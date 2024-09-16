@@ -1,0 +1,791 @@
+/* variables */
+:root {
+  --background-color: #1D1E22;
+  --primary-color: #3DBDA7;
+  --secondary-color: #000;
+  --tertiary-color: #f0f0f0;
+  --input-color: #646e6d6e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, li {
+  list-style: none;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: white;
+}
+
+.gameComponent {
+  display: grid;
+  grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+  grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
+  grid-template-areas: 
+      "menu header header header header header header header header header header header"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+      "menu content content content content content content content content sidebar sidebar sidebar"
+}
+
+.game-setting-layout {
+  display: grid;
+  grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+  grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
+  grid-template-areas: 
+      "menu header header header header header header header header header header header"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+      "menu content content content content content content content content content content content"
+}
+
+.site {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* start header stylesheet */
+.site .header {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100px;
+}
+
+.header .search {
+  margin: 0 20px;
+}
+
+.header .search input {
+  background-color: var(--input-color);
+  border: none;
+  width: 400px;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 10px;
+}
+
+.header .profile {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.header .profile i {
+  font-size: 25px;
+  margin-right: 20px;
+  padding: 15px;
+  border-radius: 50%;
+}
+
+.header .profile .notification {
+  background-color: #393939;
+  background-image: linear-gradient(160deg, #393939 0%, #1d1e22 100%);
+}
+
+.header .profile .send {
+  background-color: var(--primary-color);
+}
+
+.header .profile img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+
+
+/* start menu stylesheet */
+.site .menu {
+  grid-area: menu;
+  min-height: 600px;
+  height: 100%;
+  box-shadow: 20px 43px 41px -20px rgba(0,0,0,0.28);
+  position: fixed;
+}
+
+.menu .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  margin: 10px;
+}
+
+.menu .logo img {
+  width: 50px;
+  height: 50px;
+}
+
+.menu .menu-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px - 20px);
+  min-height: 500px;
+}
+
+.site .menu .menu-items ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.menu .menu-items ul li {
+  padding: 15px;
+}
+
+.menu .menu-items ul .active {
+  background-color: var(--primary-color);
+  border-radius: 50%;
+}
+.menu .menu-items ul li a {
+  font-size: 25px;
+}
+
+/* start content stylesheet */
+.site .content {
+  grid-area: content;
+  padding: 20px;
+}
+
+.content .game-mode {
+  width: 100%;
+}
+
+.game-mode h2 {
+  text-align: center;
+  background: #8A51FF;
+  background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game-mode .models {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.game-mode .models .model {
+  width: calc(100% / 3 - 20px);
+  min-width: 200px;
+  height: 200px;
+  margin: 80px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.3);
+  position: relative;
+  padding: 20px;
+}
+
+.game-mode .models .center {
+  margin: 20px 0;
+}
+
+.game-mode .models .model p {
+  color: #E9E9EA;
+  font-size: 12px;
+  margin: 8px 0;
+}
+
+.game-mode .models .model a {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+.game-mode .models .model img {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 50%;
+  z-index: -1;
+}
+
+.game-mode .models .classic::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  background-color: #2b4b9d;
+  background-image: linear-gradient(160deg, #2b4b9d 0%, #02ff95 100%);
+  z-index: -1;
+}
+
+.game-mode .models .classic a {
+  border: 1px solid #85E9FF;
+}
+
+.game-mode .models .ai {
+  box-shadow: 0px 0px 5px 1px rgba(119,119,204,1);
+}
+
+.game-mode .models .ai::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  background-color: #544f5a;
+  background-image: linear-gradient(160deg, #544f5a 0%, #00ff57 100%);
+  z-index: -1;
+}
+
+.game-mode .models .ai a {
+  border: 1px solid #FF007A;
+}
+
+.game-mode .models .tournament::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  background-color: #2b4b9d;
+  background-image: linear-gradient(160deg, #2b4b9d 0%, #02ff95 100%);
+  z-index: -1;
+}
+
+.game-mode .models .tournament a {
+  border: 1px solid #FF8A00;
+}
+
+.best-players {
+  width: 49%;
+  float: left;
+}
+
+.best-players h2 {
+  text-align: center;
+  background: #8A51FF;
+  background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.best-players .player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #252525;
+  padding: 5px 20px;
+  border-radius: 12px;
+  border: 1px solid #a09fe76b;
+  margin-bottom: 10px;
+}
+
+.best-players .player img {
+  width: 30px;
+  height: 30px;
+}
+
+.best-players .player p {
+  color: #E9E9EA;
+  font-size: 10px;
+  margin: 0 10px;
+}
+
+.best-players .player span {
+  color: #E9E9EA;
+  font-size: 14px;
+  padding: 3px 8px;
+  background-color: #056C09;
+  border-radius: 9px;
+}
+
+.last-matches {
+  width: 49%;
+  float: right;
+}
+
+.last-matches h2 {
+  text-align: center;
+  background: #8A51FF;
+  background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.last-matches .matches {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.last-matches .matches .match {
+  width: 115px;
+  background-color: #252525;
+  height: 150px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.last-matches .matches .win {
+  box-shadow: 0px 0px 5px 0px rgba(75,174,79,1);
+}
+
+.last-matches .matches .lose {
+  box-shadow: 0px 0px 5px 0px rgba(224,79,95,1);
+}
+
+.last-matches .matches .match img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.last-matches .matches .match h4 {
+  font-size: 16px;
+}
+
+.last-matches .matches .match span {
+  position: absolute;
+  bottom: 5px;
+}
+
+.last-matches .matches .match i {
+  position: absolute;
+  bottom: -50px;
+  overflow: hidden;
+}
+
+.last-matches .matches .match i img{
+  width: 30px;
+  height: 30px;
+}
+
+
+/* start sidebar stylesheet */
+.site .sidebar {
+  grid-area: sidebar;
+  overflow: hidden;
+}
+
+.sidebar h2 {
+  background: #8A51FF;
+  background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.sidebar .friends {
+  background-color: #252525;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: 90%;
+}
+
+.sidebar .friends .friend {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.sidebar .friends .friend img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.sidebar .friends .friend h4 {
+  color: #E9E9EA;
+  font-size: 14px;
+}
+
+.sidebar .friends .friend a {
+  background-color: var(--primary-color);
+  padding: 5px 15px;
+  color: #E9E9EA;
+  font-size: 12px;
+  position: absolute;
+  right: 20px;
+}
+
+
+/* game starting  */
+.classic-game {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.classic-game h2 {
+  background: #8A51FF;
+  background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 100px 0;
+}
+
+.classic-game a {
+  margin-top: 50px;
+  padding: 10px 20px;
+  border: 1px solid var(--primary-color);
+  border-radius: 20px;
+}
+
+.classic-game .waiting {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.classic-game .waiting .waiting__player {
+  margin: 0 100px;
+}
+
+.classic-game .waiting .waiting__player .image-cover { 
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--primary-color);
+}
+
+.classic-game .waiting .waiting__player .image-cover img {
+  width: 100%;
+  height: 100%;
+}
+
+.classic-game .waiting .waiting__player h4 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.tournament-component {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game-container {
+  margin: 50px 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game-container i {
+  position: absolute;
+  top: 40px;
+  font-size: 40px;
+  right: 40px;
+  cursor: pointer;
+  color: red;
+}
+
+.game-container .player-field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game-container .player-field img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+
+/* game setting style sheet  */
+.game-settings {
+  grid-area: content;
+}
+
+.game-settings h2 {
+  background: #8A51FF;
+  background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.game-settings .settings {
+  margin-bottom: 20px;
+  width: 49%;
+  float: left;
+}
+
+.game-settings .settings h4 {
+  background: #8A51FF;
+  background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 50px;
+}
+
+.settings .player .direction span {
+  padding: 8px 20px;
+  border: 1px solid var(--primary-color);
+  border-radius: 20px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.settings .player .direction span.active {
+  background-color: var(--primary-color);
+}
+
+.settings .player .color {
+  margin-top: 30px;
+}
+
+.settings .player .color span {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.settings .color span.blue {
+  background-color: blue;
+}
+
+.settings .color span.red {
+  background-color: red;
+}
+
+.settings .color span.green {
+  background-color: green;
+}
+
+.settings .color span {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.settings .net .direction span {
+  padding: 8px 20px;
+  border: 1px solid var(--primary-color);
+  border-radius: 20px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.settings .net .direction span.active {
+  background-color: var(--primary-color);
+}
+
+.settings .net .color {
+  margin-top: 30px;
+}
+
+.live-settings {
+  width: 49%;
+  float: right;
+}
+
+.live-settings h4 {
+  background: #8A51FF;
+  background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 50px;
+}
+
+.live-settings canvas {
+  width: 100%;
+  height: 300px;
+}
+
+
+.sidebar .profile {
+  background-color: #252525;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sidebar .profile h2 {
+  text-align: center;
+}
+
+.sidebar .profile .image-cover {
+  width: 100%;
+  overflow: hidden;
+  height: 60px;
+  margin-bottom: 50px;
+}
+
+.sidebar .profile .image-cover img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  border: 1px solid var(--primary-color);
+  float: left;
+}
+
+.sidebar .profile .image-cover  .status{
+  float: left;
+  width: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+  padding-left: 10px;
+}
+
+.sidebar .profile .image-cover .status h4 {
+  color: #635DC2;
+  font-size: 20px;
+}
+
+.sidebar .profile .image-cover .status p {
+  color: #838383;
+  font-size: 12px;
+}
+
+.sidebar .profile .profile-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar .profile .profile-info div {
+  width: calc(100% / 3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar .profile .profile-info div p {
+  color: #BDC1CA;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.sidebar .profile .profile-info div .offline {
+  color: red;
+}
+
+.sidebar .profile .profile-info div .progress {
+  color: green;
+}
+
+.sidebar .friend-request {
+  background-color: #252525;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sidebar .friend-request .friend {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar .friend-request .friend img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 5px;
+  border: 1px solid var(--primary-color);
+  border-radius: 50%;
+}
+
+.sidebar .friend-request .friend h4 {
+  color: #E9E9EA;
+  font-size: 14px;
+}
+
+.sidebar .friend-request .friend a {
+  padding: 5px 15px;
+  margin-left: 10px;
+  font-size: 12px;
+  right: 20px;
+}
+
+.sidebar .friend-request .friend a.accept {
+  background-color: green;
+}
+
+.sidebar .friend-request .friend a.reject {
+  background-color: red;
+}
