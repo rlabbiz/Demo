@@ -188,10 +188,10 @@ body {
 
 .game-mode h2 {
     text-align: center;
-    background: #8A51FF;
     background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 .game-mode .models {
@@ -302,10 +302,10 @@ body {
 
 .best-players h2 {
     text-align: center;
-    background: #8A51FF;
     background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
     margin-bottom: 20px;
 }
 
@@ -347,10 +347,10 @@ body {
 
 .last-matches h2 {
     text-align: center;
-    background: #8A51FF;
     background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
     margin-bottom: 20px;
 }
 
@@ -416,10 +416,10 @@ body {
 }
 
 .sidebar h2 {
-    background: #8A51FF;
     background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
     margin-bottom: 20px;
 }
 
@@ -472,10 +472,10 @@ body {
 }
 
 .classic-game h2 {
-    background: #8A51FF;
     background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
     margin: 100px 0;
 }
 
@@ -563,10 +563,10 @@ body {
 }
 
 .game-settings h2 {
-    background: #8A51FF;
     background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -578,10 +578,10 @@ body {
 }
 
 .game-settings .settings h4 {
-    background: #8A51FF;
     background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
     margin-bottom: 15px;
     margin-top: 50px;
 }
@@ -654,10 +654,10 @@ body {
 }
 
 .live-settings h4 {
-    background: #8A51FF;
     background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
     margin-bottom: 15px;
     margin-top: 50px;
 }
