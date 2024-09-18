@@ -7,6 +7,7 @@ import { gameScript } from './game.js';
 import { gameSettingScript } from './game.js';
 import { gameSettingComponent } from './components.js';
 import { homeComponent } from './components.js';
+import { SingUpComponent } from '../components/singup.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
@@ -41,6 +42,10 @@ export function urlHandler() {
             site.innerHTML = gameSettingComponent();
             site.classList = 'site game-setting-layout';
             gameSettingScript();
+            break;
+        case '/singup':
+            site.innerHTML = SingUpComponent();
+            site.classList = 'site';
             break;
         default:
             site.innerHTML = `
