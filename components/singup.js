@@ -55,10 +55,6 @@ export function SingUpComponent() {
                         <label class="choose-label" for="avatar-input">Choose File</i></label>
                         <input type="file" id="avatar-input" name="avatar" accept="image/*" />
                     </div>
-
-                    <div class="form-link">
-                        <a href="/singin">Already have an account? <span>Sing In</span></a>
-                    </div>
                     <button type="submit-singup">Sign Up <i class="fas fa-user-plus"></i></button>
                 </form>
                 <div class="form-social">

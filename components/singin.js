@@ -19,9 +19,6 @@ export function SingInComponent() {
                           <label for="password"><i class="fas fa-lock"></i></label>
                           <input type="password" id="password" name="password" placeholder="Password" required />
                       </div>
-                      <div class="form-link">
-                          <a href="/singup">Dont have an account yet? <span>Sing Up</span></a>
-                      </div>
                       <button type="submit-singup">Sign In <i class="fas fa-sign-in-alt"></i></button>
                   </form>
                   <div class="form-social">

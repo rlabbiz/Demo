@@ -103,6 +103,15 @@ export function setUpEvent() {
             urlHandler();
         })
     }
+
+    const chat = document.querySelector('.header .profile .send');
+    if (chat) {
+        chat.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/chat');
+            urlHandler();
+        })
+    }
     
 }
 

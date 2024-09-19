@@ -10,6 +10,7 @@ import { homeComponent } from './components.js';
 import { SingUpComponent } from '../components/singup.js';
 import { singupScript } from '../components/singup.js';
 import { SingInComponent } from '../components/singin.js';
+import { ChatComponent } from '../components/chat.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
@@ -53,6 +54,10 @@ export function urlHandler() {
         case '/singin':
             site.innerHTML = SingInComponent();
             site.classList = 'site';
+            break;
+        case '/chat':
+            site.innerHTML = ChatComponent();
+            site.classList = 'site chat-layout';
             break;
         default:
             site.innerHTML = `

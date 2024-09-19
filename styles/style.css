@@ -48,6 +48,25 @@ body {
         "menu content content content content content content content content sidebar sidebar sidebar"
 }
 
+.chat-layout {
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
+    grid-template-areas: 
+        "menu header header header header header header header header header header header"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+}
+
 .game-setting-layout {
     display: grid;
     grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
@@ -990,10 +1009,97 @@ body {
     background-color: #2b4b9d;
 }
 
-.form-link {
-    margin-top: 20px;
+/* chat style sheet */
+/* grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
+    grid-template-areas: 
+        "menu header header header header header header header header header header header"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat"
+        "menu chat chat chat chat chat chat chat chat chat chat chat" */
+.chat {
+    grid-area: chat;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #2A2B30;
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto;
+    grid-template-areas: 
+        "chat_friends chat_friends chat_friends chat_header chat_header chat_header chat_header chat_header chat_header chat_header chat_header"
+        "chat_friends chat_friends chat_friends chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages"
+        "chat_friends chat_friends chat_friends chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages"
+        "chat_friends chat_friends chat_friends chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages chat_messages"
+        "chat_friends chat_friends chat_friends chat_send chat_send chat_send chat_send chat_send chat_send chat_send chat_send"
 }
 
-.form-link span {
-    color: var(--primary-color);
+.chat-friends {
+    grid-area: chat_friends;
+    padding: 15px;
+}
+
+.chat-friends .chat-friend {
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.chat-friends .chat-friend:hover {
+    background-color: #33343A;
+    border-radius: 10px;
+}
+
+.chat-friends .chat-friend img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.chat-friends .chat-friend p {
+    color: #E9E9EA;
+    font-size: 16px;
+}
+
+.chat-friends .chat-friend span {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    right: 50px;
+}
+
+.chat-friends .chat-friend span.online {
+    background-color: green;
+}
+
+.chat-friends .chat-friend span.offline {
+    background-color: black;
+}
+
+.chat-header {
+    grid-area: chat_header;
+}
+
+.chat-content {
+    grid-area: chat_messages;
+    /* background-color: blue; */
+    height: 800px;
+}
+
+.chat-input {
+    grid-area: chat_send;
+    /* background-color: yellow; */
 }
