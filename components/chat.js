@@ -1,4 +1,4 @@
-import { header, menu } from '../scripts/components.js'
+import { header, homeComponent, menu } from '../scripts/components.js'
 
 
 export function ChatComponent() {
@@ -13,7 +13,10 @@ export function chatContent() {
     return (`
         <div class="chat">
             <div class="chat-header">
-                chat header
+                <div class="chat-profile">
+                    <img src="../images/profile.png" alt="friend">
+                    <p>rlabbiz</p>
+                </div>
             </div>
 
             <div class="chat-friends">
@@ -40,11 +43,17 @@ export function chatContent() {
             </div>
 
             <div class="chat-content">
-                chat content
+                <div class="right">
+                    <p>hey, how are you? hey, how are you? hey, how are you? </p>
+                </div>
+                <div class="left">
+                    <p>hey, how are you? hey, how are you? hey, how are you? hey, how are you? hey, how are you? hey, how are you? hey, how are you? hey, how are you?</p>
+                </div>
             </div>
 
             <div class="chat-input">
-                chat input
+                <input type="text" placeholder="Type a message...">
+                <button>Send</button
             </div>
         </div>
     `)
