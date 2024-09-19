@@ -86,6 +86,25 @@ export function setUpEvent() {
         })
     }
 
+    const singin = document.querySelector('.sing-forms .form-titles .singin');
+    if (singin) {
+        console.log(singin);
+        singin.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/singin');
+            urlHandler();
+        })
+    }
+
+    const singup = document.querySelector('.sing-forms .form-titles .singup');
+    if (singup) {
+        singup.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/singup');
+            urlHandler();
+        })
+    }
+
     
 }
 

@@ -799,3 +799,198 @@ body {
     align-items: center;
     flex-direction: column;
 }
+
+.sing-forms .logo {
+    margin: 50px 0 50px 0;
+}
+
+.form {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(61,189,167,0.3);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(61,189,167,0.3);
+    box-shadow: 0px 0px 10px 1px rgba(61,189,167,0.3);
+    border-radius: 20px;
+}
+
+.form .form-titles {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.form .form-titles h4 {
+    padding: 10px 25px;
+    cursor: pointer;
+}
+
+.form .form-titles h4.active {
+    background-color: var(--primary-color);
+    border-radius: 20px;
+}
+
+.form .form-inputs form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form .form-inputs form .filed input {
+    margin: 10px 0;
+    padding: 0 10px 0 30px;
+    border-radius: 20px;
+    background-color: var(--input-color);
+    border: none;
+    width: 400px;
+    height: 40px;
+    color: white;
+}
+
+.form .form-inputs form .filed {
+    position: relative;
+}
+
+.form .form-inputs form .filed label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: rgb(133, 133, 133);
+}
+
+.form .form-inputs form button {
+    margin: 20px 0;
+    padding: 15px 20px;
+    font-size: 16px;
+    border-radius: 20px;
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: .5s ease-in-out;
+
+}
+
+.form .form-inputs form button:hover {
+    background-color: #2b4b9d;
+}
+
+.chose-avatar {
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+}
+
+.chose-avatar img {
+    margin-top: 5px;
+    width: 50px;
+    display: inline-block;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.upload-avatar {
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+}
+
+.upload-avatar input {
+    display: none;
+}
+
+.upload-avatar .choose-label {
+    margin: 10px 0;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: var(--input-color);
+    display: block;
+    border: none;
+    width: 400px;
+    cursor: pointer;
+    color: rgb(133, 133, 133);
+}
+
+.form-social .line {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.form-social .line::before, .form-social .line::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgb(133, 133, 133);
+}
+
+.form-social .line span {
+    padding: 0 10px;
+    color: #777;
+    font-size: 14px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+.social-icons img {
+    width: 50px;
+    display: inline-block;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.social-icons a {
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 20px;
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: .5s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.social-icons a.github {
+    background-color: #333;
+}
+
+.social-icons a.intra {
+    background-color: #292D39;
+}
+
+.social-icons a:hover {
+    background-color: #2b4b9d;
+}
+
+.form-link {
+    margin-top: 20px;
+}
+
+.form-link span {
+    color: var(--primary-color);
+}
