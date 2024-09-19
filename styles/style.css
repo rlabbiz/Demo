@@ -1010,21 +1010,7 @@ body {
 }
 
 /* chat style sheet */
-/* grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
-    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
-    grid-template-areas: 
-        "menu header header header header header header header header header header header"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat"
-        "menu chat chat chat chat chat chat chat chat chat chat chat" */
+
 .chat {
     grid-area: chat;
     border-radius: 20px;
