@@ -791,31 +791,11 @@ body {
 }
 
 /* singup component */
-.singup {
+.sing-forms {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.singup .singup-logo {
-    margin: 50px auto;
-}
-
-.singup .singup-title {
-    margin-bottom: 20px;
-}
-
-.singup .singup-title h2 {
-    background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 20px;
-}
-
-.singup .singup-form {
-    width: 50%;
 }
