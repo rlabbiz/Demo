@@ -8,6 +8,7 @@ import { gameSettingScript } from './game.js';
 import { gameSettingComponent } from './components.js';
 import { homeComponent } from './components.js';
 import { SingUpComponent } from '../components/singup.js';
+import { singupScript } from '../components/singup.js';
 import { SingInComponent } from '../components/singin.js';
 
 export function urlHandler() {
@@ -47,6 +48,7 @@ export function urlHandler() {
         case '/singup':
             site.innerHTML = SingUpComponent();
             site.classList = 'site';
+            singupScript();
             break;
         case '/singin':
             site.innerHTML = SingInComponent();

@@ -37,4 +37,4 @@ export function SingInComponent() {
           </div>
       </div>
     `);
-  }
+}

@@ -41,7 +41,7 @@ export function SingUpComponent() {
                             <h4>Choose an Avatar: </h4>
                         </div>
                         <div class="avatars">
-                            <img src="../images/avatars/avatar1.webp" alt="avatar1" />
+                            <img class="active" src="../images/avatars/avatar1.webp" alt="avatar1" />
                             <img src="../images/avatars/avatar2.webp" alt="avatar1" />
                             <img src="../images/avatars/avatar3.webp" alt="avatar1" />
                             <img src="../images/avatars/avatar4.webp" alt="avatar1" />
@@ -74,4 +74,17 @@ export function SingUpComponent() {
         </div>
     </div>
   `);
+}
+export function singupScript() {
+    const avatarInput = document.querySelectorAll('.avatars img');
+    if (avatarInput) {
+        avatarInput.forEach((avatar) => {
+            avatar.addEventListener('click', function (e) {
+                avatarInput.forEach((avatar) => {
+                    avatar.classList.remove('active');
+                });
+                e.target.classList.add('active');
+            })
+        })
+    }
 }
