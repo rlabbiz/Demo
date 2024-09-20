@@ -1155,3 +1155,97 @@ body {
     cursor: pointer;
     margin-left: 20px;
 }
+
+/* tournament style sheet */
+
+.tournament-component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 100px auto;
+    background-color: #2A2B30;
+
+    max-width: 900px;
+    width: 95%;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(61, 189, 167, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.tournament-component h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(61, 189, 167, 0.5);
+}
+
+.tournament-component i {
+    position: absolute;
+    left: 20px; 
+    font-size: 30px;
+    cursor: pointer;
+    color: inherit;
+}
+
+.tournament-component .options {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+    width: 90%;
+}
+
+.tournament-component .options .option {
+    background-color: rgba(53, 54, 60, 0.8);
+    border-radius: 15px;
+    padding: 50px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    margin: 0 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tournament-component .options .option::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary-color), #ff6b6b);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tournament-component .options .option:hover::before {
+    opacity: 1;
+}
+.tournament-component .options .option:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(61, 189, 167, 0.4);
+}
+
+.tournament-component .options .option h3 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(61, 189, 167, 0.5);
+    color: #ff6b6b;
+}
+
+.create-tournament, .join-tournament {
+    margin-top: 40px;
+    display: none;
+    animation: fadeIn 0.5s ease;
+}

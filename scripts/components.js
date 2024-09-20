@@ -253,14 +253,6 @@ export function gameStartingComponent() {
     `)
 }
 
-export function gameTournamentComponent() {
-    return (`
-        <div class="tournament-component">
-            <h2>Tournament is cooming soon. </h2>
-        </div>
-    `)
-}
-
 export function gameAiComponent() {
     return (`
         <div class="game-container">

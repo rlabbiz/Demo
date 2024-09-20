@@ -1,7 +1,7 @@
 import { setUpEvent } from './script.js';
 import { gameComponent } from './components.js';
 import { gameStartingComponent } from './components.js';
-import { gameTournamentComponent } from './components.js';
+import { gameTournamentComponent } from '../components/tournament.js';
 import { gameAiComponent } from './components.js';
 import { gameScript } from './game.js';
 import { gameSettingScript } from './game.js';
