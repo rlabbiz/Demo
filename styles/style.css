@@ -7,6 +7,20 @@
     --input-color: #646e6d6e;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(61, 62, 66, 0.5);
+    border-radius: 5px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -1248,4 +1262,109 @@ body {
     margin-top: 40px;
     display: none;
     animation: fadeIn 0.5s ease;
+    width: 90%;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.create-tournament h3, .join-tournament h3 {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    color: #ff6b6b;
+    margin-bottom: 30px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 1.8em;
+    text-shadow: 0 0 10px rgba(61, 189, 167, 0.5);
+
+}
+
+.create-tournament select, .create-tournament input, .create-tournament button,
+.join-tournament select, .join-tournament input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: rgba(61, 62, 66, 0.8);
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.create-tournament input:focus, .create-tournament select:focus,
+.join-tournament input:focus, .join-tournament select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.create-tournament button {
+    background-color: var(--primary-color);
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: black;
+}
+
+.tournament-list {
+    background-color: rgba(61, 62, 66, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+    max-height: 250px;
+    overflow-y: auto;
+    display: none;
+    backdrop-filter: blur(5px);
+}
+
+.tournament-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid rgba(74, 75, 80, 0.5);
+    transition: all 0.3s ease;
+    border-radius: 25px;
+}
+
+.tournament-item:hover {
+    background-color: rgba(69, 70, 74, 0.8);
+    transform: translateX(5px);
+}
+
+.join-tournament button {
+    background-color: var(--primary-color);
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: black;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.join-tournament button:hover, .create-tournament button:hover {
+    background-color: #ff6b6b;
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+}
+
+.join-button {
+    padding: 10px 20px;
+    width: auto !important;
 }
