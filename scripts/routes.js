@@ -11,6 +11,7 @@ import { SingUpComponent } from '../components/singup.js';
 import { singupScript } from '../components/singup.js';
 import { SingInComponent } from '../components/singin.js';
 import { ChatComponent } from '../components/chat.js';
+import { firstModeComponent, secondModeComponent, tournamentModesScript } from '../components/tournamentModes.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
@@ -59,6 +60,16 @@ export function urlHandler() {
         case '/chat':
             site.innerHTML = ChatComponent();
             site.classList = 'site chat-layout';
+            break;
+        case '/first-mode':
+            site.innerHTML = firstModeComponent();
+            site.classList = 'site';
+            tournamentModesScript();
+            break;
+        case '/second-mode':
+            site.innerHTML = secondModeComponent();
+            site.classList = 'site';
+            tournamentModesScript();
             break;
         default:
             site.innerHTML = `

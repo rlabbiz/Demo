@@ -35,6 +35,11 @@ export function header() {
                 <i class="far fa-paper-plane send"></i>
                 <img src="images/profile.png" alt="profile">
             </div>
+            <div class="header-menu">
+                <a href="#" class="profile-link">Profile</a>
+                <a href="#" class="setting-link">Setting</a>
+                <a href="#" class="logout-link">Logout</a>
+            </div>
         </div>
     `)
 }

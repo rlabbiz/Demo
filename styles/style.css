@@ -1368,3 +1368,177 @@ body {
     padding: 10px 20px;
     width: auto !important;
 }
+
+/* first-mode style sheet */
+
+.first-mode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 100px auto;
+    height: 100%;
+}
+
+.first-mode h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2em;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(61, 189, 167, 0.5);
+}
+
+.tournament-info {
+    text-align: center;
+    color: #FFD93D;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tournament-info .copy-button {
+    background-color: #3DBDA7;
+    color: #1D1E22;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.bracket {
+    display: flex;
+    justify-content: space-evenly;
+    min-width: 100%;
+}
+
+.round {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.round .match {
+    background-color: #2D2E32;
+    border: 2px solid #3DBDA7;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.round .match:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(61, 189, 167, 0.5);
+}
+
+.round .player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #3D3E42;
+    border-radius: 5px;
+}
+
+.paddle {
+    position: absolute;
+    width: 10px;
+    height: 40px;
+    background-color: #FF6B6B;
+    border-radius: 5px;
+}
+
+.paddle-left {
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: paddleLeft 1s infinite alternate;
+}
+
+@keyframes paddleLeft {
+    0% {
+        transform: translateY(-70%);
+    }
+    100% {
+        transform: translateY(-30%);
+    }
+}
+
+.paddle-right {
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: paddleRight 1s infinite alternate;
+}
+
+@keyframes paddleRight {
+    0% {
+        transform: translateY(-30%);
+    }
+    100% {
+        transform: translateY(-70%);
+    }
+}
+
+.ball {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #FFD93D;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: ballMove 2s infinite linear;
+}
+
+@keyframes ballMove {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    
+    25% {
+        transform: translate(-100%, -50%) scale(0.8);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    75% {
+        transform: translate(0%, -50%) scale(0.8);
+    }
+}
+
+.player-score {
+    background-color: #3DBDA7;
+    color: #1D1E22;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.first-mode .bottom-leave-button {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #FF6B6B;
+    color: #1D1E22;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+}
+
+.first-mode .bottom-leave-button:hover {
+    background-color: #FF4949;
+}

@@ -29,22 +29,22 @@ export function gameTournamentComponent() {
                 <button onclick="joinTournamentById()" w-tid="25">Join by ID</button>
                 
                 <div class="tournament-list" id="tournamentList" w-tid="26" style="display: block;">
-                    <div class="tournament-item">
+                    <div class="tournament-item" id="first-mode">
                         <span>Paddle Fury </span>
                         <p>4/8</p>
                         <button class="join-button" onclick="joinTournament('T001')">Enter Arena</button>
                     </div>
-                    <div class="tournament-item">
+                    <div class="tournament-item" id="first-mode">
                         <span>Table Titans</span>
                         <p>5/8</p>
                         <button class="join-button" onclick="joinTournament('T002')">Enter Arena</button>
                     </div>
-                    <div class="tournament-item">
+                    <div class="tournament-item" id="second-mode">
                         <span>Spin Masters</span>
                         <p>3/4</p>
                         <button class="join-button" onclick="joinTournament('T003')">Enter Arena</button>
                     </div>
-                    <div class="tournament-item">
+                    <div class="tournament-item" id="first-mode">
                         <span>Ping Pong Legends</span>
                         <p>6/8</p>
                         <button class="join-button" onclick="joinTournament('T004')">Enter Arena</button>
@@ -86,4 +86,23 @@ export function tournamentScript() {
         })
     }
 
+    const firstMode = document.querySelectorAll('.tournament-list #first-mode');
+    if (firstMode) {
+        firstMode.forEach(mode => {
+            mode.addEventListener('click', function () {
+                history.pushState(null, null, '/first-mode');
+                urlHandler();
+            })
+        })
+    }
+
+    const secondMode = document.querySelectorAll('.tournament-list #second-mode');
+    if (secondMode) {
+        secondMode.forEach(mode => {
+            mode.addEventListener('click', function () {
+                history.pushState(null, null, '/second-mode');
+                urlHandler();
+            })
+        })
+    }
 }
