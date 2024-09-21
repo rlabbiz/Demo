@@ -173,13 +173,25 @@ body {
     height: 130px;
     z-index: 1;
     display: none;
-    animation: fadeOut .3s ease-in-out;
+    animation: fadeOut .9s ease-in-out;
 }
 
 @keyframes fadeOut {
     0% {
         opacity: 0;
         transform: translateY(-20px);
+    }
+    30% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+    60% {
+        opacity: 0.6;
+        transform: translateY(-10px);
+    }
+    60% {
+        opacity: 0.9;
+        transform: translateY(5);
     }
     100% {
         opacity: 1;
@@ -204,7 +216,7 @@ body {
     content: '';
     display: block;
     position: absolute;
-    width: 2px;
+    width: 5px;
     height: 100%;
     top: 0;
     left: 0;
@@ -225,7 +237,7 @@ body {
 .header .header-menu a:hover {
     background-color: #1d1e22;
     color: var(--primary-color);
-    transform: translateX(2px);
+    transform: translateX(5px);
 }
 
 .header .header-menu a:hover::before {
