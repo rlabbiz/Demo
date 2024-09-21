@@ -103,7 +103,7 @@ export function menu() {
                     <li class="active"><a href="#" class="game"><i class="fas fa-play-circle"></i></a></li>
                     <li><a href="#" class="game-setting-link"><i class="fas fa-sliders-h"></i></a></li>
                     <li><a href="#"><i class="fas fa-store"></i></a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i></a></li>
+                    <li><a href="#" class="account-setting-link"><i class="fas fa-cog"></i></a></li>
                 </ul>
             </div>
         </div>

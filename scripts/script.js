@@ -2,7 +2,16 @@ import { urlHandler } from "./routes.js";
 
 // Game script
 
+function event(e){
+    const profileLink = document.querySelector('.header .header-profile-link');
+    const profileMenu = document.querySelector('.header .header-menu');
+    if (e.target !== profileLink) {
+        profileMenu.classList.remove('active-menu');
+    }
+}
+
 export function setUpEvent() {
+
     const classicLink = document.querySelector('.classic a');
     if (classicLink) {
         classicLink.addEventListener('click', function (e) {
@@ -115,7 +124,7 @@ export function setUpEvent() {
 
     const profileLink = document.querySelector('.header .header-profile-link');
     const profileMenu = document.querySelector('.header .header-menu');
-    const closeByBody = document.querySelector('body');
+    const closeByBody = document.querySelector('html');
     if (profileLink) {
         profileLink.addEventListener('click', function() {
             if (profileMenu) {
@@ -124,17 +133,29 @@ export function setUpEvent() {
         })
     }
     
-    profileLink.addEventListener('click', function() {
-        profileMenu.classList.toggle('active');
-    })
     if (closeByBody) {
-        closeByBody.addEventListener('click', function(e) {
-            if (e.target !== profileLink) {
-                profileMenu.classList.remove('active-menu');
-            }
+        closeByBody.removeEventListener('click', event)
+        closeByBody.addEventListener('click', event)
+    }
+
+    const accountSettingLink = document.querySelector('.header .header-menu .setting-link');
+    const accountSettingMenu = document.querySelector('.menu .menu-items .account-setting-link');
+
+    if (accountSettingLink) {
+        accountSettingLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/account_settings');
+            urlHandler();
         })
     }
-    
+
+    if (accountSettingMenu) {
+        accountSettingMenu.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/account_settings');
+            urlHandler();
+        })
+    }
 }
 
 window.onload = setUpEvent;
