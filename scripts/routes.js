@@ -12,6 +12,7 @@ import { singupScript } from '../components/singup.js';
 import { SingInComponent } from '../components/singin.js';
 import { ChatComponent } from '../components/chat.js';
 import { firstModeComponent, secondModeComponent, tournamentModesScript } from '../components/tournamentModes.js';
+import { accountSettingComponent } from '../components/accountSetting.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
@@ -70,6 +71,10 @@ export function urlHandler() {
             site.innerHTML = secondModeComponent();
             site.classList = 'site';
             tournamentModesScript();
+            break;
+        case '/account_settings':
+            site.innerHTML = accountSettingComponent();
+            site.classList = 'site account-setting-layout';
             break;
         default:
             site.innerHTML = `
