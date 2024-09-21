@@ -112,6 +112,28 @@ export function setUpEvent() {
             urlHandler();
         })
     }
+
+    const profileLink = document.querySelector('.header .header-profile-link');
+    const profileMenu = document.querySelector('.header .header-menu');
+    const closeByBody = document.querySelector('body');
+    if (profileLink) {
+        profileLink.addEventListener('click', function() {
+            if (profileMenu) {
+                profileMenu.classList.toggle('active-menu');
+            }
+        })
+    }
+    
+    profileLink.addEventListener('click', function() {
+        profileMenu.classList.toggle('active');
+    })
+    if (closeByBody) {
+        closeByBody.addEventListener('click', function(e) {
+            if (e.target !== profileLink) {
+                profileMenu.classList.remove('active-menu');
+            }
+        })
+    }
     
 }
 

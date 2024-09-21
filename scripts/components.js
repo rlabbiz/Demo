@@ -33,12 +33,12 @@ export function header() {
             <div class="profile">
                 <i class="far fa-bell notification"></i>
                 <i class="far fa-paper-plane send"></i>
-                <img src="images/profile.png" alt="profile">
+                <img src="images/profile.png" class="header-profile-link" alt="profile">
             </div>
             <div class="header-menu">
-                <a href="#" class="profile-link">Profile</a>
-                <a href="#" class="setting-link">Setting</a>
-                <a href="#" class="logout-link">Logout</a>
+                <a href="#" class="profile-link"><i class="fas fa-user"></i> Profile</a>
+                <a href="#" class="setting-link"><i class="fas fa-cog" aria-hidden="true"></i> Setting</a>
+                <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
     `)
