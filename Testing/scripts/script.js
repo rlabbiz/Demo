@@ -1,8 +1,18 @@
+
 import { urlHandler } from "./routes.js";
 
 // Game script
 
+function event(e){
+    const profileLink = document.querySelector('.header .header-profile-link');
+    const profileMenu = document.querySelector('.header .header-menu');
+    if (e.target !== profileLink) {
+        profileMenu.classList.remove('active-menu');
+    }
+}
+
 export function setUpEvent() {
+
     const classicLink = document.querySelector('.classic a');
     if (classicLink) {
         classicLink.addEventListener('click', function (e) {
@@ -85,18 +95,139 @@ export function setUpEvent() {
             urlHandler();
         })
     }
-    const signin = document.getElementById("showSignIn");
-    if (signin) {
-        signin.addEventListener('click', function (e) {
+
+    const singin = document.querySelector('.sing-forms .form-titles .singin');
+    if (singin) {
+        singin.addEventListener('click', function (e) {
             e.preventDefault();
-            history.pushState(null, null, '/signin');
+            history.pushState(null, null, '/singin');
             urlHandler();
         })
     }
+
+    const singup = document.querySelector('.sing-forms .form-titles .singup');
+    if (singup) {
+        singup.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/singup');
+            urlHandler();
+        })
+    }
+
+    const chat = document.querySelector('.header .profile .send');
+    if (chat) {
+        chat.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/chat');
+            urlHandler();
+        })
+    }
+
+    const profileLink = document.querySelector('.header .header-profile-link');
+    const profileMenu = document.querySelector('.header .header-menu');
+    const closeByBody = document.querySelector('html');
+    if (profileLink) {
+        profileLink.addEventListener('click', function() {
+            if (profileMenu) {
+                profileMenu.classList.toggle('active-menu');
+            }
+        })
+    }
+    
+    if (closeByBody) {
+        closeByBody.removeEventListener('click', event)
+        closeByBody.addEventListener('click', event)
+    }
+
+    const accountSettingLink = document.querySelector('.header .header-menu .setting-link');
+    const accountSettingMenu = document.querySelector('.menu .menu-items .account-setting-link');
+
+    if (accountSettingLink) {
+        accountSettingLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/account_settings');
+            urlHandler();
+        })
+    }
+
+    if (accountSettingMenu) {
+        accountSettingMenu.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/account_settings');
+            urlHandler();
+        })
+    }
+
+    const saveChangeButton = document.querySelector('.account-setting .save-btn');
+    const passwordModal = document.querySelector('#passwordModal');
+
+    if (saveChangeButton) {
+        saveChangeButton.addEventListener('click', function () {
+            passwordModal.style.display = 'block';
+        })
+    }
+
+    const passwordModalClose = document.querySelector('#passwordModal span');
+    const passwordModalCancel = document.querySelector('#passwordModal .save-btn:last-child');
+
+    if (passwordModalClose) {
+        passwordModalClose.addEventListener('click', function () {
+            passwordModal.style.display = 'none';
+        })
+    }
+
+    if (passwordModalCancel) {
+        passwordModalCancel.addEventListener('click', function () {
+            passwordModal.style.display = 'none';
+        })
+    }
+
+    const avatarSelector = document.querySelectorAll('.account-setting .avatar-selection img');
+
+    if (avatarSelector) {
+        avatarSelector.forEach(selector => {
+            selector.addEventListener('click', function (e) {
+                avatarSelector.forEach(selector => {
+                    selector.classList.remove('active');
+                })
+                selector.classList.add('active');
+                const target = e.target;
+                if (target.tagName === 'IMG') {
+                    const profilePic = document.querySelector('.account-setting .profile-pic');
+                    profilePic.src = target.src;
+                }
+            })
+        })
+    }
+
+    const friendListLink = document.querySelector('.menu .menu-items .friend-list-link');
+    if (friendListLink) {
+        friendListLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/friends');
+            urlHandler();
+        })
+    }
+
+    const notificationLink = document.querySelector('.header .profile .notification');
+    const notificationMenu = document.querySelector('.header #notificationsPanel');
+
+    if (notificationLink) {
+        notificationLink.addEventListener('click', function () {
+            notificationMenu.classList.toggle('show');
+        })
+    }
+
+    if (closeByBody){
+        closeByBody.addEventListener('click', function(e) {
+            if (e.target !== notificationLink) {
+                notificationMenu.classList.remove('show');
+            }
+        })
+    }
+
+
+
 }
-
-
-
-
 
 window.onload = setUpEvent;
