@@ -1,5 +1,7 @@
 import { header, menu } from '../scripts/components.js'
 
+const hhh = "sfghfgh";
+
 export function accountSettingComponent() {
     return (
         header() +
@@ -12,6 +14,7 @@ export function accountSettingComponent() {
 export function accountSettingContent() {
     return (`
         <div class="account-setting">
+            <h2>Account Settings</h2>
             <div class="setting-group">
                 <img src="https://page-images.websim.ai/Current profile picture_1024x1024xemJ2jr7UINRqya9Hdx9654623cf1966.jpg" alt="Current profile picture" class="profile-pic" id="profilePic" data-image_id="0" alt-rewritten="Current profile picture">
                 <input id="setting-upload" type="file" id="avatarUpload" style="display: none;" accept="image/*">

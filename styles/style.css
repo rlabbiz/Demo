@@ -1799,3 +1799,14 @@ body {
 .account-setting .avatar-selection .active {
     border: 3px solid #3DBDA7;
 }
+
+
+.account-setting h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2em;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(61, 189, 167, 0.5);
+}
