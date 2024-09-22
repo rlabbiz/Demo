@@ -135,6 +135,28 @@ body {
     z-index: 1000;
 }
 
+.header::after {
+    content: '';
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: -30px;
+    background: #1D1E22;
+    z-index: -1;
+}
+
+.header::before {
+    content: '';
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: -30px;
+    background: #1D1E22;
+    z-index: -1;
+}
+
 .site .header {
     display: flex;
     justify-content: space-between;
