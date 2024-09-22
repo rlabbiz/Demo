@@ -199,6 +199,15 @@ export function setUpEvent() {
         })
     }
 
+    const friendListLink = document.querySelector('.menu .menu-items .friend-list-link');
+    if (friendListLink) {
+        friendListLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/friends');
+            urlHandler();
+        })
+    }
+
 
 
 }

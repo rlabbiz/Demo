@@ -13,6 +13,7 @@ import { SingInComponent } from '../components/singin.js';
 import { ChatComponent } from '../components/chat.js';
 import { firstModeComponent, secondModeComponent, tournamentModesScript } from '../components/tournamentModes.js';
 import { accountSettingComponent } from '../components/accountSetting.js';
+import { friendsComponent } from '../components/friends.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
@@ -76,6 +77,11 @@ export function urlHandler() {
             site.innerHTML = accountSettingComponent();
             site.classList = 'site account-setting-layout';
             break;
+        case '/friends':
+            site.innerHTML = friendsComponent();
+            site.classList = 'site friends-layout';
+            break;
+        
         default:
             site.innerHTML = `
                 <h2>404 Page Not Found</h2>
