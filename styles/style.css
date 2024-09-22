@@ -119,6 +119,15 @@ body {
         "menu friends"
 }
 
+.profile-layout {
+    display: grid;
+    grid-template-columns: 100px auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "menu header-background"
+        "menu profile"
+}
+
 .site {
     width: 1200px;
     margin: 0 auto;
@@ -2177,4 +2186,10 @@ body {
 .btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* profile style sheet */
+
+.profile {
+    grid-area: profile;
 }

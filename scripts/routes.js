@@ -14,6 +14,7 @@ import { ChatComponent } from '../components/chat.js';
 import { firstModeComponent, secondModeComponent, tournamentModesScript } from '../components/tournamentModes.js';
 import { accountSettingComponent } from '../components/accountSetting.js';
 import { friendsComponent } from '../components/friends.js';
+import { profileComponent } from '../components/profile.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
@@ -80,6 +81,10 @@ export function urlHandler() {
         case '/friends':
             site.innerHTML = friendsComponent();
             site.classList = 'site friends-layout';
+            break;
+        case '/profile':
+            site.innerHTML = profileComponent();
+            site.classList = 'site profile-layout';
             break;
         
         default:
