@@ -208,6 +208,23 @@ export function setUpEvent() {
         })
     }
 
+    const notificationLink = document.querySelector('.header .profile .notification');
+    const notificationMenu = document.querySelector('.header #notificationsPanel');
+
+    if (notificationLink) {
+        notificationLink.addEventListener('click', function () {
+            notificationMenu.classList.toggle('show');
+        })
+    }
+
+    if (closeByBody){
+        closeByBody.addEventListener('click', function(e) {
+            if (e.target !== notificationLink) {
+                notificationMenu.classList.remove('show');
+            }
+        })
+    }
+
 
 
 }

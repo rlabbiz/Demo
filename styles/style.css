@@ -49,7 +49,7 @@ body {
     grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
     grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
     grid-template-areas: 
-        "menu header header header header header header header header header header header"
+        "menu header-background header-background header-background header-background header-background header-background header-background header-background header-background header-background header-background"
         "menu content content content content content content content content sidebar sidebar sidebar"
         "menu content content content content content content content content sidebar sidebar sidebar"
         "menu content content content content content content content content sidebar sidebar sidebar"
@@ -68,7 +68,7 @@ body {
     grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
     grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
     grid-template-areas: 
-        "menu header header header header header header header header header header header"
+        "menu header-background header-background header-background header-background header-background header-background header-background header-background header-background header-background header-background"
         "menu chat chat chat chat chat chat chat chat chat chat chat"
         "menu chat chat chat chat chat chat chat chat chat chat chat"
         "menu chat chat chat chat chat chat chat chat chat chat chat"
@@ -87,7 +87,7 @@ body {
     grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
     grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
     grid-template-areas: 
-        "menu header header header header header header header header header header header"
+        "menu header-background header-background header-background header-background header-background header-background header-background header-background header-background header-background header-background"
         "menu content content content content content content content content content content content"
         "menu content content content content content content content content content content content"
         "menu content content content content content content content content content content content"
@@ -106,7 +106,7 @@ body {
     grid-template-columns: 100px auto;
     grid-template-rows: auto auto;
     grid-template-areas:
-        "menu header"
+        "menu header-background"
         "menu account-setting"
 }
 
@@ -115,7 +115,7 @@ body {
     grid-template-columns: 100px auto;
     grid-template-rows: auto auto;
     grid-template-areas:
-        "menu header"
+        "menu header-background"
         "menu friends"
 }
 
@@ -126,8 +126,16 @@ body {
 
 
 /* start header stylesheet */
+
+.header-background {
+    grid-area: header-background;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-color);
+    z-index: 1000;
+}
+
 .site .header {
-    grid-area: header;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -265,6 +273,100 @@ body {
 }
 
 .header .active-menu {
+    display: block;
+}
+
+.notifications-panel {
+    width: 350px;
+    max-height: 600px;
+    position: absolute;
+    top: 90%;
+    right: 0;
+    background-color: #252525;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    overflow-y: auto;
+    animation: fadeOut .9s ease-in-out;
+    display: none;
+}
+
+.notifications-panel h3 {
+    margin-top: 0;
+    padding: 15px;
+    display: block;
+    margin-bottom: 15px;
+    color: #3DBDA7;
+    position: sticky;
+    top: 0;
+    background-color: #252525;
+}
+
+.notification-list {
+    height: calc(100% - 40px);
+}
+
+.notification-item {
+    background-color: #252525;
+    border-left: 4px solid transparent;
+    margin-bottom: 10px;
+    padding: 8px;
+    transition: all 0.3s ease;
+}
+
+.notification-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #3DBDA7;
+    float: left;
+}
+
+.notification-content {
+    overflow: hidden;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #A0A0A0;
+}
+
+.notification-info {
+    font-size: 12px;
+    color: #A0A0A0;
+    margin-bottom: 10px;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.notification-item:hover {
+    background-color: var(--background-color);
+    border-left-color: #3DBDA7;
+}
+
+.notification-actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.notifications-panel.show {
     display: block;
 }
 
@@ -1968,7 +2070,7 @@ body {
     grid-column: 1 / -1;
 }
 
-.friend-level, .friend-registered {
+.friend-level {
     font-size: 14px;
     color: #A0A0A0;
 }
