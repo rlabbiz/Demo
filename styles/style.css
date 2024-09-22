@@ -1674,6 +1674,8 @@ body {
     transition: background-color 0.3s;
     font-size: 14px;
     margin-bottom: 30px;
+    display: inline-block;
+
 }
 
 .account-setting .avatar-selection {
@@ -1792,4 +1794,8 @@ body {
 
 .modal-content p {
     margin: 10px auto;
+}
+
+.account-setting .avatar-selection .active {
+    border: 3px solid #3DBDA7;
 }

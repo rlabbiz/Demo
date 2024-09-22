@@ -156,6 +156,51 @@ export function setUpEvent() {
             urlHandler();
         })
     }
+
+    const saveChangeButton = document.querySelector('.account-setting .save-btn');
+    const passwordModal = document.querySelector('#passwordModal');
+
+    if (saveChangeButton) {
+        saveChangeButton.addEventListener('click', function () {
+            passwordModal.style.display = 'block';
+        })
+    }
+
+    const passwordModalClose = document.querySelector('#passwordModal span');
+    const passwordModalCancel = document.querySelector('#passwordModal .save-btn:last-child');
+
+    if (passwordModalClose) {
+        passwordModalClose.addEventListener('click', function () {
+            passwordModal.style.display = 'none';
+        })
+    }
+
+    if (passwordModalCancel) {
+        passwordModalCancel.addEventListener('click', function () {
+            passwordModal.style.display = 'none';
+        })
+    }
+
+    const avatarSelector = document.querySelectorAll('.account-setting .avatar-selection img');
+
+    if (avatarSelector) {
+        avatarSelector.forEach(selector => {
+            selector.addEventListener('click', function (e) {
+                avatarSelector.forEach(selector => {
+                    selector.classList.remove('active');
+                })
+                selector.classList.add('active');
+                const target = e.target;
+                if (target.tagName === 'IMG') {
+                    const profilePic = document.querySelector('.account-setting .profile-pic');
+                    profilePic.src = target.src;
+                }
+            })
+        })
+    }
+
+
+
 }
 
 window.onload = setUpEvent;
