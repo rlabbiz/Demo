@@ -2307,3 +2307,58 @@ body {
 .stat-box:hover {
     box-shadow: 0 6px 25px rgba(61, 189, 167, 0.3);
 }
+
+.match-history {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.match-history h2 {
+    color: var(--primary-color);
+    font-size: 24px;
+    margin-top: 0;
+    text-shadow: 0 0 10px rgba(61, 189, 167, 0.5);
+    margin-bottom: 20px;
+}
+
+.match-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.match-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.match-item:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 25px rgba(61, 189, 167, 0.3);
+}
+
+.match-result {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.win {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+.loss {
+    background-color: #FF6B6B;
+    color: var(--bg-color);
+}
