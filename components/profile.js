@@ -73,6 +73,39 @@ export function profileContent() {
                     </div>
                 </div>
             </div>
+            <div class="achievements" w-tid="65">
+                <h2 w-tid="66">Achievements</h2>
+                <div class="achievement-grid" w-tid="67">
+                    <div class="achievement-item" w-tid="68">
+                        <div class="achievement-icon" w-tid="69">🏆</div>
+                        <div class="achievement-info" w-tid="70">
+                            <h3 w-tid="71">Tournament Champion</h3>
+                            <p w-tid="72">Win a major PingPongMasters tournament</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item" w-tid="73">
+                        <div class="achievement-icon" w-tid="74">🔥</div>
+                        <div class="achievement-info" w-tid="75">
+                            <h3 w-tid="76">On Fire</h3>
+                            <p w-tid="77">Win 10 matches in a row</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item" w-tid="78">
+                        <div class="achievement-icon" w-tid="79">🎯</div>
+                        <div class="achievement-info" w-tid="80">
+                            <h3 w-tid="81">Precision Master</h3>
+                            <p w-tid="82">Achieve 95% serve accuracy in 50 matches</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item" w-tid="83">
+                        <div class="achievement-icon" w-tid="84">⚡</div>
+                        <div class="achievement-info" w-tid="85">
+                            <h3 w-tid="86">Speed Demon</h3>
+                            <p w-tid="87">Win a match in under 5 minutes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     `)
 }
