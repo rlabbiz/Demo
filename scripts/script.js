@@ -225,6 +225,14 @@ export function setUpEvent() {
         })
     }
 
+    const profileButton = document.querySelector('.header .header-menu .profile-link');
+    if (profileButton) {
+        profileButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/profile');
+            urlHandler();
+        })
+    }
 
 
 }
