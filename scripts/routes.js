@@ -3,7 +3,7 @@ import { gameComponent } from './components.js';
 import { gameStartingComponent } from './components.js';
 import { gameTournamentComponent, tournamentScript } from '../components/tournament.js';
 import { gameAiComponent } from './components.js';
-import { gameScript } from './game.js';
+import { gameScriptAi } from './game.js';
 import { gameSettingScript } from './game.js';
 import { gameSettingComponent } from './components.js';
 import { homeComponent } from './components.js';
@@ -44,7 +44,7 @@ export function urlHandler() {
         case '/ai':
             site.innerHTML = gameAiComponent();
             site.classList = 'site';
-            gameScript();
+            gameScriptAi();
             break;
         case '/game_setting':
             site.innerHTML = gameSettingComponent();

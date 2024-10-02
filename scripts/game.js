@@ -1,5 +1,5 @@
 // select canvas 
-export function gameScript() {
+export function gameScriptAi() {
     const canvas = document.querySelector('#pong')
 
     const context = canvas.getContext('2d')
