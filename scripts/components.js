@@ -408,6 +408,8 @@ export function gameStartingComponent() {
 export function gameAiComponent() {
     return (`
         <div class="game-container">
+            <div id="countdown">5</div>
+            <div id="game-cover"></div>
             <i class="fas fa-times"></i>
             <div class="player-field">
                 <img src="images/profile.png" alt="">

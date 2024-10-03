@@ -5,7 +5,7 @@ import { urlHandler } from "./routes.js";
 function event(e){
     const profileLink = document.querySelector('.header .header-profile-link');
     const profileMenu = document.querySelector('.header .header-menu');
-    if (e.target !== profileLink) {
+    if (profileLink && e.target !== profileLink) {
         profileMenu.classList.remove('active-menu');
     }
 }
@@ -219,7 +219,7 @@ export function setUpEvent() {
 
     if (closeByBody){
         closeByBody.addEventListener('click', function(e) {
-            if (e.target !== notificationLink) {
+            if (notificationLink && e.target !== notificationLink) {
                 notificationMenu.classList.remove('show');
             }
         })
