@@ -234,7 +234,6 @@ export function setUpEvent() {
         })
     }
 
-
 }
 
 window.onload = setUpEvent;

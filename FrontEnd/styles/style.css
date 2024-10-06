@@ -766,59 +766,93 @@ body {
 
 
 /* game starting  */
-.classic-game {
-    width: 100%;
-    height: 100%;
+
+
+.game-waiting-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    height: 100vh;
 }
 
-.classic-game h2 {
-    background: linear-gradient(to right, #8A51FF 0%, #533199 50%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin: 100px 0;
-}
-
-.classic-game a {
-    margin-top: 50px;
-    padding: 10px 20px;
-    border: 1px solid var(--primary-color);
-    border-radius: 20px;
-}
-
-.classic-game .waiting {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.classic-game .waiting .waiting__player {
-    margin: 0 100px;
-}
-
-.classic-game .waiting .waiting__player .image-cover { 
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid var(--primary-color);
-}
-
-.classic-game .waiting .waiting__player .image-cover img {
-    width: 100%;
-    height: 100%;
-}
-
-.classic-game .waiting .waiting__player h4 {
+.game-waiting {
     text-align: center;
-    margin-top: 20px;
+    background: #2A2B30;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
 }
 
+.game-waiting h1 {
+    color: #3DBDA7;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.game-waiting .players {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.game-waiting .players .player {
+    text-align: center;
+}
+
+.game-waiting .player-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #3DBDA7;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.game-waiting .player-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    animation: scaleAnimate 0.5s infinite;
+}
+
+@keyframes scaleAnimate {
+    0% {
+        transform: scale(0.99);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+    
+}
+
+.game-waiting .player-name {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4ECDB7;
+}
+
+.game-waiting .vs {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff6b6b;
+}
+
+.game-waiting .waiting {
+    font-size: 1.2rem;
+    color: #5EDDC7;
+    margin-top: 2rem;
+}
+
+/* game component style sheet */
 .tournament-component {
     width: 100%;
     height: 100%;
