@@ -23,5 +23,46 @@ export function gameStartingComponent() {
 }
 
 export function gameStartingComponentScript() {
-    
+    // define game variables
+    const userInfo = {
+        id: 1,
+        name: 'Alex',
+        avatar: 'avatar1.webp'
+    }
+
+    // start connection to the server
+    const ws = new WebSocket('ws://localhost:1212/ws/game/');
+
+    ws.onopen = function () {}
+
+    // receive message from the server
+    ws.onmessage = function (event) {
+        const message = JSON.parse(event.data);
+        handleMessages(message);
+    }
+
+    // handle disconnection
+    ws.onclose = function () {
+        ws.close();
+    }
+
+    // handle messages from the server
+    function handleMessages(message) {
+        console.log(message);
+        console.log('is called');
+        if (message.type == 'channel_name') {
+            ws.send(JSON.stringify({
+                type: 'join',
+                channel: message.channel_name,
+                user: userInfo
+            }))
+        } else if (message.type == 'game_start') {
+            console.log('game start');
+            launchGame(message);
+        }
+    }
+
+    function launchGame(message) {
+        
+    }
 }
