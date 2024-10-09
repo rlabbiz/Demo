@@ -1,9 +1,10 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
+games = []
+
 class GameConsumer(AsyncWebsocketConsumer):
     users = []
-    games = []
 
     async def connect(self):
         await self.accept()
@@ -48,11 +49,10 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def launchGame(self, gameName):
         print('Game is starting ' + gameName)
 
-        for game in self.games:
+        for game in games:
             if game['name'] == gameName:
                 await self.channel_layer.group_add(gameName, game['users'][0])
                 await self.channel_layer.group_add(gameName, game['users'][1])
-                print('message is sent to all group members')
                 firstUser = None
                 secondUser = None
                 for user in self.users:
@@ -64,10 +64,12 @@ class GameConsumer(AsyncWebsocketConsumer):
                     'type': 'game_start',
                     'message': {
                         'firstUser': firstUser,
-                        'secondUser': secondUser
+                        'secondUser': secondUser,
+                        'roomName': gameName
                     }
                 })
-                return 
+
+                return
 
     async def game_start(self, event):
         message = event['message']
@@ -94,7 +96,7 @@ class GameConsumer(AsyncWebsocketConsumer):
                 break
         
         # join user to the game
-        for game in self.games:
+        for game in games:
             if game['free'] == True:
                 # check first one is still connected
                 for user in self.users:
@@ -107,7 +109,7 @@ class GameConsumer(AsyncWebsocketConsumer):
                         return
 
         # create new game
-        self.games.append({'users': [self.channel_name], 'free': True, 'name': ''})
+        games.append({'users': [self.channel_name], 'free': True, 'name': ''})
     
     # function to handle user messages
     async def handleMessage(self, message):
@@ -116,4 +118,46 @@ class GameConsumer(AsyncWebsocketConsumer):
         if messageType == 'join':
             await self.handleJoin(message)
     
+class PlayConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_group_name = 'play_%s' % self.room_name
+
+        # Join room group
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        # Leave room group
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+
+    # Receive message from WebSocket
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
+
+        # Send message to room group
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'chat_message',
+                'message': message
+            }
+        )
+
+    # Receive message from room group
+    async def chat_message(self, event):
+        message = event['message']
+
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            'message': message
+        }))
 
