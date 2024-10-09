@@ -82,7 +82,7 @@ export function gameStartingComponentScript() {
         userImage.style = "animation: fadeOut 1s ease-in-out;";
         userName.innerHTML = user.name;
         
-        setInterval(() => {
+        setTimeout(() => {
             history.pushState(null, null, 'play');
             urlHandler();
         }, 5000)
