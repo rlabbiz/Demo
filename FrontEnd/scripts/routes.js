@@ -15,7 +15,6 @@ import { firstModeComponent, secondModeComponent, tournamentModesScript } from '
 import { accountSettingComponent } from '../components/accountSetting.js';
 import { friendsComponent } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
-import { playOnlineScript } from '../components/play.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
