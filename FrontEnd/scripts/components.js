@@ -382,32 +382,12 @@ export function gameContent() {
     `)
 }
 
-export function gameStartingComponent() {
-    return (`
-        <div class="classic-game">
-            <h2>Wait for other player</h2>
-            <div class="waiting">
-                <div class="waiting__player">
-                    <div class="image-cover">
-                        <img src="images/profile.png" alt="">
-                    </div>
-                    <h4>Rlabbiz</h4>
-                </div>
-                <div class="waiting__player">
-                    <div class="image-cover">
-                        <!-- <img src="images/profile.png" alt=""> -->
-                    </div>
-                    <h4>waiting...</h4>
-                </div>
-            </div>
-            <a href="#">Cancel</a>
-        </div>    
-    `)
-}
 
 export function gameAiComponent() {
     return (`
         <div class="game-container">
+            <div id="countdown">5</div>
+            <div id="game-cover"></div>
             <i class="fas fa-times"></i>
             <div class="player-field">
                 <img src="images/profile.png" alt="">

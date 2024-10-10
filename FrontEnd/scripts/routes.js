@@ -1,9 +1,9 @@
 import { setUpEvent } from './script.js';
 import { gameComponent } from './components.js';
-import { gameStartingComponent } from './components.js';
+import { gameStartingComponent, gameStartingComponentScript } from '../components/gameWaiting.js';
 import { gameTournamentComponent, tournamentScript } from '../components/tournament.js';
 import { gameAiComponent } from './components.js';
-import { gameScript } from './game.js';
+import { gameScriptAi } from './game.js';
 import { gameSettingScript } from './game.js';
 import { gameSettingComponent } from './components.js';
 import { homeComponent } from './components.js';
@@ -15,6 +15,7 @@ import { firstModeComponent, secondModeComponent, tournamentModesScript } from '
 import { accountSettingComponent } from '../components/accountSetting.js';
 import { friendsComponent } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
+import { playOnlineScript } from '../components/play.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
@@ -35,6 +36,7 @@ export function urlHandler() {
         case '/game_starting':
             site.innerHTML = gameStartingComponent();
             site.classList = 'site';
+            gameStartingComponentScript();
             break;
         case '/tournament':
             site.innerHTML = gameTournamentComponent();
@@ -44,7 +46,13 @@ export function urlHandler() {
         case '/ai':
             site.innerHTML = gameAiComponent();
             site.classList = 'site';
-            gameScript();
+            gameScriptAi();
+            break;
+        case '/play':
+            site.innerHTML = gameAiComponent();
+            site.classList = 'site';
+            playOnlineScript();
+            gameScriptAi();
             break;
         case '/game_setting':
             site.innerHTML = gameSettingComponent();
