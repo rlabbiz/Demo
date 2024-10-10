@@ -1,4 +1,5 @@
 import json
+import random
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 games = []
@@ -55,11 +56,17 @@ class GameConsumer(AsyncWebsocketConsumer):
                 await self.channel_layer.group_add(gameName, game['users'][1])
                 firstUser = None
                 secondUser = None
+                direction = random.choice(['left', 'right'])
                 for user in self.users:
                     if game['users'][0] in user:
                         firstUser = user[game['users'][0]]['userInfo']
+                        firstUser['direction'] = direction
                     elif game['users'][1] in user:
                         secondUser = user[game['users'][1]]['userInfo']
+                        if direction == 'left':
+                            secondUser['direction'] = 'right'
+                        else:
+                            secondUser['direction'] = 'left'
                 await self.send_group_message(gameName, {
                     'type': 'game_start',
                     'message': {
