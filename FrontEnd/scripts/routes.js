@@ -48,12 +48,6 @@ export function urlHandler() {
             site.classList = 'site';
             gameScriptAi();
             break;
-        case '/play':
-            site.innerHTML = gameAiComponent();
-            site.classList = 'site';
-            playOnlineScript();
-            gameScriptAi();
-            break;
         case '/game_setting':
             site.innerHTML = gameSettingComponent();
             site.classList = 'site game-setting-layout';
