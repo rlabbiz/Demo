@@ -1,4 +1,5 @@
-import { urlHandler } from "../scripts/routes";
+import { gameAiComponent } from "../scripts/components";
+import { gameScriptAi } from "../scripts/game";
 
 export function gameStartingComponent() {
     return (`
@@ -83,9 +84,10 @@ export function gameStartingComponentScript() {
         userName.innerHTML = user.name;
         
         setTimeout(() => {
-            history.pushState(null, null, 'play');
-            urlHandler();
-        }, 5000)
+            document.querySelector('.site').innerHTML = gameAiComponent();
+            gameScriptAi()
+            
+        }, 5000) 
     }
 }
 
