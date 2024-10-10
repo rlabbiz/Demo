@@ -1,6 +1,3 @@
-import { gameAiComponent } from "../scripts/components";
-import { gameScriptAi } from "../scripts/game";
-
 
 const userInfo = {
     id: null,
@@ -35,6 +32,25 @@ export function gameStartingComponent() {
                     </div>
                 </div>
                 <div class="waiting" w-tid="16">Searching For Opponent!</div>
+            </div>
+        </div>
+    `)
+}
+
+export function gameOnlineComponent(RightUser, LeftUser) {
+    return (`
+        <div class="game-container">
+            <div id="countdown">5</div>
+            <div id="game-cover"></div>
+            <i class="fas fa-times"></i>
+            <div class="player-field">
+                <img src="../images/avatars/${LeftUser.avatar}" alt="">
+                <h4>${LeftUser.name}</h4>
+            </div>
+            <canvas id="pong" width="950px" height="500"></canvas>
+            <div class="player-field">
+                <img src="../images/avatars/${RightUser.avatar}" alt="">
+                <h4>${RightUser.name}</h4>
             </div>
         </div>
     `)
@@ -102,7 +118,10 @@ export function gameStartingComponentScript() {
         userInfo['direction'] = user.direction;
         
         setTimeout(() => {
-            document.querySelector('.site').innerHTML = gameAiComponent();
+            if (message.message.firstUser.direction == 'left')
+                document.querySelector('.site').innerHTML = gameOnlineComponent(message.message.firstUser, message.message.secondUser);
+            else
+                document.querySelector('.site').innerHTML = gameOnlineComponent(message.message.secondUser, message.message.firstUser);
             gameOnlineScript();
         }, 5000) 
     }
@@ -134,7 +153,7 @@ export function gameOnlineScript() {
     let PLAYER_HEIGHT = 150
 
     // AI
-    let AI_LEVEL = 0.1
+    let AI_LEVEL = 0.05
 
     // Net
     let NET_SPACE = 5
