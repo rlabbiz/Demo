@@ -159,10 +159,8 @@ class GameConsumer(AsyncWebsocketConsumer):
         elif (messageType == 'move_player'):
             if (message['direction'] == 'left'):
                 self.LeftPlayer['y'] = message['y']
-                print(self.LeftPlayer['y'])
             else:
                 self.RightPlayer['y'] = message['y']
-                print(self.RightPlayer['y'])
             self.update(message)
     
     
