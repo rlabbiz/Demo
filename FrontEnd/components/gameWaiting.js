@@ -40,8 +40,8 @@ export function gameStartingComponent() {
 export function gameOnlineComponent(RightUser, LeftUser) {
     return (`
         <div class="game-container">
-            <div id="countdown">5</div>
-            <div id="game-cover"></div>
+            <div id="countdown" style="display: none;">5</div>
+            <div id="game-cover" style="display: none;"></div>
             <i class="fas fa-times"></i>
             <div class="player-field">
                 <img src="../images/avatars/${LeftUser.avatar}" alt="">
@@ -107,7 +107,6 @@ export function gameStartingComponentScript() {
 
     // handle messages from the server
     function handleMessages(message) {
-        console.log(message);
         if (message.type == 'channel_name') {
             ws.send(JSON.stringify({
                 type: 'join',
@@ -122,6 +121,8 @@ export function gameStartingComponentScript() {
             }, 10000)
         } else if (message.type == 'game_update') {
             updateGame(message);
+        } else if (message.type == 'reset_game') {
+
         }
     }
 
@@ -269,10 +270,16 @@ export function gameStartingComponentScript() {
         
             canvas.addEventListener('mousemove', (e) => {
                 let rect = canvas.getBoundingClientRect()
-                if (userInfo.direction == 'left')
-                    LeftPlayer.y = e.clientY - rect.top - RightPlayer.height / 2
-                else
-                    RightPlayer.y = e.clientY - rect.top - RightPlayer.height / 2
+                ws.send(JSON.stringify({
+                    'type': 'move_player',
+                    'roomName': data.roomName,
+                    'direction': userInfo.direction,
+                    'y': e.clientY - rect.top - LeftPlayer.height / 2
+                }))
+                // if (userInfo.direction == 'left')
+                //     LeftPlayer.y = e.clientY - rect.top - RightPlayer.height / 2
+                // else
+                //     RightPlayer.y = e.clientY - rect.top - RightPlayer.height / 2
             })
         
             // move player using keyboard
@@ -284,106 +291,8 @@ export function gameStartingComponentScript() {
                 }
             })
         
-            function update() {
-                // Calculate the new position
-                let newX = Ball.x + Ball.velocityX * Ball.speed;
-                let newY = Ball.y + Ball.velocityY * Ball.speed;
-        
-                // Check for collisions with top and bottom walls
-                if (newY + Ball.radius > canvas.height || newY - Ball.radius < 0) {
-                    Ball.velocityY = -Ball.velocityY;
-                    newY = Ball.y + Ball.velocityY * Ball.speed; // Recalculate newY
-                }
-        
-                // Determine which player to check for collision
-                let player = (newX < canvas.width / 2) ? LeftPlayer : RightPlayer; 
-        
-                // Check for collision with player paddle
-                if (lineRect(Ball.x, Ball.y, newX, newY, 
-                            player.x, player.y, player.width, player.height)) {
-                    
-                    // Collision occurred, handle it
-                    let collidePoint = Ball.y - (player.y + player.height / 2);
-                    collidePoint = collidePoint / (player.height / 2);
-        
-                    let angleRad = collidePoint * Math.PI / 4;
-        
-                    let direction = (Ball.x < canvas.width / 2) ? 1 : -1;
-        
-                    Ball.velocityX = direction * Ball.speed * Math.cos(angleRad) * 8;
-                    Ball.velocityY = Ball.speed * Math.sin(angleRad) * 8;
-                    
-                    if (Ball.speed < BALL_MAX_SPEED)
-                        Ball.speed += SPEED;
-        
-                    // Update newX and newY based on new velocities
-                    newX = Ball.x + Ball.velocityX;
-                    newY = Ball.y + Ball.velocityY;
-                }
-        
-                // Update ball position
-                Ball.x = newX;
-                Ball.y = newY;
-        
-                // Check for scoring
-                if (Ball.x - Ball.radius < 0) {
-                    if (RightPlayer.score == WINNING_SCORE - 1) {
-                        RightPlayer.score++;
-                        gameOver('Right Player');
-                        return ;
-                    }
-                    RightPlayer.score++;
-                    resetBall();
-                } else if (Ball.x + Ball.radius > canvas.width) {
-                    if (LeftPlayer.score == WINNING_SCORE - 1) {
-                        LeftPlayer.score++;
-                        gameOver('Left Player');
-                        return ;
-                    }
-                    LeftPlayer.score++;
-                    resetBall();
-                }
-            }
-        
-            // game over
-            function gameOver(winner) {
-                FPS = 0;
-                console.log(`Game Over! ${winner} Wins!`);
-                Ball.speed = 0;
-                clearInterval(gameInterval);
-            }
-        
-            // Helper function to check line-rectangle collision
-            function lineRect(x1, y1, x2, y2, rx, ry, rw, rh) {
-                // Check if the line has hit any of the rectangle's sides
-                // uses the Line/Line function below
-                let left =   lineLine(x1,y1,x2,y2, rx,ry,rx,ry+rh);
-                let right =  lineLine(x1,y1,x2,y2, rx+rw,ry,rx+rw,ry+rh);
-                let top =    lineLine(x1,y1,x2,y2, rx,ry,rx+rw,ry);
-                let bottom = lineLine(x1,y1,x2,y2, rx,ry+rh,rx+rw,ry+rh);
-        
-                // If ANY of the above are true, the line has hit the rectangle
-                if (left || right || top || bottom) {
-                    return true;
-                }
-                return false;
-            }
-        
-            // Helper function to check line-line collision
-            function lineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
-                // Calculate the direction of the lines
-                let uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-                let uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-        
-                // If uA and uB are between 0-1, lines are colliding
-                if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
-                    return true;
-                }
-                return false;
-            }
         
             function game(){
-                // update()
                 ws.send(JSON.stringify({
                     type: 'game_update',
                     roomName: data.roomName,
@@ -401,45 +310,9 @@ export function gameStartingComponentScript() {
             function startGame() {
                 Ball.speed = BALL_START_SPEED
                 gameInterval = setInterval(game, 1000 / FPS)
-            }  
-        
-            function coolCountdown(callback, seconds) {
-                const countdownElement = document.getElementById('countdown');
-                const gameCover = document.getElementById('game-cover');
-                let count = seconds;
-        
-                countdownElement.style.display = 'block';
-                gameCover.style.display = 'block';
-        
-                function updateCount() {
-                    countdownElement.textContent = count;
-                    countdownElement.classList.add('highlight');
-        
-                    setTimeout(() => {
-                        countdownElement.classList.remove('highlight');
-                    }, 250);
-        
-                    if (count > 0) {
-                        count--;
-                        setTimeout(updateCount, 1000);
-                    } else {
-                        countdownElement.textContent = 'Go!';
-                        setTimeout(() => {
-                            countdownElement.style.display = 'none';
-                        }, 1000);
-                        countdownElement.style.display = 'none';
-                        gameCover.style.display = 'none';
-                        callback();
-                    }
-                }
-        
-                updateCount();
             }
-        
-            coolCountdown(startGame, 5);
-        
-        }        
-
+            startGame();
+        }
     }
 }
 

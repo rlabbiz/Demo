@@ -8,6 +8,37 @@ games = []
 
 class GameConsumer(AsyncWebsocketConsumer):
     users = []
+    Ball = []   
+
+    Ball = {
+    'x': 950 / 2,
+    'y': 500 / 2,
+    'radius': 10,
+    'speed': 1.00,
+    'velocityX': 5,
+    'velocityY': 5,
+    'color': '#EEEEEE'
+    }
+
+    # Define the LeftPlayer object
+    LeftPlayer = {
+        'x': 0,
+        'y': 500 / 2 - 150 / 2,
+        'width': 15,
+        'height': 150,
+        'color': 'red',
+        'score': 0
+    }
+
+    # Define the RightPlayer object
+    RightPlayer = {
+        'x': 950 - 15,
+        'y': 500 / 2 - 150 / 2,
+        'width': 15,
+        'height': 150,
+        'color': 'red',
+        'score': 0
+    }
 
     async def connect(self):
         await self.accept()
@@ -125,6 +156,14 @@ class GameConsumer(AsyncWebsocketConsumer):
             await self.handleJoin(message)
         elif (messageType == 'game_update'):
             await self.update(message)
+        elif (messageType == 'move_player'):
+            if (message['direction'] == 'left'):
+                self.LeftPlayer['y'] = message['y']
+                print(self.LeftPlayer['y'])
+            else:
+                self.RightPlayer['y'] = message['y']
+                print(self.RightPlayer['y'])
+            self.update(message)
     
     
     canvas = {
@@ -133,77 +172,81 @@ class GameConsumer(AsyncWebsocketConsumer):
     }
 
     SPEED = 0.02
-    BALL_START_SPEED = 5
+    BALL_START_SPEED = 1
     WINNING_SCORE = 5
     BALL_MAX_SPEED = 10
 
     async def update(self, message):
-        Ball = message['ball']
-        LeftPlayer = message['leftPlayer']
-        RightPlayer = message['rightPlayer']
-        print(Ball)
-        print(LeftPlayer)
-        print(RightPlayer)
 
         # Calculate the new position
-        new_x = Ball['x'] + Ball['velocityX'] * Ball['speed']
-        new_y = Ball['y'] + Ball['velocityY'] * Ball['speed']
+        new_x = self.Ball['x'] + self.Ball['velocityX'] * self.Ball['speed']
+        new_y = self.Ball['y'] + self.Ball['velocityY'] * self.Ball['speed']
 
         # Check for collisions with top and bottom walls
-        if new_y + Ball['radius'] > self.canvas['height'] or new_y - Ball['radius'] < 0:
-            Ball['velocityY'] = -Ball['velocityY']
-            new_y = Ball['y'] + Ball['velocityY'] * Ball['speed']  # Recalculate new_y
+        if new_y + self.Ball['radius'] > self.canvas['height'] or new_y - self.Ball['radius'] < 0:
+            self.Ball['velocityY'] = -self.Ball['velocityY']
+            new_y = self.Ball['y'] + self.Ball['velocityY'] * self.Ball['speed']  # Recalculate new_y
 
         # Determine which player to check for collision
-        player = LeftPlayer if new_x < self.canvas['width'] / 2 else RightPlayer
+        player = self.LeftPlayer if new_x < self.canvas['width'] / 2 else self.RightPlayer
 
         # Check for collision with player paddle
-        if self.line_rect(Ball['x'], Ball['y'], new_x, new_y, 
+        if self.line_rect(self.Ball['x'], self.Ball['y'], new_x, new_y, 
                     player['x'], player['y'], player['width'], player['height']):
             
             # Collision occurred, handle it
-            collide_point = Ball['y'] - (player['y'] + player['height'] / 2)
+            collide_point = self.Ball['y'] - (player['y'] + player['height'] / 2)
             collide_point = collide_point / (player['height'] / 2)
 
             angle_rad = collide_point * math.pi / 4
 
-            direction = 1 if Ball['x'] < self.canvas['width'] / 2 else -1
+            direction = 1 if self.Ball['x'] < self.canvas['width'] / 2 else -1
 
-            Ball['velocityX'] = direction * Ball['speed'] * math.cos(angle_rad) * 8
-            Ball['velocityY'] = Ball['speed'] * math.sin(angle_rad) * 8
+            self.Ball['velocityX'] = direction * self.Ball['speed'] * math.cos(angle_rad) * 8
+            self.Ball['velocityY'] = self.Ball['speed'] * math.sin(angle_rad) * 8
             
-            if Ball['speed'] < self.BALL_MAX_SPEED:
-                Ball['speed'] += self.SPEED
+            if self.Ball['speed'] < self.BALL_MAX_SPEED:
+                self.Ball['speed'] += self.SPEED
 
             # Update new_x and new_y based on new velocities
-            new_x = Ball['x'] + Ball['velocityX']
-            new_y = Ball['y'] + Ball['velocityY']
+            new_x = self.Ball['x'] + self.Ball['velocityX']
+            new_y = self.Ball['y'] + self.Ball['velocityY']
 
         # Update ball position
-        Ball['x'] = new_x
-        Ball['y'] = new_y
+        self.Ball['x'] = new_x
+        self.Ball['y'] = new_y
 
         # Check for scoring
-        if Ball['x'] - Ball['radius'] < 0:
-            if RightPlayer['score'] == self.WINNING_SCORE - 1:
-                RightPlayer['score'] += 1
-                # game_over('Right Player')
-                # return
-            RightPlayer['score'] += 1
-            self.reset_ball(Ball)
-        elif Ball['x'] + Ball['radius'] > self.canvas['width']:
-            if LeftPlayer['score'] == self.WINNING_SCORE - 1:
-                LeftPlayer['score'] += 1
-                # game_over('Left Player')
-                # return
-            LeftPlayer['score'] += 1
-            self.reset_ball(Ball)
+        if self.Ball['x'] - self.Ball['radius'] < 0:
+            if self.RightPlayer['score'] == self.WINNING_SCORE - 1:
+                self.RightPlayer['score'] += 1
+                await self.send_group_message(message['roomName'], {
+                    'type': 'game_over',
+                    'message': {
+                        'winner': 'Right Player'
+                    }
+                })
+                return
+            self.RightPlayer['score'] += 1
+            await self.reset_ball(self.Ball, message)
+        elif self.Ball['x'] + self.Ball['radius'] > self.canvas['width']:
+            if self.LeftPlayer['score'] == self.WINNING_SCORE - 1:
+                self.LeftPlayer['score'] += 1
+                await self.send_group_message(message['roomName'], {
+                    'type': 'game_over',
+                    'message': {
+                        'winner': 'Left Player'
+                    }
+                })
+                return
+            self.LeftPlayer['score'] += 1
+            await self.reset_ball(self.Ball, message)
         await self.send_group_message(message['roomName'], {
             'type': 'game_update',
             'message': {
-                'ball': Ball,
-                'leftPlayer': LeftPlayer,
-                'rightPlayer': RightPlayer
+                'ball': self.Ball,
+                'leftPlayer': self.LeftPlayer,
+                'rightPlayer': self.RightPlayer
             }
         })
 
@@ -236,14 +279,21 @@ class GameConsumer(AsyncWebsocketConsumer):
             return True
         return False
     
-    def reset_ball(self, Ball):
-
+    async def reset_ball(self, Ball, message):
         Ball['x'] = self.canvas['width'] / 2
         Ball['y'] = self.canvas['height'] / 2
         Ball['velocityX'] = -Ball['velocityX']
         Ball['velocityY'] = -Ball['velocityY']
         Ball['speed'] = 0
 
-        time.sleep(3)
+        # time.sleep(3)
         Ball['speed'] = self.BALL_START_SPEED
+        await self.send_group_message(message['roomName'], {
+            'type': 'game_update',
+            'message': {
+                'ball': Ball,
+                'leftPlayer': message['leftPlayer'],
+                'rightPlayer': message['rightPlayer']
+            }
+        })
 
