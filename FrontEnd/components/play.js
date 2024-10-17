@@ -1,13 +1,11 @@
 import { userInfo, data } from "./gameWaiting"
+import { urlHandler } from "../scripts/routes";
 
 export function gameOnlineComponent() {
     let LeftUser, RightUser;
 
-    if (data.roomName == '' || userInfo.otherPlayer == null) {
-        console.log('roomName or otherPlayer is null');
+    if (data.roomName == '' || userInfo.otherPlayer == null) 
         return;
-    } else 
-        console.log('your roomName is: ' + data.roomName);
 
     if (userInfo.otherPlayer.direction == 'left') {
         LeftUser = userInfo.otherPlayer;
@@ -35,7 +33,41 @@ export function gameOnlineComponent() {
     `);
 }
 
+let Ball = {
+    x: 950 / 2,
+    y: 500 / 2,
+    radius: 10,
+    speed: 1.00,
+    velocityX: 5,
+    velocityY: 5,
+    color: '#EEEEEE'
+}
+
+let LeftPlayer = {
+    x: 0,
+    y: 500 / 2 - 150 / 2,
+    width: 15,
+    height: 150,
+    color: 'red',
+    score: 0,
+}
+
+let RightPlayer = {
+    x: 950 - 15,
+    y: 500 / 2 - 150 / 2,
+    width: 15,
+    height: 150,
+    color: 'red',
+    score: 0,
+}
+
 export function gameOnlineScript() {
+
+    if (data.roomName == '' || userInfo.otherPlayer == null) {
+        history.pushState(null, null, '/game_starting');
+        urlHandler();
+        return ;
+    }
 
     const ws = new WebSocket('ws://localhost:8000/ws/play/')
 
