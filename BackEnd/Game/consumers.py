@@ -332,7 +332,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
         'score': 0
     }
 
-    SPEED = 0.02
+    SPEED = 0
     BALL_START_SPEED = 1
     WINNING_SCORE = 5
     BALL_MAX_SPEED = 10
@@ -371,13 +371,39 @@ class PlayConsumer(AsyncWebsocketConsumer):
         pass
 
     async def receive(self, text_data):
-        pass
+        message = json.loads(text_data)
+        if message['type'] == 'move_player':
+            if message['direction'] == 'left':
+                self.LeftPlayer['y'] = message['y']
+            else:
+                self.RightPlayer['y'] = message['y']
+            # await self.send_group_message(self.room_name, {
+            #     'type': 'game_update',
+            #     'ball': self.Ball,
+            #     'leftPlayer': self.LeftPlayer,
+            #     'rightPlayer': self.RightPlayer
+            # })
+
+    async def send_group_message(self, gameName, message):
+        await self.channel_layer.group_send(
+            gameName,
+            {
+                'type': 'chat_message',
+                'message': message
+            }
+        )
+    
+    async def chat_message(self, event):
+        message = event['message']
+        await self.send(text_data=json.dumps(message))
+
     
     def run_async_game(self):
         asyncio.run(self.game())
     
     async def game(self):
         while self.gameStatus:
+            await asyncio.sleep(0.008)
             # Calculate the new position
             new_x = self.Ball['x'] + self.Ball['velocityX'] * self.Ball['speed']
             new_y = self.Ball['y'] + self.Ball['velocityY'] * self.Ball['speed']
@@ -429,6 +455,9 @@ class PlayConsumer(AsyncWebsocketConsumer):
                     return
                 self.RightPlayer['score'] += 1
                 # await self.reset_ball(self.Ball, message)
+                self.Ball['speed'] = self.BALL_START_SPEED
+                self.Ball['velocityX'] = -self.Ball['velocityX']
+                self.Ball['velocityY'] = -self.Ball['velocityY']
             elif self.Ball['x'] + self.Ball['radius'] > self.canvas['width']:
                 if self.LeftPlayer['score'] == self.WINNING_SCORE - 1:
                     self.LeftPlayer['score'] += 1
@@ -441,14 +470,15 @@ class PlayConsumer(AsyncWebsocketConsumer):
                     return
                 self.LeftPlayer['score'] += 1
                 # await self.reset_ball(self.Ball, message)
-            # await self.send_group_message(message['roomName'], {
-            #     'type': 'game_update',
-            #     'message': {
-            #         'ball': self.Ball,
-            #         'leftPlayer': self.LeftPlayer,
-            #         'rightPlayer': self.RightPlayer
-            #     }
-            # })
+                self.Ball['speed'] = self.BALL_START_SPEED
+                self.Ball['velocityX'] = -self.Ball['velocityX']
+                self.Ball['velocityY'] = -self.Ball['velocityY']
+            await self.send_group_message(self.room_name, {
+                'type': 'game_update',
+                'ball': self.Ball,
+                'leftPlayer': self.LeftPlayer,
+                'rightPlayer': self.RightPlayer
+            })
 
     def line_rect(self, x1, y1, x2, y2, rx, ry, rw, rh):
         # Check if the line has hit any of the rectangle's sides
