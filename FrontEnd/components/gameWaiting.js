@@ -1,3 +1,4 @@
+import { urlHandler } from "../scripts/routes";
 
 const userInfo = {
     id: null,
@@ -117,12 +118,15 @@ export function gameStartingComponentScript() {
             data.roomName = message.message.roomName;
             console.log(data.roomName);
             setTimeout(() => {
-                launchGame(message);
+                history.pushState(null, null, '/play');
+                urlHandler();
+
+                // launchGame(message);
             }, 10000)
         } else if (message.type == 'game_update') {
             updateGame(message);
         } else if (message.type == 'reset_game') {
-
+            
         }
     }
 
