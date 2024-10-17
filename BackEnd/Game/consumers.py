@@ -377,12 +377,8 @@ class PlayConsumer(AsyncWebsocketConsumer):
                 self.LeftPlayer['y'] = message['y']
             else:
                 self.RightPlayer['y'] = message['y']
-            # await self.send_group_message(self.room_name, {
-            #     'type': 'game_update',
-            #     'ball': self.Ball,
-            #     'leftPlayer': self.LeftPlayer,
-            #     'rightPlayer': self.RightPlayer
-            # })
+        elif message['type'] == 'game_update':
+            await self.game()
 
     async def send_group_message(self, gameName, message):
         await self.channel_layer.group_send(
@@ -402,8 +398,8 @@ class PlayConsumer(AsyncWebsocketConsumer):
         asyncio.run(self.game())
     
     async def game(self):
-        while self.gameStatus:
-            await asyncio.sleep(0.008)
+        # while self.gameStatus:
+            # await asyncio.sleep(0.008)
             # Calculate the new position
             new_x = self.Ball['x'] + self.Ball['velocityX'] * self.Ball['speed']
             new_y = self.Ball['y'] + self.Ball['velocityY'] * self.Ball['speed']

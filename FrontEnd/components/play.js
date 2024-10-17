@@ -211,10 +211,6 @@ export function gameOnlineScript() {
     function game(){
         ws.send(JSON.stringify({
             type: 'game_update',
-            roomName: data.roomName,
-            ball: Ball,
-            leftPlayer: LeftPlayer,
-            rightPlayer: RightPlayer
         }))
         render()
     }
@@ -227,5 +223,5 @@ export function gameOnlineScript() {
         Ball.speed = BALL_START_SPEED
         gameInterval = setInterval(game, 1000 / FPS)
     }
-    // startGame();
+    startGame();
 }
