@@ -1,9 +1,10 @@
 import { urlHandler } from "../scripts/routes";
 
-const userInfo = {
+export const userInfo = {
     id: null,
     name: null,
     avatar: null,
+    otherPlayer: null,
 }
 
 export function gameStartingComponent() {
@@ -33,25 +34,6 @@ export function gameStartingComponent() {
                     </div>
                 </div>
                 <div class="waiting" w-tid="16">Searching For Opponent!</div>
-            </div>
-        </div>
-    `)
-}
-
-export function gameOnlineComponent(RightUser, LeftUser) {
-    return (`
-        <div class="game-container">
-            <div id="countdown" style="display: none;">5</div>
-            <div id="game-cover" style="display: none;"></div>
-            <i class="fas fa-times"></i>
-            <div class="player-field">
-                <img src="../images/avatars/${LeftUser.avatar}" alt="">
-                <h4>${LeftUser.name}</h4>
-            </div>
-            <canvas id="pong" width="950px" height="500"></canvas>
-            <div class="player-field">
-                <img src="../images/avatars/${RightUser.avatar}" alt="">
-                <h4>${RightUser.name}</h4>
             </div>
         </div>
     `)
@@ -89,6 +71,8 @@ let RightPlayer = {
     score: 0,
 }
 
+export let user = null
+
 export function gameStartingComponentScript() {
     // start connection to the server
     const ws = new WebSocket('ws://localhost:1212/ws/game/');
@@ -123,10 +107,30 @@ export function gameStartingComponentScript() {
 
                 // launchGame(message);
             }, 10000)
+            setTimeout(() => {
+                const userImage = document.querySelector('.player-photo img');
+                const userName = document.querySelectorAll('.player-name')[1];
+                const waitingMsg = document.querySelector('.game-waiting-container .waiting');
+                
+                if (message.message.firstUser.id != userInfo.id) 
+                    userInfo.otherPlayer = message.message.firstUser;
+                else
+                    userInfo.otherPlayer = message.message.secondUser;
+
+                waitingMsg.innerHTML = 'Opponent found! Get ready to play!';
+                userImage.src = `../images/avatars/${userInfo.otherPlayer.avatar}`;
+                userImage.style = "animation: fadeOut 1s ease-in-out;";
+                userName.innerHTML = userInfo.otherPlayer.name;
+
+                if (userInfo.otherPlayer.direction == 'left') 
+                    userInfo.direction = 'right';
+                else
+                    userInfo.direction = 'left';
+            }, 5000)
         } else if (message.type == 'game_update') {
             updateGame(message);
         } else if (message.type == 'reset_game') {
-            
+
         }
     }
 
@@ -137,26 +141,7 @@ export function gameStartingComponentScript() {
     }
     
     function launchGame(message) {
-        // set user info 
-        let user = null
-        const userImage = document.querySelector('.player-photo img');
-        const userName = document.querySelectorAll('.player-name')[1];
-        const waitingMsg = document.querySelector('.game-waiting-container .waiting');
-
-        data.roomName = message.message.roomName;
-        
-        if (message.message.firstUser.id != userInfo.id) 
-            user = message.message.firstUser;
-        else
-            user = message.message.secondUser;
-
-        waitingMsg.innerHTML = 'Opponent found! Get ready to play!';
-        userImage.src = `../images/avatars/${user.avatar}`;
-        userImage.style = "animation: fadeOut 1s ease-in-out;";
-        userName.innerHTML = user.name;
-
-
-        userInfo['direction'] = user.direction;
+        // set user info
         
         setTimeout(() => {
             if (message.message.firstUser.direction == 'left')
@@ -280,10 +265,6 @@ export function gameStartingComponentScript() {
                     'direction': userInfo.direction,
                     'y': e.clientY - rect.top - LeftPlayer.height / 2
                 }))
-                // if (userInfo.direction == 'left')
-                //     LeftPlayer.y = e.clientY - rect.top - RightPlayer.height / 2
-                // else
-                //     RightPlayer.y = e.clientY - rect.top - RightPlayer.height / 2
             })
         
             // move player using keyboard

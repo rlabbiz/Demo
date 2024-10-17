@@ -15,6 +15,7 @@ import { firstModeComponent, secondModeComponent, tournamentModesScript } from '
 import { accountSettingComponent } from '../components/accountSetting.js';
 import { friendsComponent } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
+import { gameOnlineComponent, gameOnlineScript } from '../components/play.js';
 
 export function urlHandler() {
     const routeName = window.location.pathname;
@@ -86,6 +87,12 @@ export function urlHandler() {
         case '/profile':
             site.innerHTML = profileComponent();
             site.classList = 'site profile-layout';
+            break;
+
+        case '/play':
+            site.innerHTML = gameOnlineComponent();
+            site.classList = 'site gameComponent';
+            gameOnlineScript();
             break;
         
         default:
