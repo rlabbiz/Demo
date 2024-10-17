@@ -71,7 +71,22 @@ export function gameOnlineScript() {
     }
 
     const ws = new WebSocket('ws://localhost:1212/ws/play/' + data.roomName + '/');
-    
+
+    ws.onopen = function () {}
+
+    ws.onmessage = function (event) {
+        const message = JSON.parse(event.data);
+        if (message.type == 'game_update') {
+            Ball = message.ball;
+            LeftPlayer = message.leftPlayer;
+            RightPlayer = message.rightPlayer;
+            render();
+            console.log('game update');
+        }
+    }
+
+    ws.onclose = function () {}
+
     const canvas = document.querySelector('#pong')
 
     const context = canvas.getContext('2d')
@@ -212,5 +227,5 @@ export function gameOnlineScript() {
         Ball.speed = BALL_START_SPEED
         gameInterval = setInterval(game, 1000 / FPS)
     }
-    startGame();
+    // startGame();
 }
