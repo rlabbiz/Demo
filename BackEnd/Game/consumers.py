@@ -2,22 +2,26 @@ import json
 import math
 import random
 import time
+import asyncio
+import threading
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 games = []
 
+Games = {}
+
 class GameConsumer(AsyncWebsocketConsumer):
     users = []
-    Ball = []   
+    # Ball = []   
 
     Ball = {
-    'x': 950 / 2,
-    'y': 500 / 2,
-    'radius': 10,
-    'speed': 1.00,
-    'velocityX': 5,
-    'velocityY': 5,
-    'color': '#EEEEEE'
+        'x': 950 / 2,
+        'y': 500 / 2,
+        'radius': 10,
+        'speed': 1.00,
+        'velocityX': 5,
+        'velocityY': 5,
+        'color': '#EEEEEE'
     }
 
     # Define the LeftPlayer object
@@ -121,8 +125,6 @@ class GameConsumer(AsyncWebsocketConsumer):
         user1Id = game['users'][0].split('_')[1]
         return game['users'][0] + game['users'][1]
         
-
-
     # function to handle join players
     async def handleJoin(self, message):
         # set user info to user object
@@ -294,4 +296,189 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'rightPlayer': message['rightPlayer']
             }
         })
+
+class PlayConsumer(AsyncWebsocketConsumer):
+    canvas = {
+        'width': 950,
+        'height': 500
+    }
+    Ball = {
+        'x': 950 / 2,
+        'y': 500 / 2,
+        'radius': 10,
+        'speed': 1.00,
+        'velocityX': 5,
+        'velocityY': 5,
+        'color': '#EEEEEE'
+    }
+
+    # Define the LeftPlayer object
+    LeftPlayer = {
+        'x': 0,
+        'y': 500 / 2 - 150 / 2,
+        'width': 15,
+        'height': 150,
+        'color': 'red',
+        'score': 0
+    }
+
+    # Define the RightPlayer object
+    RightPlayer = {
+        'x': 950 - 15,
+        'y': 500 / 2 - 150 / 2,
+        'width': 15,
+        'height': 150,
+        'color': 'red',
+        'score': 0
+    }
+
+    SPEED = 0.02
+    BALL_START_SPEED = 1
+    WINNING_SCORE = 5
+    BALL_MAX_SPEED = 10
+
+    async def connect(self):
+        # get the roomName from the url
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
+
+        # add the channel name to the Games dictionary
+        if self.room_name not in Games:
+            Games[self.room_name] = [self.channel_name]
+        else:
+            Games[self.room_name].append(self.channel_name)
+
+        # add the channel to the group
+        await self.channel_layer.group_add(
+            self.room_name,
+            self.channel_name
+        )
+
+        # accept the connection
+        await self.accept()
+
+        # check if the room has 2 players, if so, then start the game function every 0.1 seconds without block the main thread
+        if len(Games[self.room_name]) == 2:
+            # set the game status to True, so the game function will run
+            self.gameStatus = True
+
+            # start the game function in a new thread
+            self.gameThread = threading.Thread(target=self.run_async_game)
+            self.gameThread.start()
+
+            
+        
+    async def disconnect(self, close_code):
+        pass
+
+    async def receive(self, text_data):
+        pass
+    
+    def run_async_game(self):
+        asyncio.run(self.game())
+    
+    async def game(self):
+        while self.gameStatus:
+            # Calculate the new position
+            new_x = self.Ball['x'] + self.Ball['velocityX'] * self.Ball['speed']
+            new_y = self.Ball['y'] + self.Ball['velocityY'] * self.Ball['speed']
+
+            # Check for collisions with top and bottom walls
+            if new_y + self.Ball['radius'] > self.canvas['height'] or new_y - self.Ball['radius'] < 0:
+                self.Ball['velocityY'] = -self.Ball['velocityY']
+                new_y = self.Ball['y'] + self.Ball['velocityY'] * self.Ball['speed']  # Recalculate new_y
+
+            # Determine which player to check for collision
+            player = self.LeftPlayer if new_x < self.canvas['width'] / 2 else self.RightPlayer
+
+            # Check for collision with player paddle
+            if self.line_rect(self.Ball['x'], self.Ball['y'], new_x, new_y, 
+                        player['x'], player['y'], player['width'], player['height']):
+                
+                # Collision occurred, handle it
+                collide_point = self.Ball['y'] - (player['y'] + player['height'] / 2)
+                collide_point = collide_point / (player['height'] / 2)
+
+                angle_rad = collide_point * math.pi / 4
+
+                direction = 1 if self.Ball['x'] < self.canvas['width'] / 2 else -1
+
+                self.Ball['velocityX'] = direction * self.Ball['speed'] * math.cos(angle_rad) * 8
+                self.Ball['velocityY'] = self.Ball['speed'] * math.sin(angle_rad) * 8
+                
+                if self.Ball['speed'] < self.BALL_MAX_SPEED:
+                    self.Ball['speed'] += self.SPEED
+
+                # Update new_x and new_y based on new velocities
+                new_x = self.Ball['x'] + self.Ball['velocityX']
+                new_y = self.Ball['y'] + self.Ball['velocityY']
+
+            # Update ball position
+            self.Ball['x'] = new_x
+            self.Ball['y'] = new_y
+
+            # Check for scoring
+            if self.Ball['x'] - self.Ball['radius'] < 0:
+                if self.RightPlayer['score'] == self.WINNING_SCORE - 1:
+                    self.RightPlayer['score'] += 1
+                    # await self.send_group_message(message['roomName'], {
+                    #     'type': 'game_over',
+                    #     'message': {
+                    #         'winner': 'Right Player'
+                    #     }
+                    # })
+                    return
+                self.RightPlayer['score'] += 1
+                # await self.reset_ball(self.Ball, message)
+            elif self.Ball['x'] + self.Ball['radius'] > self.canvas['width']:
+                if self.LeftPlayer['score'] == self.WINNING_SCORE - 1:
+                    self.LeftPlayer['score'] += 1
+                    # await self.send_group_message(message['roomName'], {
+                    #     'type': 'game_over',
+                    #     'message': {
+                    #         'winner': 'Left Player'
+                    #     }
+                    # })
+                    return
+                self.LeftPlayer['score'] += 1
+                # await self.reset_ball(self.Ball, message)
+            # await self.send_group_message(message['roomName'], {
+            #     'type': 'game_update',
+            #     'message': {
+            #         'ball': self.Ball,
+            #         'leftPlayer': self.LeftPlayer,
+            #         'rightPlayer': self.RightPlayer
+            #     }
+            # })
+
+    def line_rect(self, x1, y1, x2, y2, rx, ry, rw, rh):
+        # Check if the line has hit any of the rectangle's sides
+        # uses the line_line function (assumed to be defined elsewhere)
+        left = self.line_line(x1, y1, x2, y2, rx, ry, rx, ry + rh)
+        right = self.line_line(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh)
+        top = self.line_line(x1, y1, x2, y2, rx, ry, rx + rw, ry)
+        bottom = self.line_line(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh)
+
+        # If ANY of the above are true, the line has hit the rectangle
+        if left or right or top or bottom:
+            return True
+        return False
+        
+    def line_line(self, x1, y1, x2, y2, x3, y3, x4, y4):
+        # Calculate the direction of the lines
+        denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
+        
+        # Check if lines are parallel (denominator == 0)
+        if denominator == 0:
+            return False
+        
+        u_a = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator
+        u_b = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator
+
+        # If uA and uB are between 0-1, lines are colliding
+        if 0 <= u_a <= 1 and 0 <= u_b <= 1:
+            return True
+        return False
+    
+        
+
 

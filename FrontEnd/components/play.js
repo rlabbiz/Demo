@@ -1,9 +1,38 @@
 import { userInfo, data } from "./gameWaiting"
 import { urlHandler } from "../scripts/routes";
 
+let Ball = {
+    x: 950 / 2,
+    y: 500 / 2,
+    radius: 10,
+    speed: 1.00,
+    velocityX: 5,
+    velocityY: 5,
+    color: '#EEEEEE'
+}
+
+let LeftPlayer = {
+    x: 0,
+    y: 500 / 2 - 150 / 2,
+    width: 15,
+    height: 150,
+    color: 'red',
+    score: 0,
+}
+
+let RightPlayer = {
+    x: 950 - 15,
+    y: 500 / 2 - 150 / 2,
+    width: 15,
+    height: 150,
+    color: 'red',
+    score: 0,
+}
+
 export function gameOnlineComponent() {
     let LeftUser, RightUser;
 
+    // check if no room name, then exit this function
     if (data.roomName == '' || userInfo.otherPlayer == null) 
         return;
 
@@ -33,34 +62,6 @@ export function gameOnlineComponent() {
     `);
 }
 
-let Ball = {
-    x: 950 / 2,
-    y: 500 / 2,
-    radius: 10,
-    speed: 1.00,
-    velocityX: 5,
-    velocityY: 5,
-    color: '#EEEEEE'
-}
-
-let LeftPlayer = {
-    x: 0,
-    y: 500 / 2 - 150 / 2,
-    width: 15,
-    height: 150,
-    color: 'red',
-    score: 0,
-}
-
-let RightPlayer = {
-    x: 950 - 15,
-    y: 500 / 2 - 150 / 2,
-    width: 15,
-    height: 150,
-    color: 'red',
-    score: 0,
-}
-
 export function gameOnlineScript() {
 
     if (data.roomName == '' || userInfo.otherPlayer == null) {
@@ -69,12 +70,8 @@ export function gameOnlineScript() {
         return ;
     }
 
-    const ws = new WebSocket('ws://localhost:8000/ws/play/')
-
-    ws.send(JSON.stringify({
-        type: 'game_start',
-        roomName: data.roomName
-    }))
+    const ws = new WebSocket('ws://localhost:1212/ws/play/' + data.roomName + '/');
+    
     const canvas = document.querySelector('#pong')
 
     const context = canvas.getContext('2d')
