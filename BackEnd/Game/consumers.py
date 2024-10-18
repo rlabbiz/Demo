@@ -301,7 +301,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
         'width': 950,
         'height': 500
     }
-    Ball = {
+    BallTmp = {
         'x': 950 / 2,
         'y': 500 / 2,
         'radius': 10,
@@ -312,7 +312,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
     }
 
     # Define the LeftPlayer object
-    LeftPlayer = {
+    LeftPlayerTmp = {
         'x': 0,
         'y': 500 / 2 - 150 / 2,
         'width': 15,
@@ -322,7 +322,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
     }
 
     # Define the RightPlayer object
-    RightPlayer = {
+    RightPlayerTmp = {
         'x': 950 - 15,
         'y': 500 / 2 - 150 / 2,
         'width': 15,
@@ -361,7 +361,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
             self.gameStatus = True
 
             # start the game function in a new thread
-            Games[self.room_name].append({'Ball': self.Ball, 'LeftPlayer': self.LeftPlayer, 'RightPlayer': self.RightPlayer})
+            Games[self.room_name].append({'Ball': self.BallTmp, 'LeftPlayer': self.LeftPlayerTmp, 'RightPlayer': self.RightPlayerTmp})
             # print Games ball and players
             print(Games[self.room_name][-1]['Ball'])
             await self.send_group_message(self.room_name, {
@@ -375,9 +375,9 @@ class PlayConsumer(AsyncWebsocketConsumer):
         message = json.loads(text_data)
         if message['type'] == 'move_player':
             if message['direction'] == 'left':
-                self.LeftPlayer['y'] = message['y']
+                Games[message['roomName']][-1]['LeftPlayer']['y'] = message['y']
             else:
-                self.RightPlayer['y'] = message['y']
+                Games[message['roomName']][-1]['RightPlayer']['y'] = message['y']
         elif message['type'] == 'game_update':
             await self.game(message['roomName'])
 
@@ -399,14 +399,9 @@ class PlayConsumer(AsyncWebsocketConsumer):
         asyncio.run(self.game())
     
     async def game(self, roomName):
-        print(roomName)
         Ball = Games[roomName][-1]['Ball']
         LeftPlayer = Games[roomName][-1]['LeftPlayer']
         RightPlayer = Games[roomName][-1]['RightPlayer']
-
-        # print(Ball)
-        # print(LeftPlayer)
-        # print(RightPlayer)
         
         new_x = Ball['x'] + Ball['velocityX'] * Ball['speed']
         new_y = Ball['y'] + Ball['velocityY'] * Ball['speed']
@@ -482,9 +477,9 @@ class PlayConsumer(AsyncWebsocketConsumer):
             'leftPlayer': LeftPlayer,
             'rightPlayer': RightPlayer
         })
-        Games[roomName][-1]['Ball'] = Ball
-        Games[roomName][-1]['LeftPlayer'] = LeftPlayer
-        Games[roomName][-1]['RightPlayer'] = RightPlayer
+        # Games[roomName][-1]['Ball'] = Ball
+        # Games[roomName][-1]['LeftPlayer'] = LeftPlayer
+        # Games[roomName][-1]['RightPlayer'] = RightPlayer
 
     def line_rect(self, x1, y1, x2, y2, rx, ry, rw, rh):
         # Check if the line has hit any of the rectangle's sides

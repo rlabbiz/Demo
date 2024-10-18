@@ -72,6 +72,8 @@ export function gameOnlineScript() {
 
     const ws = new WebSocket('ws://localhost:1212/ws/play/' + data.roomName + '/');
 
+    let gameStarted = false
+
     ws.onopen = function () {}
 
     ws.onmessage = function (event) {
@@ -82,6 +84,7 @@ export function gameOnlineScript() {
             RightPlayer = message.rightPlayer;
             render();
         } else if (message.type == 'game_start') {
+            gameStarted = true;
             startGame();
         }
     }
@@ -91,8 +94,6 @@ export function gameOnlineScript() {
     const canvas = document.querySelector('#pong')
 
     const context = canvas.getContext('2d')
-
-    let gameStarted = false
 
     let playerDir = 'right'
 
@@ -190,6 +191,8 @@ export function gameOnlineScript() {
     }
 
     canvas.addEventListener('mousemove', (e) => {
+        if (!gameStarted)
+            return ;
         let rect = canvas.getBoundingClientRect()
         ws.send(JSON.stringify({
             'type': 'move_player',
