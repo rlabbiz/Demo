@@ -81,7 +81,8 @@ export function gameOnlineScript() {
             LeftPlayer = message.leftPlayer;
             RightPlayer = message.rightPlayer;
             render();
-            console.log('game update');
+        } else if (message.type == 'game_start') {
+            startGame();
         }
     }
 
@@ -207,21 +208,20 @@ export function gameOnlineScript() {
         }
     })
 
-
     function game(){
         ws.send(JSON.stringify({
             type: 'game_update',
+            roomName: data.roomName,
         }))
         render()
     }
 
     render()
 
-
     // start game
     function startGame() {
         Ball.speed = BALL_START_SPEED
         gameInterval = setInterval(game, 1000 / FPS)
     }
-    startGame();
+
 }
