@@ -90,6 +90,15 @@ export function gameOnlineScript() {
             console.log(message);
         } else if (message.type == 'reset_ball') {
             resetBall(message)
+        } else if (message.type == 'game_over') {
+            clearInterval(gameInterval);
+            if (message.winner == userInfo.direction) {
+                alert('You win')
+            } else {
+                alert('You lose')
+            }
+            history.pushState(null, null, '/game_starting');
+            urlHandler();
         }
     }
 
@@ -190,7 +199,7 @@ export function gameOnlineScript() {
         Ball.y = 500 / 2;
         Ball.velocityX = -Ball.velocityX;
         Ball.velocityY = -Ball.velocityY;
-        
+
         setTimeout(render, 100)
         setTimeout(startGame, 3000);
     }

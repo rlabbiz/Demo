@@ -440,9 +440,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
                 RightPlayer['score'] += 1
                 await self.send_group_message(message['roomName'], {
                     'type': 'game_over',
-                    'message': {
-                        'winner': 'Right Player'
-                    }
+                    'winner': 'right'
                 })
                 return
             RightPlayer['score'] += 1
@@ -456,12 +454,10 @@ class PlayConsumer(AsyncWebsocketConsumer):
         elif Ball['x'] + Ball['radius'] > self.canvas['width']:
             if LeftPlayer['score'] == self.WINNING_SCORE - 1:
                 LeftPlayer['score'] += 1
-                # await self.send_group_message(message['roomName'], {
-                #     'type': 'game_over',
-                #     'message': {
-                #         'winner': 'Left Player'
-                #     }
-                # })
+                await self.send_group_message(message['roomName'], {
+                    'type': 'game_over',
+                    'winner': 'left'
+                })
                 return
             LeftPlayer['score'] += 1
             await self.send_group_message(message['roomName'], {
