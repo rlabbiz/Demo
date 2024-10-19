@@ -10,8 +10,7 @@ games = []
 Games = {}
 
 class GameConsumer(AsyncWebsocketConsumer):
-    users = []
-    # Ball = []   
+    users = [] 
 
     Ball = {
         'x': 950 / 2,
@@ -379,7 +378,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
             else:
                 Games[message['roomName']][-1]['RightPlayer']['y'] = message['y']
         elif message['type'] == 'game_update':
-            await self.game(message['roomName'])
+            await self.game(message)
 
     async def send_group_message(self, gameName, message):
         await self.channel_layer.group_send(
@@ -398,10 +397,13 @@ class PlayConsumer(AsyncWebsocketConsumer):
     def run_async_game(self):
         asyncio.run(self.game())
     
-    async def game(self, roomName):
-        Ball = Games[roomName][-1]['Ball']
-        LeftPlayer = Games[roomName][-1]['LeftPlayer']
-        RightPlayer = Games[roomName][-1]['RightPlayer']
+    async def game(self, message):
+        Ball = message['ball']
+        LeftPlayer = message['leftPlayer']
+        RightPlayer = message['rightPlayer']
+        # Ball = Games[roomName][-1]['Ball']
+        # LeftPlayer = Games[roomName][-1]['LeftPlayer']
+        # RightPlayer = Games[roomName][-1]['RightPlayer']
         
         new_x = Ball['x'] + Ball['velocityX'] * Ball['speed']
         new_y = Ball['y'] + Ball['velocityY'] * Ball['speed']
@@ -471,7 +473,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
             Ball['speed'] = self.BALL_START_SPEED
             Ball['velocityX'] = -Ball['velocityX']
             Ball['velocityY'] = -Ball['velocityY']
-        await self.send_group_message(roomName, {
+        await self.send_group_message(message['roomName'], {
             'type': 'game_update',
             'ball': Ball,
             'leftPlayer': LeftPlayer,

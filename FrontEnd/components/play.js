@@ -86,6 +86,8 @@ export function gameOnlineScript() {
         } else if (message.type == 'game_start') {
             gameStarted = true;
             startGame();
+        } else if (message.type == 'send_message') {
+            console.log(message);
         }
     }
 
@@ -194,12 +196,17 @@ export function gameOnlineScript() {
         if (!gameStarted)
             return ;
         let rect = canvas.getBoundingClientRect()
-        ws.send(JSON.stringify({
-            'type': 'move_player',
-            'roomName': data.roomName,
-            'direction': userInfo.direction,
-            'y': e.clientY - rect.top - LeftPlayer.height / 2
-        }))
+        if (userInfo.direction == 'left') {
+            LeftPlayer.y = e.clientY - rect.top - LeftPlayer.height / 2
+        } else {
+            RightPlayer.y = e.clientY - rect.top - RightPlayer.height / 2
+        }
+        // ws.send(JSON.stringify({
+        //     'type': 'move_player',
+        //     'roomName': data.roomName,
+        //     'direction': userInfo.direction,
+        //     'y': e.clientY - rect.top - LeftPlayer.height / 2
+        // }))
     })
 
     // move player using keyboard
@@ -215,6 +222,9 @@ export function gameOnlineScript() {
         ws.send(JSON.stringify({
             type: 'game_update',
             roomName: data.roomName,
+            ball: Ball,
+            leftPlayer: LeftPlayer,
+            rightPlayer: RightPlayer
         }))
         render()
     }
