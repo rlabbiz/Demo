@@ -372,12 +372,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         message = json.loads(text_data)
-        if message['type'] == 'move_player':
-            if message['direction'] == 'left':
-                Games[message['roomName']][-1]['LeftPlayer']['y'] = message['y']
-            else:
-                Games[message['roomName']][-1]['RightPlayer']['y'] = message['y']
-        elif message['type'] == 'game_update':
+        if message['type'] == 'game_update':
             await self.game(message)
 
     async def send_group_message(self, gameName, message):

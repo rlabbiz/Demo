@@ -201,12 +201,6 @@ export function gameOnlineScript() {
         } else {
             RightPlayer.y = e.clientY - rect.top - RightPlayer.height / 2
         }
-        // ws.send(JSON.stringify({
-        //     'type': 'move_player',
-        //     'roomName': data.roomName,
-        //     'direction': userInfo.direction,
-        //     'y': e.clientY - rect.top - LeftPlayer.height / 2
-        // }))
     })
 
     // move player using keyboard
