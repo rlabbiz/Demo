@@ -88,6 +88,11 @@ export function gameOnlineScript() {
             startGame();
         } else if (message.type == 'send_message') {
             console.log(message);
+        } else if (message.type == 'reset_ball') {
+            clearInterval(gameInterval);
+            resetBall()
+            // render();
+            // setTimeout(startGame, 3000);
         }
     }
 
@@ -133,9 +138,7 @@ export function gameOnlineScript() {
         color: '#201E43'
     }
 
-    
-
-        // Draw shapes and text
+    // Draw shapes and text
     function drawRect(x, y, width, height, color ){
         context.fillStyle = color
         context.fillRect(x, y, width, height)
@@ -181,14 +184,23 @@ export function gameOnlineScript() {
     }
 
     function resetBall() {
-        Ball.x = canvas.width / 2;
-        Ball.y = canvas.height / 2;
-        Ball.velocityX = -Ball.velocityX;
-        Ball.velocityY = -Ball.velocityY;
-        Ball.speed = 0;
-
+        // Ball.x = canvas.width / 2;
+        // Ball.y = canvas.height / 2;
+        // Ball.velocityX = -Ball.velocityX;
+        // Ball.velocityY = -Ball.velocityY;
+        // Ball.speed = 1;
+        Ball = {
+            x: 950 / 2,
+            y: 500 / 2,
+            radius: 10,
+            speed: 1.00,
+            velocityX: 5,
+            velocityY: 5,
+            color: '#EEEEEE'
+        }
+        render();
         setTimeout(() => {
-            Ball.speed = BALL_START_SPEED;
+            startGame();
         }, 3000);
     }
 
