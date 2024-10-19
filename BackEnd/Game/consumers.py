@@ -448,12 +448,11 @@ class PlayConsumer(AsyncWebsocketConsumer):
             RightPlayer['score'] += 1
             await self.send_group_message(message['roomName'], {
                 'type': 'reset_ball',
-                'message': {
-                    'ball': Ball,
-                    'leftPlayer': LeftPlayer,
-                    'rightPlayer': RightPlayer
-                }
+                'ball': Ball,
+                'leftPlayer': LeftPlayer,
+                'rightPlayer': RightPlayer
             })
+            return 
         elif Ball['x'] + Ball['radius'] > self.canvas['width']:
             if LeftPlayer['score'] == self.WINNING_SCORE - 1:
                 LeftPlayer['score'] += 1
@@ -465,19 +464,19 @@ class PlayConsumer(AsyncWebsocketConsumer):
                 # })
                 return
             LeftPlayer['score'] += 1
-            # await self.reset_ball(self.Ball, message)
-            Ball['speed'] = self.BALL_START_SPEED
-            Ball['velocityX'] = -Ball['velocityX']
-            Ball['velocityY'] = -Ball['velocityY']
+            await self.send_group_message(message['roomName'], {
+                'type': 'reset_ball',
+                'ball': Ball,
+                'leftPlayer': LeftPlayer,
+                'rightPlayer': RightPlayer
+            })
+            return
         await self.send_group_message(message['roomName'], {
             'type': 'game_update',
             'ball': Ball,
             'leftPlayer': LeftPlayer,
             'rightPlayer': RightPlayer
         })
-        # Games[roomName][-1]['Ball'] = Ball
-        # Games[roomName][-1]['LeftPlayer'] = LeftPlayer
-        # Games[roomName][-1]['RightPlayer'] = RightPlayer
 
     def line_rect(self, x1, y1, x2, y2, rx, ry, rw, rh):
         # Check if the line has hit any of the rectangle's sides

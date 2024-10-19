@@ -89,10 +89,7 @@ export function gameOnlineScript() {
         } else if (message.type == 'send_message') {
             console.log(message);
         } else if (message.type == 'reset_ball') {
-            clearInterval(gameInterval);
-            resetBall()
-            // render();
-            // setTimeout(startGame, 3000);
+            resetBall(message)
         }
     }
 
@@ -183,25 +180,19 @@ export function gameOnlineScript() {
 
     }
 
-    function resetBall() {
-        // Ball.x = canvas.width / 2;
-        // Ball.y = canvas.height / 2;
-        // Ball.velocityX = -Ball.velocityX;
-        // Ball.velocityY = -Ball.velocityY;
-        // Ball.speed = 1;
-        Ball = {
-            x: 950 / 2,
-            y: 500 / 2,
-            radius: 10,
-            speed: 1.00,
-            velocityX: 5,
-            velocityY: 5,
-            color: '#EEEEEE'
-        }
-        render();
-        setTimeout(() => {
-            startGame();
-        }, 3000);
+    function resetBall(message) {
+        clearInterval(gameInterval);
+        Ball = message.ball;
+        LeftPlayer = message.leftPlayer;
+        RightPlayer = message.rightPlayer;
+
+        Ball.x = 950 / 2;
+        Ball.y = 500 / 2;
+        Ball.velocityX = -Ball.velocityX;
+        Ball.velocityY = -Ball.velocityY;
+        
+        setTimeout(render, 100)
+        setTimeout(startGame, 3000);
     }
 
     canvas.addEventListener('mousemove', (e) => {
@@ -240,7 +231,7 @@ export function gameOnlineScript() {
     // start game
     function startGame() {
         Ball.speed = BALL_START_SPEED
+        console.log(Ball)
         gameInterval = setInterval(game, 1000 / FPS)
     }
-
 }
