@@ -45,13 +45,15 @@ export function gameOnlineComponent() {
     }
 
     return (`
-        <div class="popup" style="display: none;">
-            <div class="emoji">🏆</div>
-            <h2>Victory Achieved!</h2>
-            <p>Congratulations on your spectacular win! What's your next move?</p>
-            <div class="buttons">
-                <button class="new-match">New Match</button>
-                <button class="exit" >Exit</button>
+        <div class="game-over-popup">
+            <div class="popup">
+                <div class="emoji">🏆</div>
+                <h2>Victory Achieved!</h2>
+                <p>Congratulations on your spectacular win! What's your next move?</p>
+                <div class="buttons">
+                    <button class="new-match">New Match</button>
+                    <button class="exit" >Exit</button>
+                </div>
             </div>
         </div>
         <div class="game-container">
@@ -101,14 +103,47 @@ export function gameOnlineScript() {
         } else if (message.type == 'game_over') {
             clearInterval(gameInterval);
             if (message.winner == userInfo.direction) {
-                document.querySelector('.popup').style.display = 'flex';
+                document.querySelector('.game-over-popup').style.display = 'block';
                 createConfetti()
             } else {
-                document.querySelector('.popup').style.display = 'flex';
-                createConfetti()
+                document.querySelector('.game-over-popup').style.display = 'block';
+                document.querySelector('.emoji').innerText = '😢';
+                document.querySelector('h2').innerText = 'Defeat!';
+                document.querySelector('p').innerText = `Don't be disheartened! Every loss is a chance to learn and grow. Ready for another challenge?`;
             }
-            history.pushState(null, null, '/game_starting');
-            urlHandler();
+            document.querySelector('.exit').addEventListener('click', () => {
+                history.pushState(null, null, '/game');
+                urlHandler();
+            })
+            document.querySelector('.new-match').addEventListener('click', () => {
+                Ball = {
+                    x: 950 / 2,
+                    y: 500 / 2,
+                    radius: 10,
+                    speed: 1.00,
+                    velocityX: 5,
+                    velocityY: 5,
+                    color: '#EEEEEE'
+                }
+                LeftPlayer = {
+                    x: 0,
+                    y: 500 / 2 - 150 / 2,
+                    width: 15,
+                    height: 150,
+                    color: 'red',
+                    score: 0,
+                }
+                RightPlayer = {
+                    x: 950 - 15,
+                    y: 500 / 2 - 150 / 2,
+                    width: 15,
+                    height: 150,
+                    color: 'red',
+                    score: 0,
+                }
+                history.pushState(null, null, '/game_starting');
+                urlHandler();
+            })
         }
     }
 
@@ -254,7 +289,6 @@ export function gameOnlineScript() {
         gameInterval = setInterval(game, 1000 / FPS)
     }
 }
-
 
 function createConfetti() {
     const confettiColors = ['#f1c40f', '#e67e22', '#e74c3c', '#2ecc71', '#3498db'];
