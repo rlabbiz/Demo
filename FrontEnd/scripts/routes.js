@@ -91,7 +91,7 @@ export function urlHandler() {
 
         case '/play':
             site.innerHTML = gameOnlineComponent();
-            site.classList = 'site gameComponent';
+            site.classList = 'site';
             gameOnlineScript();
             break;
         

@@ -45,6 +45,15 @@ export function gameOnlineComponent() {
     }
 
     return (`
+        <div class="popup" style="display: none;">
+            <div class="emoji">🏆</div>
+            <h2>Victory Achieved!</h2>
+            <p>Congratulations on your spectacular win! What's your next move?</p>
+            <div class="buttons">
+                <button class="new-match">New Match</button>
+                <button class="exit" >Exit</button>
+            </div>
+        </div>
         <div class="game-container">
             <div id="countdown" style="display: none;">5</div>
             <div id="game-cover" style="display: none;"></div>
@@ -63,7 +72,6 @@ export function gameOnlineComponent() {
 }
 
 export function gameOnlineScript() {
-
     if (data.roomName == '' || userInfo.otherPlayer == null) {
         history.pushState(null, null, '/game_starting');
         urlHandler();
@@ -93,9 +101,11 @@ export function gameOnlineScript() {
         } else if (message.type == 'game_over') {
             clearInterval(gameInterval);
             if (message.winner == userInfo.direction) {
-                alert('You win')
+                document.querySelector('.popup').style.display = 'flex';
+                createConfetti()
             } else {
-                alert('You lose')
+                document.querySelector('.popup').style.display = 'flex';
+                createConfetti()
             }
             history.pushState(null, null, '/game_starting');
             urlHandler();
@@ -242,5 +252,27 @@ export function gameOnlineScript() {
         Ball.speed = BALL_START_SPEED
         console.log(Ball)
         gameInterval = setInterval(game, 1000 / FPS)
+    }
+}
+
+
+function createConfetti() {
+    const confettiColors = ['#f1c40f', '#e67e22', '#e74c3c', '#2ecc71', '#3498db'];
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+        confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        document.body.appendChild(confetti);
+
+        confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(100vh) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+        ], {
+            duration: Math.random() * 3000 + 2000,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            fill: 'forwards'
+        }).onfinish = () => confetti.remove();
     }
 }
