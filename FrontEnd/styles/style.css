@@ -1196,6 +1196,45 @@ body {
     position: relative;
 }
 
+.form .form-inputs form .gender-items {
+    width: 100%;
+    margin: 10px 0;
+    padding: 0 5px;
+}
+
+.form .form-inputs form .gender-items span {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.form .form-inputs form .gender-items .radio {
+    display: flex;
+    align-items: center;
+}
+
+.form .form-inputs form .gender-items input {
+    margin-right: 10px;
+    all: unset;
+    width: 20px;
+    height: 20px;
+    background-color: var(--input-color);
+    border-radius: 50%;
+    padding: 1px;
+    display: inline-block;
+    &:checked {
+        background-color: var(--primary-color);
+    }
+    &:not(:checked):hover {
+        background-color: #333;
+    }
+}
+
+.form .form-inputs form .gender-items label {
+    margin-right: 10px;
+    color: rgb(133, 133, 133);
+    padding: 0 5px;
+}
+
 .form .form-inputs form .filed label {
     position: absolute;
     top: 50%;

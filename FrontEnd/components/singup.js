@@ -35,6 +35,15 @@ export function SingUpComponent() {
                         <label for="re-password"><i class="fas fa-check"></i></label>
                         <input type="password" id="re-password" name="re-password" placeholder="Confirm Password" required />
                     </div>
+                    <div class="gender-items">
+                        <span>Gender</span>
+                        <div class="radio">
+                            <input type="radio" name="gender" id="gender-male" />
+                            <label for="gender-male">Male</label>
+                            <input type="radio" name="gender" id="gender-female" />
+                            <label for="gender-female">Female</label>
+                        </div>
+                    </div>
 
                     <button type="submit-singup">Sign Up <i class="fas fa-user-plus"></i></button>
                 </form>
