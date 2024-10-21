@@ -31,11 +31,15 @@ export function accountSettingContent() {
             <div class="setting-group">
                 <div class="setting-item">
                     <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" value="John">
+                    <input type="text" id="firstName" name="firstName" value="rida">
                 </div>
                 <div class="setting-item">
                     <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" value="Doe">
+                    <input type="text" id="lastName" name="lastName" value="labbiz">
+                </div>
+                <div class="setting-item">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" value="rlabbiz">
                 </div>
             </div>
 
@@ -49,21 +53,21 @@ export function accountSettingContent() {
                     <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password">
                 </div>
             </div>
-            <button type="button" class="save-btn" onclick="showPasswordModal()">Save Changes</button>
+            <button type="button" class="save-btn" onclick="">Change Password</button>
         </div>
 
         <div id="passwordModal" class="modal">
             <div class="modal-content">
                 <span class="close">×</span>
-                <h2>Confirm Changes</h2>
-                <p>Please enter your current password to save changes:</p>
+                <h2>Change Password</h2>
                 <input type="password" id="currentPassword" placeholder="Current Password" style="display: block; margin: 20px auto;">
+                <input type="password" id="newPassword" placeholder="New Password" style="display: block; margin: 20px auto;">
+                <input type="password" id="reNewPassword" placeholder="Repeat New Password" style="display: block; margin: 20px auto;">
                 <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                    <button class="save-btn" onclick="saveChanges()" style="margin-top: 0;">Confirm</button>
+                    <button class="save-btn" style="margin-top: 0;">Confirm</button>
                     <button class="save-btn" style="margin-top: 0; background-color: #FF6B6B;">Cancel</button>
                 </div>
             </div>
         </div>
-        
     `)
 }
