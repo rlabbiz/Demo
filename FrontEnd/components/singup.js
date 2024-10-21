@@ -35,26 +35,7 @@ export function SingUpComponent() {
                         <label for="re-password"><i class="fas fa-check"></i></label>
                         <input type="password" id="re-password" name="re-password" placeholder="Confirm Password" required />
                     </div>
-
-                    <div class="chose-avatar">
-                        <div class="title">
-                            <h4>Choose an Avatar: </h4>
-                        </div>
-                        <div class="avatars">
-                            <img class="active" src="../images/avatars/avatar1.webp" alt="avatar1" />
-                            <img src="../images/avatars/avatar2.webp" alt="avatar1" />
-                            <img src="../images/avatars/avatar3.webp" alt="avatar1" />
-                            <img src="../images/avatars/avatar4.webp" alt="avatar1" />
-                        </div>
-                    </div>
-
-                    <div class="upload-avatar">
-                        <div class="title">
-                            <h4><label for="avatar-input">Or upload your own: </label></h4>
-                        </div>
-                        <label class="choose-label" for="avatar-input">Choose File</i></label>
-                        <input type="file" id="avatar-input" name="avatar" accept="image/*" />
-                    </div>
+                    
                     <button type="submit-singup">Sign Up <i class="fas fa-user-plus"></i></button>
                 </form>
                 <div class="form-social">

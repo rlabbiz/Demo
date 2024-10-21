@@ -153,26 +153,12 @@ export function gameOnlineScript() {
 
     const context = canvas.getContext('2d')
 
-    let playerDir = 'right'
-
     // define game constants
     // game
-    let WINNING_SCORE = 3
-    let FPS = 60
+    let FPS = 100
 
     // ball
     let BALL_START_SPEED = 1
-    let BALL_MAX_SPEED = 8
-    let SPEED = .02
-    let BALL_RADIUS = 10
-
-    // player 
-    let PLAYER_COLOR = '#508C9B'
-    let PLAYER_WIDTH = 15
-    let PLAYER_HEIGHT = 150
-
-    // AI
-    let AI_LEVEL = 0.05
 
     // Net
     let NET_SPACE = 5
@@ -265,7 +251,7 @@ export function gameOnlineScript() {
         if (e.key === 'ArrowUp' || e.key == 'w') {
             LeftPlayer.y -= 30
         } else if (e.key === 'ArrowDown' || e.key == 's') {
-            LeftPlayer.y += 30  
+            LeftPlayer.y += 30
         }
     })
 

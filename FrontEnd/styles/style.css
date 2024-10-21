@@ -1221,50 +1221,6 @@ body {
     background-color: #2b4b9d;
 }
 
-.chose-avatar {
-    margin-top: 20px;
-    width: 100%;
-    height: 100%;
-    text-align: left;
-}
-
-.chose-avatar img {
-    margin-top: 5px;
-    width: 50px;
-    display: inline-block;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 20px;
-    cursor: pointer;
-}
-.chose-avatar img.active {
-    border: 2px solid var(--primary-color);
-}
-
-.upload-avatar {
-    margin-top: 20px;
-    width: 100%;
-    height: 100%;
-    text-align: left;
-}
-
-.upload-avatar input {
-    display: none;
-}
-
-.upload-avatar .choose-label {
-    margin: 10px 0;
-    padding: 10px 20px;
-    text-align: center;
-    border-radius: 20px;
-    background-color: var(--input-color);
-    display: block;
-    border: none;
-    width: 400px;
-    cursor: pointer;
-    color: rgb(133, 133, 133);
-}
-
 .form-social .line {
     display: flex;
     align-items: center;
