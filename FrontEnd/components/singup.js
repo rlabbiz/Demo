@@ -35,7 +35,7 @@ export function SingUpComponent() {
                         <label for="re-password"><i class="fas fa-check"></i></label>
                         <input type="password" id="re-password" name="re-password" placeholder="Confirm Password" required />
                     </div>
-                    
+
                     <button type="submit-singup">Sign Up <i class="fas fa-user-plus"></i></button>
                 </form>
                 <div class="form-social">
@@ -44,7 +44,6 @@ export function SingUpComponent() {
                     </div>
                     <div class="social-icons">
                         <a class="intra" href="#"><img src="../images/42intra.png" alt="42 intra" /> Sing up with 42 Intra</a>
-                        <a class="github" href="#"><img src="../images/github.png" alt="42 intra" /> Sing up with Github</a>
                     </div>
                 </div>
             </div>
