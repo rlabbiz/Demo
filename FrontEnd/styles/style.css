@@ -1190,6 +1190,32 @@ body {
     width: 400px;
     height: 40px;
     color: white;
+    outline: none;
+    transition: all .5s ease-in-out;
+    &:focus {
+        background-color: #333;
+        transform: scale(1.05);
+        padding: 0 10px 0 30px;
+        border: 0.5px solid var(--primary-color);
+    }
+}
+
+/* add password view eye icon to right of input */
+.form .form-inputs form .password span i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: white;
+    &:hover {
+        color: var(--primary-color);
+    }
+}
+
+
+.form .form-inputs form .filed input:focus ~ label {
+    color: green;   
 }
 
 .form .form-inputs form .filed {

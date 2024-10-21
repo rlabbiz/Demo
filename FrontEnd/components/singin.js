@@ -12,12 +12,13 @@ export function SingInComponent() {
               <div class="form-inputs">
                   <form action="/singup" method="post">
                       <div class="filed">
-                          <label for="userName"><i class="far fa-user-circle"></i></label>
-                          <input type="text" id="userName" name="userName" placeholder="Username" required />
+                            <label for="userName"><i class="far fa-user-circle"></i></label>
+                            <input type="text" id="userName" name="userName" placeholder="Username" required />
                       </div>
-                      <div class="filed">
-                          <label for="password"><i class="fas fa-lock"></i></label>
-                          <input type="password" id="password" name="password" placeholder="Password" required />
+                      <div class="filed password">
+                            <label for="password"><i class="fas fa-lock"></i></label>
+                            <input type="password" id="password" name="password" placeholder="Password" required />
+                            <span class="password-eye"><i class="fas fa-eye-slash"></i></span>
                       </div>
                       <button type="submit-singup">Sign In <i class="fas fa-sign-in-alt"></i></button>
                   </form>

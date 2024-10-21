@@ -61,6 +61,7 @@ export function urlHandler() {
         case '/singin':
             site.innerHTML = SingInComponent();
             site.classList = 'site';
+            singupScript();
             break;
         case '/chat':
             site.innerHTML = ChatComponent();

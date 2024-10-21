@@ -27,9 +27,10 @@ export function SingUpComponent() {
                         <label for="email"><i class="fas fa-at"></i></label>
                         <input type="email" id="email" name="email" placeholder="Email" required />
                     </div>
-                    <div class="filed">
+                    <div class="filed password">
                         <label for="password"><i class="fas fa-lock"></i></label>
                         <input type="password" id="password" name="password" placeholder="Password" required />
+                        <span class="password-eye"><i class="fas fa-eye-slash"></i></span>
                     </div>
                     <div class="filed">
                         <label for="re-password"><i class="fas fa-check"></i></label>
@@ -61,15 +62,36 @@ export function SingUpComponent() {
   `);
 }
 export function singupScript() {
-    const avatarInput = document.querySelectorAll('.avatars img');
-    if (avatarInput) {
-        avatarInput.forEach((avatar) => {
-            avatar.addEventListener('click', function (e) {
-                avatarInput.forEach((avatar) => {
-                    avatar.classList.remove('active');
-                });
-                e.target.classList.add('active');
-            })
+    const passwordEye = document.querySelector('.password-eye');
+    const password = document.querySelector('#password');
+    if (password) {
+        password.addEventListener('paste', function (e) {
+            e.preventDefault();
+        })
+        password.addEventListener('copy', function (e) {
+            e.preventDefault();
+        })
+    }
+    if (passwordEye && password) {
+        passwordEye.addEventListener('click', function () {
+            if (password.type === 'password') {
+                password.type = 'text';
+                passwordEye.innerHTML = '<i class="fas fa-eye"></i>';
+
+            } else {
+                password.type = 'password';
+                passwordEye.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            }
+        })
+    }
+
+    const rePassword = document.querySelector('#re-password');
+    if (rePassword) {
+        rePassword.addEventListener('paste', function (e) {
+            e.preventDefault();
+        })
+        rePassword.addEventListener('copy', function (e) {
+            e.preventDefault();
         })
     }
 }
