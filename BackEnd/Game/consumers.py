@@ -331,7 +331,7 @@ class PlayConsumer(AsyncWebsocketConsumer):
     }
 
     SPEED = 0
-    BALL_START_SPEED = 1
+    BALL_START_SPEED = 0.4
     WINNING_SCORE = 5
     BALL_MAX_SPEED = 10
 
