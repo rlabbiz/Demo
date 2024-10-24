@@ -1,3 +1,5 @@
+import { urlHandler } from '../scripts/routes.js';
+
 export function SingUpComponent() {
   return (`
     <div class="sing-forms">
@@ -39,9 +41,9 @@ export function SingUpComponent() {
                     <div class="gender-items">
                         <span>Gender</span>
                         <div class="radio">
-                            <input type="radio" name="gender" id="gender-male" />
+                            <input type="radio" name="gender" id="gender-male" value="M" />
                             <label for="gender-male">Male</label>
-                            <input type="radio" name="gender" id="gender-female" />
+                            <input type="radio" name="gender" id="gender-female" value="F" />
                             <label for="gender-female">Female</label>
                         </div>
                     </div>
@@ -92,6 +94,78 @@ export function singupScript() {
         })
         rePassword.addEventListener('copy', function (e) {
             e.preventDefault();
+        })
+    }
+
+    // handle the singup and send data to the server using fetch 
+    const form = document.querySelector('.form form');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const firstName = document.querySelector('#firstName').value;
+            const lastName = document.querySelector('#lastName').value;
+            const userName = document.querySelector('#userName').value;
+            const email = document.querySelector('#email').value;
+            const password = document.querySelector('#password').value;
+            const rePassword = document.querySelector('#re-password').value;
+
+            // check if the password is less than 6 characters and contain at least one number and one letter and one special character and one uppercase letter
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+            if (!passwordRegex.test(password)) {
+                alert('Password must contain at least one number, one letter, one special character, one uppercase letter and at least 6 characters');
+                return;
+            }
+
+            // check if the password and re-password are the same
+            if (password !== rePassword) {
+                alert('Password and Confirm Password are not the same');
+                return;
+            }
+
+            // select gender and check if the user select one of them
+            const gender = document.querySelectorAll('input[name="gender"]')
+            let genderValue = '';
+            if (gender) {
+                // check if the user select one of the gender
+                for (const tmp of gender) {
+                    if (tmp.checked) {
+                        genderValue = tmp.value;
+                        break;
+                    }
+                }
+                if (genderValue === '') {
+                    alert('Please select your gender ');
+                }
+            }
+
+            // send data to the server
+            fetch('http://127.0.0.1:8000/api/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "username": userName,
+                    "gender": "M",
+                    "email": email,
+                    "password": password,
+                    "re_password": rePassword
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert('User created successfully');
+                        history.pushState(null, null, '/singin');
+                        urlHandler();
+                    }
+                })
+                .catch((error) => {
+                    alert('Error: ' + error);
+                });
         })
     }
 }
