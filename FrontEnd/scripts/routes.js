@@ -9,7 +9,7 @@ import { gameSettingComponent } from './components.js';
 import { homeComponent } from './components.js';
 import { SingUpComponent } from '../components/singup.js';
 import { singupScript } from '../components/singup.js';
-import { SingInComponent } from '../components/singin.js';
+import { SingInComponent, SingUpComponentScript } from '../components/singin.js';
 import { ChatComponent } from '../components/chat.js';
 import { firstModeComponent, secondModeComponent, tournamentModesScript } from '../components/tournamentModes.js';
 import { accountSettingComponent } from '../components/accountSetting.js';
@@ -61,7 +61,7 @@ export function urlHandler() {
         case '/singin':
             site.innerHTML = SingInComponent();
             site.classList = 'site';
-            singupScript();
+            SingUpComponentScript();
             break;
         case '/chat':
             site.innerHTML = ChatComponent();

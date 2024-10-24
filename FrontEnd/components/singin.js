@@ -35,3 +35,58 @@ export function SingInComponent() {
       </div>
     `);
 }
+
+export function SingUpComponentScript() {
+    const passwordEye = document.querySelector('.password-eye');
+    const password = document.querySelector('#password');
+    if (password) {
+        password.addEventListener('paste', function (e) {
+            e.preventDefault();
+        })
+        password.addEventListener('copy', function (e) {
+            e.preventDefault();
+        })
+    }
+    if (passwordEye && password) {
+        passwordEye.addEventListener('click', function () {
+            if (password.type === 'password') {
+                password.type = 'text';
+                passwordEye.innerHTML = '<i class="fas fa-eye"></i>';
+
+            } else {
+                password.type = 'password';
+                passwordEye.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            }
+        })
+    }
+
+    // handle form submit event for sign up 
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const userName = document.querySelector('#userName').value;
+            const password = document.querySelector('#password').value;
+
+            const response = await fetch('http://127.0.0.1:8000/api/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'userName': userName,
+                    'password': password
+                })
+            });
+
+            response.json().then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    window.location.href = '/home';
+                }
+            })
+        })
+    }
+
+}
