@@ -1,3 +1,5 @@
+import { urlHandler } from '../scripts/routes.js';
+
 export function SingInComponent() {
     return (`
       <div class="sing-forms">
@@ -74,7 +76,7 @@ export function SingUpComponentScript() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    'userName': userName,
+                    'username': userName,
                     'password': password
                 })
             });
@@ -83,10 +85,31 @@ export function SingUpComponentScript() {
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    window.location.href = '/home';
+                    document.cookie = `user=${userName}`;
+                    // fetch user data
+                    console.log(`the data`, data);
+                    // fetchData();
+                    // history.pushState(null, null, '/');
+                    // urlHandler();
                 }
             })
         })
     }
 
 }
+
+async function fetchData() {
+    const response = await fetch(`http://127.0.0.1:8000/api/profile/rida/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                console.log(data);
+            }
+        })
+    }
