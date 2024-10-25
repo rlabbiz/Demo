@@ -85,6 +85,19 @@ export function SingUpComponentScript() {
                 if (data.error) {
                     alert(data.error);
                 } else {
+                    const generalMessage = document.querySelector('.generalMessage');
+                    if (generalMessage) {
+                        generalMessage.style.animation = 'comeFormRight 0.5s ease-in-out';
+                        generalMessage.innerHTML = `Login successfull as ${userName}`;
+                        generalMessage.style.display = 'block';
+                        setTimeout(() => {
+                            generalMessage.style.animation = 'goRight 0.5s ease-in-out';
+                            setTimeout(() => {
+                                generalMessage.style.display = 'none';
+                            }, 300);
+                            
+                        }, 3000);
+                    }
                     document.cookie = `user=${userName}`;
                     // fetch user data
                     console.log(`the data`, data);
