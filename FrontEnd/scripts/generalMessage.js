@@ -35,24 +35,11 @@ class NotificationManager {
 
         this.container.appendChild(notification);
 
-        // GSAP Animations
-        gsap.set(notification, {
-            opacity: 0,
-            rotateX: -90,
-            transformOrigin: "right center"
-        });
-        
-        gsap.to(notification, {
-            opacity: 1,
-            rotateX: 0,
-            duration: 0.5,
-            ease: "back.out(1.7)"
-        });
-
-        gsap.to(notification.querySelector('.progress-bar'), {
-            scaleX: 0,
-            duration: duration/1000,
-            ease: "none"
+        // Start progress bar animation
+        const progressBar = notification.querySelector('.progress-bar');
+        progressBar.style.transition = `transform ${duration/1000}s linear`;
+        requestAnimationFrame(() => {
+            progressBar.style.transform = 'scaleX(0)';
         });
 
         // Setup event listeners
@@ -80,15 +67,10 @@ class NotificationManager {
     }
 
     remove(notification) {
-        gsap.to(notification, {
-            opacity: 0,
-            x: 100,
-            duration: 0.5,
-            ease: "power2.in",
-            onComplete: () => {
-                if (notification.parentElement) {
-                    notification.parentElement.removeChild(notification);
-                }
+        notification.classList.add('removing');
+        notification.addEventListener('animationend', () => {
+            if (notification.parentElement) {
+                notification.parentElement.removeChild(notification);
             }
         });
     }
@@ -97,7 +79,7 @@ class NotificationManager {
 const notificationManager = new NotificationManager();
 
 // Rest of your notification functions remain the same
-function showLoginNotification() {
+export function showLoginNotification() {
     notificationManager.create({
         type: 'success',
         title: 'Welcome Back! 👋',

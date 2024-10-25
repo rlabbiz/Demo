@@ -5,6 +5,14 @@
     --secondary-color: #000;
     --tertiary-color: #f0f0f0;
     --input-color: #646e6d6e;
+
+    --success-gradient: linear-gradient(135deg, #00b09b, #96c93d);
+    --error-gradient: linear-gradient(135deg, #ff416c, #ff4b2b);
+    --info-gradient: linear-gradient(135deg, #2193b0, #6dd5ed);
+    --request-gradient: linear-gradient(135deg, #834d9b, #d04ed6);
+    --message-gradient: linear-gradient(135deg, #4158d0, #c850c0);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
 }
 
 ::-webkit-scrollbar {
@@ -44,45 +52,219 @@ body {
     color: white;
 }
 
-.generalMessage {
+
+
+.stars {
     position: fixed;
-    top: 50px;
-    right: 50px;
-    min-width: 300px;
-    /* height: 80px; */
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--primary-color);
-    z-index: 1000;
-    transition: all 0.5s ease-in-out;
-    padding: 20px;
-    animation: comeFormRight 0.5s ease-in-out;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
 }
 
-@keyframes comeFormRight {
-    0% {
-        transform: translateX(100%);
+@keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+}
+
+#generalMessage {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px) rotateX(-90deg);
     }
-    30% {
-        transform: translateX(0);
-    }
-    60% {
-        transform: translateX(10%);
-    }
-    100% {
-        transform: translateX(0);
+    to {
+        opacity: 1;
+        transform: translateX(0) rotateX(0);
     }
 }
-/* add go to right animation */
-@keyframes goRight {
-    0% {
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
         transform: translateX(0);
     }
-    100% {
-        transform: translateX(100%);
+    to {
+        opacity: 0;
+        transform: translateX(100px);
     }
 }
+
+.notification {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    min-width: 380px;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+    transform-origin: right;
+    animation: slideIn 0.5s ease-out;
+}
+
+.notification.removing {
+    animation: slideOut 0.5s ease-in forwards;
+}
+
+.notification-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.notification-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: currentColor;
+    opacity: 0.2;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.2); opacity: 0.1; }
+    100% { transform: scale(1); opacity: 0.2; }
+}
+
+.success .notification-icon { background: var(--success-gradient); }
+.error .notification-icon { background: var(--error-gradient); }
+.info .notification-icon { background: var(--info-gradient); }
+.request .notification-icon { background: var(--request-gradient); }
+.message .notification-icon { background: var(--message-gradient); }
+
+.notification-content {
+    flex-grow: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.notification-message {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-close:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
+
+.notification-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+}
+
+.success .progress-bar { background: var(--success-gradient); }
+.error .progress-bar { background: var(--error-gradient); }
+.info .progress-bar { background: var(--info-gradient); }
+.request .progress-bar { background: var(--request-gradient); }
+.message .progress-bar { background: var(--message-gradient); }
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.action-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+.action-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255,255,255,0.1), transparent);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.action-button:hover::before {
+    transform: translateY(0);
+}
+
+.action-button.accept { background: var(--success-gradient); }
+.action-button.reject { background: var(--error-gradient); }
+.action-button.view { background: var(--info-gradient); }
+
 
 .gameComponent {
     display: grid;

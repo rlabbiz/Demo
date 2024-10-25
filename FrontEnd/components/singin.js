@@ -1,4 +1,5 @@
 import { urlHandler } from '../scripts/routes.js';
+import { showLoginNotification } from '../scripts/generalMessage.js';
 
 export function SingInComponent() {
     return (`
@@ -85,25 +86,10 @@ export function SingUpComponentScript() {
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    const generalMessage = document.querySelector('.generalMessage');
-                    if (generalMessage) {
-                        generalMessage.style.animation = 'comeFormRight 0.5s ease-in-out';
-                        generalMessage.innerHTML = `Login successfull as ${userName}`;
-                        generalMessage.style.display = 'block';
-                        setTimeout(() => {
-                            generalMessage.style.animation = 'goRight 0.5s ease-in-out';
-                            setTimeout(() => {
-                                generalMessage.style.display = 'none';
-                            }, 300);
-                            
-                        }, 3000);
-                    }
+                    showLoginNotification();
                     document.cookie = `user=${userName}`;
-                    // fetch user data
-                    console.log(`the data`, data);
-                    // fetchData();
-                    // history.pushState(null, null, '/');
-                    // urlHandler();
+                    history.pushState(null, null, '/');
+                    urlHandler();
                 }
             })
         })
