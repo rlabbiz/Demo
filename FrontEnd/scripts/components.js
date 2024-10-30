@@ -15,14 +15,35 @@ export function gameSettingComponent() {
     )
 }
 
-export function homeComponent() {
-    return (
+export async function homeComponent() {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/profile/', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      const data = await response.json();
+  
+      return (
         header() +
         menu() +
         homeContent() +
-        homeSidebar()
-    )
-}
+        homeSidebar(data.user)
+      );
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      // Handle error, e.g., display an error message to the user
+      return (
+        header() +
+        menu() +
+        homeContent() +
+        `<div>Error fetching user data</div>`
+      );
+    }
+  }
 
 export function header() {
     return (`
@@ -461,7 +482,7 @@ export function gameSettingContent() {
 }
 
 
-export function homeSidebar() {
+export function homeSidebar(user) {
     return (`
         <div class="sidebar">
             <div class="profile">
@@ -469,7 +490,7 @@ export function homeSidebar() {
                 <div class="image-cover">
                         <img src="images/profile.png" alt="profile">
                         <div class="status">
-                            <h4>SOLIX</h4>
+                            <h4>${user.username}</h4>
                             <p>Level 6.18</p>
                         </div>
                 </div>
@@ -481,7 +502,7 @@ export function homeSidebar() {
 
                     <div>
                         <p>Status</p>
-                        <h4 class="offline">Offline</h4>
+                        <h4 class="online">Online</h4>
                     </div>
 
                     <div>

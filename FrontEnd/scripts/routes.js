@@ -17,7 +17,7 @@ import { friendsComponent } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
 import { gameOnlineComponent, gameOnlineScript } from '../components/play.js';
 
-export function urlHandler() {
+export async function urlHandler() {
     const routeName = window.location.pathname;
     const site = document.querySelector('.site');
     
@@ -27,14 +27,14 @@ export function urlHandler() {
         if (document.cookie.indexOf('access_token' + '=') === -1) {
             console.log(document.cookie);
             history.pushState(null, null, '/singin');
-            urlHandler();
+            await urlHandler();
             return;
         }
     }
 
     switch (routeName) {
         case '/':
-            site.innerHTML = homeComponent();
+            site.innerHTML = await homeComponent();
             site.classList = 'site gameComponent';
             break;
         case '/index.html':
