@@ -20,6 +20,18 @@ import { gameOnlineComponent, gameOnlineScript } from '../components/play.js';
 export function urlHandler() {
     const routeName = window.location.pathname;
     const site = document.querySelector('.site');
+    
+    // check if user if logged in or not, if not redirect to login page
+    if (routeName !== '/singin' && routeName !== '/singup') {
+        // check refresh_token if exitst in cookies
+        if (document.cookie.indexOf('access_token' + '=') === -1) {
+            console.log(document.cookie);
+            history.pushState(null, null, '/singin');
+            urlHandler();
+            return;
+        }
+    }
+
     switch (routeName) {
         case '/':
             site.innerHTML = homeComponent();
