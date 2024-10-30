@@ -1,6 +1,13 @@
 import { header, menu } from '../scripts/components.js'
+import { fetchProfile, globalState } from '../scripts/fetchData.js';
 
-export function profileComponent() {
+export async function profileComponent() {
+    if (globalState.user === null) {
+        await fetchProfile();
+    } 
+    if (globalState.user === null) {
+        return (`cant fetch user data`)
+    }
     return (
         header() +
         menu() +
@@ -9,37 +16,37 @@ export function profileComponent() {
 }
 
 export function profileContent() {
+    console.log(globalState.user)
     return (`
         <div id="profile">
             <div class="profile-header" w-tid="11" style="/* transform: rotateY(-0.54deg) rotateX(-15.4deg); */">
                 <div class="profile-pic-container" w-tid="12">
-                    <img src="https://replicate.delivery/yhqm/U44bRVmR6YqhD991cppxgyxHmkz4fjIsHtWibr9fGwuQnufmA/out-0.webp" alt="Player's profile picture" class="profile-pic" w-tid="13" data-image_id="0" alt-rewritten="Neon-lit ping pong match captured in vibrant digital photograph." style="box-shadow: rgba(61, 189, 167, 0.5) 0px 0px 20px;">
-                    <div class="rank-badge" w-tid="14">A+</div>
+                    <img src="${globalState.user.avatar}" alt="Player's profile picture" class="profile-pic" w-tid="13" data-image_id="0" alt-rewritten="Neon-lit ping pong match captured in vibrant digital photograph." style="box-shadow: rgba(61, 189, 167, 0.5) 0px 0px 20px;">
                 </div>
                 <div class="profile-info" w-tid="15">
-                    <h1 w-tid="16">Sarah Johnson</h1>
-                    <p w-tid="17">@sarahj</p>
-                    <p w-tid="18">Ping Pong Prodigy</p>
-                    <button class="edit-profile-btn" onclick="window._4ltzjkb485g.href='https://webs.im/settings/'" w-tid="19">Edit Profile</button>
+                    <h1 w-tid="16">${globalState.user.first_name} ${globalState.user.last_name}</h1>
+                    <p w-tid="17">@${globalState.user.username}</p>
+                    <p w-tid="18">Level ${globalState.user.game_stats[0].level}</p>
+                    <button class="edit-profile-btn" w-tid="19">Edit Profile</button>
                 </div>
             </div>
 
             <div class="stats-container" w-tid="20">
                 <div class="stat-box" w-tid="21">
                     <h3 w-tid="22">Matches Played</h3>
-                    <p w-tid="23">538</p>
+                    <p w-tid="23">${globalState.user.game_stats[0].total_games}</p>
                 </div>
                 <div class="stat-box" w-tid="24">
-                    <h3 w-tid="25">Win Rate</h3>
-                    <p w-tid="26">72%</p>
+                    <h3 w-tid="25">Match Loses</h3>
+                    <p w-tid="26">${globalState.user.game_stats[0].lost_games}</p>
                 </div>
                 <div class="stat-box" w-tid="27">
-                    <h3 w-tid="28">Highest Score</h3>
-                    <p w-tid="29">21-3</p>
+                    <h3 w-tid="28">Match Wins</h3>
+                    <p w-tid="29">${globalState.user.game_stats[0].won_games}</p>
                 </div>
                 <div class="stat-box" w-tid="30">
                     <h3 w-tid="31">Tournament Wins</h3>
-                    <p w-tid="32">12</p>
+                    <p w-tid="32">${globalState.user.game_stats[0].won_tournaments}</p>
                 </div>
             </div>
 

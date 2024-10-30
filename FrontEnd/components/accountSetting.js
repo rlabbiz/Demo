@@ -1,8 +1,14 @@
 import { header, menu } from '../scripts/components.js'
+import { fetchProfile, globalState } from '../scripts/fetchData.js';
 
-const hhh = "sfghfgh";
 
-export function accountSettingComponent() {
+export async function accountSettingComponent() {
+    if (globalState.user === null) {
+        await fetchProfile();
+    }
+    if (globalState.user === null) {
+        return (`cant fetch user data`)
+    }
     return (
         header() +
         menu() +
@@ -16,7 +22,7 @@ export function accountSettingContent() {
         <div class="account-setting">
             <h2>Account Settings</h2>
             <div class="setting-group">
-                <img src="https://page-images.websim.ai/Current profile picture_1024x1024xemJ2jr7UINRqya9Hdx9654623cf1966.jpg" alt="Current profile picture" class="profile-pic" id="profilePic" data-image_id="0" alt-rewritten="Current profile picture">
+                <img src="${globalState.user.avatar}" alt="Current profile picture" class="profile-pic" id="profilePic" data-image_id="0" alt-rewritten="Current profile picture">
                 <input id="setting-upload" type="file" id="avatarUpload" style="display: none;" accept="image/*">
                 <label for="setting-upload" class="upload-btn">Upload Avatar</label>
                 
@@ -31,26 +37,22 @@ export function accountSettingContent() {
             <div class="setting-group">
                 <div class="setting-item">
                     <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" value="rida">
+                    <input type="text" id="firstName" name="firstName" value="${globalState.user.first_name}">
                 </div>
                 <div class="setting-item">
                     <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" value="labbiz">
+                    <input type="text" id="lastName" name="lastName" value="${globalState.user.last_name}">
                 </div>
                 <div class="setting-item">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" value="rlabbiz">
+                    <input type="text" id="username" name="username" value="${globalState.user.username}">
                 </div>
             </div>
 
             <div class="setting-group">
                 <div class="setting-item">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" value="john.doe@example.com">
-                </div>
-                <div class="setting-item">
-                    <label for="newPassword">New Password (leave blank if unchanged)</label>
-                    <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password">
+                    <input type="email" id="email" name="email" value="${globalState.user.email}">
                 </div>
             </div>
             <button type="button" class="save-btn" onclick="">Change Password</button>

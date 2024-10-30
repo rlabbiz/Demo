@@ -234,6 +234,23 @@ export function setUpEvent() {
         })
     }
 
+    const logoutButton = document.querySelector('.header .header-menu .logout-link');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            // clear all cookies, and redirect to login page, and send logout request to server
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+            history.pushState(null, null, '/singin');
+            urlHandler();
+        })
+    }
+
 }
 
 window.onload = setUpEvent;

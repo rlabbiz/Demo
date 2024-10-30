@@ -1,5 +1,6 @@
 import { urlHandler } from '../scripts/routes.js';
 import { showLoginNotification } from '../scripts/generalMessage.js';
+import { fetchProfile } from '../scripts/fetchData.js';
 
 export function SingInComponent() {
     return (`
@@ -39,7 +40,7 @@ export function SingInComponent() {
     `);
 }
 
-export function SingUpComponentScript() {
+export async function SingUpComponentScript() {
     const passwordEye = document.querySelector('.password-eye');
     const password = document.querySelector('#password');
     if (password) {
@@ -88,30 +89,14 @@ export function SingUpComponentScript() {
                     alert(data.error);
                 } else {
                     showLoginNotification();
-                    document.cookie = `user=${userName}`;
-                    // fetchData();
-                    history.pushState(null, null, '/');
-                    urlHandler();
+                    (async () => {
+                        await fetchProfile();
+                        history.pushState(null, null, '/');
+                        urlHandler();
+                    })();
                 }
             })
         })
     }
 
-}
-
-async function fetchData() {
-    const response = await fetch(`http://127.0.0.1:8000/api/profile/`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    }).then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert(data.error);
-            } else {
-                console.log(data);
-            }
-        })
 }

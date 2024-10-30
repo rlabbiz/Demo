@@ -1,3 +1,5 @@
+import { globalState, fetchProfile } from './fetchData.js';
+
 export function gameComponent() {
   return (
     header() +
@@ -15,37 +17,25 @@ export function gameSettingComponent() {
     )
 }
 
+
 export async function homeComponent() {
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/profile/', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      const data = await response.json();
-  
-      return (
-        header() +
-        menu() +
-        homeContent() +
-        homeSidebar(data.user)
-      );
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      // Handle error, e.g., display an error message to the user
-      return (
-        header() +
-        menu() +
-        homeContent() +
-        `<div>Error fetching user data</div>`
-      );
+    if (!globalState.user) {
+        await fetchProfile();
     }
-  }
+    // check if cant fetch data
+    if (!globalState.user) {
+        return (`cant fetch data`);
+    }
+    return (
+        header() +
+        menu() +
+        homeContent() +
+        homeSidebar()
+    )
+}
 
 export function header() {
+    
     return (`
         <div class="header-background">
         <div class="header">
@@ -55,7 +45,7 @@ export function header() {
             <div class="profile">
                 <i class="far fa-bell notification"></i>
                 <i class="far fa-paper-plane send"></i>
-                <img src="images/profile.png" class="header-profile-link" alt="profile">
+                <img src="${globalState.user.avatar}" class="header-profile-link" alt="profile">
             </div>
             <div class="header-menu">
                 <a href="#" class="profile-link"><i class="fas fa-user"></i> Profile</a>
@@ -211,6 +201,10 @@ export function header() {
         </div>
         </div>
     `)
+}
+
+function logoutHandler(e) {
+    console.log('logout');
 }
 
 export function gameSidebar() {
@@ -482,15 +476,15 @@ export function gameSettingContent() {
 }
 
 
-export function homeSidebar(user) {
+export function homeSidebar() {
     return (`
         <div class="sidebar">
             <div class="profile">
                 <h2>Profile</h2>
                 <div class="image-cover">
-                        <img src="images/profile.png" alt="profile">
+                        <img src="" alt="profile">
                         <div class="status">
-                            <h4>${user.username}</h4>
+                            <h4>${globalState.user.username}</h4>
                             <p>Level 6.18</p>
                         </div>
                 </div>

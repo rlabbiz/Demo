@@ -25,7 +25,6 @@ export async function urlHandler() {
     if (routeName !== '/singin' && routeName !== '/singup') {
         // check refresh_token if exitst in cookies
         if (document.cookie.indexOf('access_token' + '=') === -1) {
-            console.log(document.cookie);
             history.pushState(null, null, '/singin');
             await urlHandler();
             return;
@@ -90,7 +89,7 @@ export async function urlHandler() {
             tournamentModesScript();
             break;
         case '/account_settings':
-            site.innerHTML = accountSettingComponent();
+            site.innerHTML = await accountSettingComponent();
             site.classList = 'site account-setting-layout';
             break;
         case '/friends':
@@ -98,7 +97,7 @@ export async function urlHandler() {
             site.classList = 'site friends-layout';
             break;
         case '/profile':
-            site.innerHTML = profileComponent();
+            site.innerHTML = await profileComponent();
             site.classList = 'site profile-layout';
             break;
 
