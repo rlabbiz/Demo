@@ -16,6 +16,7 @@ import { accountSettingComponent } from '../components/accountSetting.js';
 import { friendsComponent } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
 import { gameOnlineComponent, gameOnlineScript } from '../components/play.js';
+import { searchComponent } from '../components/search.js';
 
 export async function urlHandler() {
     const routeName = window.location.pathname;
@@ -105,6 +106,11 @@ export async function urlHandler() {
             site.innerHTML = gameOnlineComponent();
             site.classList = 'site';
             gameOnlineScript();
+            break;
+
+        case '/search':
+            site.innerHTML = await searchComponent();
+            site.classList = 'site friends-layout';
             break;
         
         default:

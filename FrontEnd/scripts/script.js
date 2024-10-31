@@ -251,6 +251,17 @@ export function setUpEvent() {
         })
     }
 
+    // get search input and when user press enter, redirect to search page, with search query
+    const searchInput = document.querySelector('.header .search input');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                history.pushState(null, null, `/search?query=${searchInput.value}`);
+                urlHandler();
+            }
+        })
+    }
 }
 
 window.onload = setUpEvent;

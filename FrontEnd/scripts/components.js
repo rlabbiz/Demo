@@ -203,10 +203,6 @@ export function header() {
     `)
 }
 
-function logoutHandler(e) {
-    console.log('logout');
-}
-
 export function gameSidebar() {
     return (`
         <div class="sidebar">

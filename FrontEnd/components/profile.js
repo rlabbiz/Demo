@@ -1,6 +1,10 @@
 import { header, menu } from '../scripts/components.js'
-import { fetchProfile, globalState } from '../scripts/fetchData.js';
-
+import { 
+    fetchProfile, 
+    globalState,
+    fetchUsers,
+} from '../scripts/fetchData.js';
+    
 export async function profileComponent() {
     if (globalState.user === null) {
         await fetchProfile();
