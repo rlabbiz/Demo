@@ -4,7 +4,7 @@
     "description": "A new Vite project",
     "main": "index.js",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite --host 127.0.0.1",
         "build": "vite build",
         "serve": "vite preview"
     },
