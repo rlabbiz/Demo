@@ -72,21 +72,26 @@ function searchContent(query) {
 
 function friendButton(user) {
     let buttonValue = 'Send Friend Request';
+    let buttonClass = 'btn btn-request';
+    let declineButton = '';
 
     globalState.user.friend_requests.forEach(request => {
         if (request.sender.username === user.username) {
             buttonValue = 'Accept Friend Request';
+            buttonClass = 'btn btn-accept';
+            declineButton = `<button class="btn btn-decline" key="${user.username}">Decline Friend Request</button>`;
         }
     })
 
     return (`
-        <button class="btn btn-accept" key="${user.username}">${buttonValue}</button>
+        <button class="${buttonClass}" key="${user.username}">${buttonValue}</button>
+        ${declineButton}
     `)
 }
 
 export async function searchComponentEvents() {
-    const friendRequestButtons = document.querySelectorAll('.btn-accept');
-
+    console.log(globalState.user)
+    const friendRequestButtons = document.querySelectorAll('.btn-request');
     friendRequestButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
             const username = e.target.getAttribute('key');
@@ -105,6 +110,30 @@ export async function searchComponentEvents() {
             console.log(response)
             if (response.status === 200) {
                 console.log('Friend request sent')
+            } else {
+                console.log('Friend request failed')
+            }
+        })
+    })
+
+    const friendAcceptButtons = document.querySelectorAll('.btn-accept');
+    friendAcceptButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const username = e.target.getAttribute('key');
+            const response = await fetch('http://127.0.0.1:8000/api/friend_operations/', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    sender: globalState.user.username,
+                    receiver: username,
+                    request_status: 'A'
+                })
+            })
+            if (response.status === 200) {
+                console.log('Friend request accepted')
             } else {
                 console.log('Friend request failed')
             }
