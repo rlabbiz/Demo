@@ -25,7 +25,7 @@ export function profileContent() {
         <div id="profile">
             <div class="profile-header" w-tid="11" style="/* transform: rotateY(-0.54deg) rotateX(-15.4deg); */">
                 <div class="profile-pic-container" w-tid="12">
-                    <img src="${globalState.user.avatar}" alt="Player's profile picture" class="profile-pic" w-tid="13" data-image_id="0" alt-rewritten="Neon-lit ping pong match captured in vibrant digital photograph." style="box-shadow: rgba(61, 189, 167, 0.5) 0px 0px 20px;">
+                    <img src="${globalState.user.avatar}" alt="${globalState.user.username}" class="profile-pic" w-tid="13" data-image_id="0" alt-rewritten="Neon-lit ping pong match captured in vibrant digital photograph." style="box-shadow: rgba(61, 189, 167, 0.5) 0px 0px 20px;">
                 </div>
                 <div class="profile-info" w-tid="15">
                     <h1 w-tid="16">${globalState.user.first_name} ${globalState.user.last_name}</h1>
