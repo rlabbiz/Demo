@@ -1,6 +1,7 @@
 export const globalState = {
     user: null,
     users: null,
+    friends: null,
 };
   
 export async function fetchProfile() {
@@ -26,4 +27,15 @@ export async function fetchUsers() {
     })
     const usersData = await response.json();
     globalState.users = usersData.users;
+
+    // fetch friends 
+    const responseFriends = await fetch('http://127.0.0.1:8000/api/friends/', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    const friendsData = await responseFriends.json();
+    globalState.friends = friendsData.friends;
 }

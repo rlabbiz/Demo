@@ -6,51 +6,70 @@ import {
 } from '../scripts/fetchData.js';
     
 export async function profileComponent() {
-    if (globalState.user === null) {
+    if (globalState.user === null) 
         await fetchProfile();
-    } 
-    if (globalState.user === null) {
+    
+    if (globalState.users === null) 
+        await fetchUsers();
+
+    if (globalState.user === null || globalState.users === null) {
         return (`cant fetch user data`)
     }
+
+    // get username parameter from url to fetch user data
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('username');
+    let user = globalState.user;
+    if (username) {
+        user = globalState.users.find(user => user.username === username);
+        if (!user) {
+            return (
+                header() +
+                menu() +
+                `<div id="profile" class="error">Dont found any user of this name: ${username}</div>`
+            )
+        }
+    }
+        
+    // const user = globalState.users.find(user => user.username === username);
     return (
         header() +
         menu() +
-        profileContent()
+        profileContent(user)
     )
 }
 
-export function profileContent() {
-    console.log(globalState.user)
+function profileContent(user) {
     return (`
         <div id="profile">
             <div class="profile-header" w-tid="11" style="/* transform: rotateY(-0.54deg) rotateX(-15.4deg); */">
                 <div class="profile-pic-container" w-tid="12">
-                    <img src="${globalState.user.avatar}" alt="${globalState.user.username}" class="profile-pic" w-tid="13" data-image_id="0" alt-rewritten="Neon-lit ping pong match captured in vibrant digital photograph." style="box-shadow: rgba(61, 189, 167, 0.5) 0px 0px 20px;">
+                    <img src="${user.avatar}" alt="${user.username}" class="profile-pic" w-tid="13" data-image_id="0" alt-rewritten="Neon-lit ping pong match captured in vibrant digital photograph." style="box-shadow: rgba(61, 189, 167, 0.5) 0px 0px 20px;">
                 </div>
                 <div class="profile-info" w-tid="15">
-                    <h1 w-tid="16">${globalState.user.first_name} ${globalState.user.last_name}</h1>
-                    <p w-tid="17">@${globalState.user.username}</p>
-                    <p w-tid="18">Level ${globalState.user.game_stats[0].level}</p>
-                    <button class="edit-profile-btn" w-tid="19">Edit Profile</button>
+                    <h1 w-tid="16">${user.first_name} ${user.last_name}</h1>
+                    <p w-tid="17">@${user.username}</p>
+                    <p w-tid="18">Level ${user.game_stats[0].level}</p>
+                    ${profileButtons(user)}
                 </div>
             </div>
 
             <div class="stats-container" w-tid="20">
                 <div class="stat-box" w-tid="21">
                     <h3 w-tid="22">Matches Played</h3>
-                    <p w-tid="23">${globalState.user.game_stats[0].total_games}</p>
+                    <p w-tid="23">${user.game_stats[0].total_games}</p>
                 </div>
                 <div class="stat-box" w-tid="24">
                     <h3 w-tid="25">Match Loses</h3>
-                    <p w-tid="26">${globalState.user.game_stats[0].lost_games}</p>
+                    <p w-tid="26">${user.game_stats[0].lost_games}</p>
                 </div>
                 <div class="stat-box" w-tid="27">
                     <h3 w-tid="28">Match Wins</h3>
-                    <p w-tid="29">${globalState.user.game_stats[0].won_games}</p>
+                    <p w-tid="29">${user.game_stats[0].won_games}</p>
                 </div>
                 <div class="stat-box" w-tid="30">
                     <h3 w-tid="31">Tournament Wins</h3>
-                    <p w-tid="32">${globalState.user.game_stats[0].won_tournaments}</p>
+                    <p w-tid="32">${user.game_stats[0].won_tournaments}</p>
                 </div>
             </div>
 
@@ -119,4 +138,35 @@ export function profileContent() {
             </div>
         </div>
     `)
+}
+
+function profileButtons(user) {
+    const requestButton = {innerHtml: '<i class="fas fa-user-plus"></i>', class: 'btn btn-request'};
+    const editButton = {innerHtml: 'Edit Profile', class: 'edit-profile-btn'};
+    const acceptButton = {innerHtml: '<i class="fas fa-user-check"></i>', class: 'btn btn-accept'};
+    const declineButton = {innerHtml: '<i class="fas fa-user-times"></i>', class: 'btn btn-decline'};
+    let isRequest = false;
+
+    if (globalState.user.username === user.username)
+        return (getButtons([editButton]))
+
+    globalState.user.friend_requests.forEach(request => {
+        if (request.sender.username === user.username) 
+            isRequest = true;
+    })
+
+    if (isRequest) 
+        return (getButtons([acceptButton, declineButton]))
+    else 
+        return (getButtons([requestButton]))
+}
+
+function getButtons(buttons) {
+    const buttonHTML = buttons.map(button => {
+        return (`
+            <button class="${button.class}">${button.innerHtml}</button>
+        `)
+    })
+
+    return buttonHTML.join('\n');
 }
