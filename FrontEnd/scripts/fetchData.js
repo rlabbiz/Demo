@@ -15,6 +15,17 @@ export async function fetchProfile() {
 
     const userData = await response.json();
     globalState.user = userData.user;
+
+    // fetch friends 
+    const responseFriends = await fetch('http://127.0.0.1:8000/api/friends/', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    const friendsData = await responseFriends.json();
+    globalState.friends = friendsData.friends;
 }
 
 export async function fetchUsers() {
@@ -27,16 +38,4 @@ export async function fetchUsers() {
     })
     const usersData = await response.json();
     globalState.users = usersData.users;
-
-    // fetch friends 
-    const responseFriends = await fetch('http://127.0.0.1:8000/api/friends/', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    const friendsData = await responseFriends.json();
-    globalState.friends = friendsData.friends;
-    console.log(globalState.friends)
 }

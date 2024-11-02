@@ -105,8 +105,6 @@ function friendButton(user) {
 }
 
 export async function searchComponentEvents() {
-    console.log(globalState.user)
-
     // handle the send request button
     const friendRequestButtons = document.querySelectorAll('.btn-request');
     friendRequestButtons.forEach(button => {
