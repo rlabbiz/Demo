@@ -10,7 +10,7 @@ import { homeComponent } from './components.js';
 import { SingUpComponent } from '../components/singup.js';
 import { singupScript } from '../components/singup.js';
 import { SingInComponent, SingUpComponentScript } from '../components/singin.js';
-import { ChatComponent } from '../components/chat.js';
+import { ChatComponent, chatScript } from '../components/chat.js';
 import { firstModeComponent, secondModeComponent, tournamentModesScript } from '../components/tournamentModes.js';
 import { accountSettingComponent } from '../components/accountSetting.js';
 import { friendsComponent } from '../components/friends.js';
@@ -76,8 +76,9 @@ export async function urlHandler() {
             SingUpComponentScript();
             break;
         case '/chat':
-            site.innerHTML = ChatComponent();
+            site.innerHTML = await ChatComponent();
             site.classList = 'site chat-layout';
+            await chatScript();
             break;
         case '/first-mode':
             site.innerHTML = firstModeComponent();

@@ -159,10 +159,16 @@ export async function handleSendRequest(e) {
         })
     }).then(response => response.json())
     if (response.ok) {
-        console.log('Friend request sent')
+        // add cenncel request button to the user
+        // const element = document.querySelector(`.btn-request[key="${username}"]`);
+        // element.innerHTML = '<i class="fas fa-user-times"></i>';
+        // element.classList.remove('btn-request');
+        // element.classList.add('btn-cancel');
     } else {
-        console.log('Friend request failed ' + response.status)
-        console.log(response)
+        // const element = document.querySelector(`.btn-request[key="${username}"]`);
+        // element.innerHTML = '<i class="fas fa-user-times"></i>';
+        // element.classList.remove('btn-request');
+        // element.classList.add('btn-cancel');
     }
 }
 

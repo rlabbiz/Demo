@@ -1,7 +1,14 @@
 import { header, homeComponent, menu } from '../scripts/components.js'
+import { fetchProfile, globalState } from '../scripts/fetchData.js';
 
 
-export function ChatComponent() {
+export async function ChatComponent() {
+    if (!globalState.user)
+        await fetchProfile();
+    if (globalState.user === null) {
+        return (`cant fetch user data`)
+    }
+
     return (
         header() +
         menu() +
@@ -57,4 +64,8 @@ export function chatContent() {
             </div>
         </div>
     `)
+}
+
+export async function chatScript() {
+    console.log('chat script')
 }
