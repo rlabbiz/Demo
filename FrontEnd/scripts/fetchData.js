@@ -38,4 +38,5 @@ export async function fetchUsers() {
     })
     const friendsData = await responseFriends.json();
     globalState.friends = friendsData.friends;
+    console.log(globalState.friends)
 }

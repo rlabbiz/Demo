@@ -36,8 +36,6 @@ function searchContent(query) {
         return user.username.includes(query) || user.first_name.includes(query) || user.last_name.includes(query)
     })
 
-    console.log(users)
-
     const usersHTML = users.map(user => {
         return (`
             <div class="friend-card" style="display: flex;">
@@ -134,7 +132,7 @@ export async function searchComponentEvents() {
 }
 
 export async function handleSendRequest(e) {
-    const username = e.target.getAttribute('key');
+    let username =  e.target.getAttribute('key');
     const response = await fetch('http://127.0.0.1:8000/api/friend_operations/', {
         method: 'POST',
         credentials: 'include',
@@ -150,7 +148,7 @@ export async function handleSendRequest(e) {
     if (response.ok) {
         console.log('Friend request sent')
     } else {
-        console.log('Friend request failed')
+        console.log('Friend request failed ' + response.status)
         console.log(response)
     }
 }

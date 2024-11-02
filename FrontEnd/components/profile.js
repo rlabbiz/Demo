@@ -145,7 +145,12 @@ function profileButtons(user) {
     const editButton = {innerHtml: 'Edit Profile', class: 'edit-profile-btn'};
     const acceptButton = {innerHtml: '<i class="fas fa-user-check"></i>', class: 'btn btn-accept'};
     const declineButton = {innerHtml: '<i class="fas fa-user-times"></i>', class: 'btn btn-decline'};
+    const unFriendButton = {innerHtml: '<i class="fas fa-user-minus"></i>', class: 'btn btn-unfriend'};
+    const blockButton = {innerHtml: '<i class="fas fa-user-slash"></i>', class: 'btn btn-block'};
+    const sendMessageButton = {innerHtml: '<i class="fas fa-envelope"></i>', class: 'btn btn-message'};
+    const playButton = {innerHtml: '<i class="fas fa-gamepad"></i>', class: 'btn btn-play'};
     let isRequest = false;
+    let isFriend = false;
 
     if (globalState.user.username === user.username)
         return (getButtons([editButton]))
@@ -155,9 +160,16 @@ function profileButtons(user) {
             isRequest = true;
     })
 
+    globalState.friends.forEach(friend => {
+        if (friend.friend.username === user.username) 
+            isFriend = true;
+    })
+
     if (isRequest) 
         return (getButtons([acceptButton, declineButton]))
-    else 
+    else if (isFriend)
+        return (getButtons([sendMessageButton, playButton, unFriendButton, blockButton]))
+    else
         return (getButtons([requestButton]))
 }
 
