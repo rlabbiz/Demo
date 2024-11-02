@@ -141,14 +141,14 @@ function profileContent(user) {
 }
 
 function profileButtons(user) {
-    const requestButton = {innerHtml: '<i class="fas fa-user-plus"></i>', class: 'btn btn-request'};
-    const editButton = {innerHtml: 'Edit Profile', class: 'edit-profile-btn'};
-    const acceptButton = {innerHtml: '<i class="fas fa-user-check"></i>', class: 'btn btn-accept'};
-    const declineButton = {innerHtml: '<i class="fas fa-user-times"></i>', class: 'btn btn-decline'};
-    const unFriendButton = {innerHtml: '<i class="fas fa-user-minus"></i>', class: 'btn btn-unfriend'};
-    const blockButton = {innerHtml: '<i class="fas fa-user-slash"></i>', class: 'btn btn-block'};
-    const sendMessageButton = {innerHtml: '<i class="fas fa-envelope"></i>', class: 'btn btn-message'};
-    const playButton = {innerHtml: '<i class="fas fa-gamepad"></i>', class: 'btn btn-play'};
+    const requestButton = {innerHtml: '<i class="fas fa-user-plus"></i>', class: 'btn btn-request', key: user.username};
+    const editButton = {innerHtml: 'Edit Profile', class: 'edit-profile-btn', key: user.username};
+    const acceptButton = {innerHtml: '<i class="fas fa-user-check"></i>', class: 'btn btn-accept', key: user.username};
+    const declineButton = {innerHtml: '<i class="fas fa-user-times"></i>', class: 'btn btn-decline', key: user.username};
+    const unFriendButton = {innerHtml: '<i class="fas fa-user-minus"></i>', class: 'btn btn-unfriend', key: user.username};
+    const blockButton = {innerHtml: '<i class="fas fa-user-slash"></i>', class: 'btn btn-block', key: user.username};
+    const sendMessageButton = {innerHtml: '<i class="fas fa-envelope"></i>', class: 'btn btn-message', key: user.username};
+    const playButton = {innerHtml: '<i class="fas fa-gamepad"></i>', class: 'btn btn-play', key: user.username};
     let isRequest = false;
     let isFriend = false;
 
@@ -173,10 +173,10 @@ function profileButtons(user) {
         return (getButtons([requestButton]))
 }
 
-function getButtons(buttons) {
+export function getButtons(buttons) {
     const buttonHTML = buttons.map(button => {
         return (`
-            <button class="${button.class}">${button.innerHtml}</button>
+            <button class="${button.class}" key="${button.key}">${button.innerHtml}</button>
         `)
     })
 
