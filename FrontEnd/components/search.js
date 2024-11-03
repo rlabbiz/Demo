@@ -142,6 +142,15 @@ export async function searchComponentEvents() {
             urlHandler();
         })
     })
+
+    const sendMessageButton = document.querySelectorAll(".btn-message");
+    sendMessageButton.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const username = e.target.getAttribute('key')
+            history.pushState(null, null, `/chat?user=${username}`)
+            urlHandler()
+        })
+    })
 }
 
 export async function handleSendRequest(e) {
