@@ -73,7 +73,6 @@ function searchContent(query) {
 
 function friendButton(user) {
     const requestButton = {innerHtml: '<i class="fas fa-user-plus"></i>', class: 'btn btn-request', key: user.username};
-    const editButton = {innerHtml: 'Edit Profile', class: 'edit-profile-btn', key: user.username};
     const acceptButton = {innerHtml: '<i class="fas fa-user-check"></i>', class: 'btn btn-accept', key: user.username};
     const declineButton = {innerHtml: '<i class="fas fa-user-times"></i>', class: 'btn btn-decline', key: user.username};
     const unFriendButton = {innerHtml: '<i class="fas fa-user-minus"></i>', class: 'btn btn-unfriend', key: user.username};
@@ -82,9 +81,6 @@ function friendButton(user) {
     const playButton = {innerHtml: '<i class="fas fa-gamepad"></i>', class: 'btn btn-play', key: user.username};
     let isRequest = false;
     let isFriend = false;
-
-    let buttonValue = '<i class="fas fa-user-plus"></i>';
-    let buttonClass = 'btn btn-request';
 
     globalState.user.friend_requests.forEach(request => {
         if (request.sender.username === user.username)

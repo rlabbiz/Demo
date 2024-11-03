@@ -97,6 +97,7 @@ export async function urlHandler() {
         case '/friends':
             site.innerHTML = await friendsComponent();
             site.classList = 'site friends-layout';
+            await searchComponentEvents();
             break;
         case '/profile':
             site.innerHTML = await profileComponent();

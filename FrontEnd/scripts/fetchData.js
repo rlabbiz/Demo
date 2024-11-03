@@ -22,7 +22,7 @@ export async function fetchProfile() {
     globalState.user = userData.user;
     globalState.requests = userData.user.friend_requests;
     globalState.sendRequests = userData.user.sent_requests;
-    globalState.friends = userData.user.friend_creator;
+    globalState.friends = userData.user.friends;
     globalState.game = userData.user.game_stats;
 }
 
