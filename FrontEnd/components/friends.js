@@ -1,6 +1,13 @@
 import { header, menu } from '../scripts/components.js'
+import { fetchProfile, globalState, fetchUsers } from '../scripts/fetchData.js';
+import { urlHandler } from '../scripts/routes.js';
 
-export function friendsComponent() {
+export async function friendsComponent() {
+    if (globalState.user === null) 
+        await fetchProfile();
+    if (globalState.user === null)
+        return (`cant fetch user data`)
+
     return (
         header() +
         menu() +
@@ -9,21 +16,22 @@ export function friendsComponent() {
 }
 
 export function friendsContent() {
+    console.log(globalState.user)
     return (`
     <div class="friends-list" w-tid="6">
         <div class="friend-header" w-tid="7">
             <h2 w-tid="8">Friends Hub</h2>
             <div class="friend-stats" w-tid="9">
                 <div class="stat-card" w-tid="10">
-                    <div class="stat-number" w-tid="11">247</div>
+                    <div class="stat-number" w-tid="11">${globalState.friends.length}</div>
                     <div class="stat-label" w-tid="12">Total Friends</div>
                 </div>
                 <div class="stat-card" w-tid="13">
-                    <div class="stat-number" w-tid="14">42</div>
+                    <div class="stat-number" w-tid="14">0</div>
                     <div class="stat-label" w-tid="15">Online Now</div>
                 </div>
                 <div class="stat-card" w-tid="16">
-                    <div class="stat-number" w-tid="17">15</div>
+                    <div class="stat-number" w-tid="17">${globalState.requests.length}</div>
                     <div class="stat-label" w-tid="18">New Requests</div>
                 </div>
             </div>
@@ -34,23 +42,9 @@ export function friendsContent() {
         
         <h3 w-tid="21">Friend Requests</h3>
         <div class="friend-requests" w-tid="22">
-            <div class="friend-card" w-tid="23" style="display: flex;">
-                <div class="friend-info" w-tid="24">
-                    <div class="friend-avatar-container" w-tid="25">
-                        <img src="https://page-images.websim.ai/Emma Thompson_1024x545xrRI3XTSKVNalK1uIDx9a8ecd4bb73c4.jpg" alt="Emma Thompson" class="friend-avatar" w-tid="26" data-image_id="0" alt-rewritten="A charming headshot portrait of the acclaimed actress Emma Thompson.">
-                    </div>
-                    <div class="friend-details" w-tid="27">
-                        <div class="friend-name" w-tid="28">Emma Thompson</div>
-                        <div class="friend-level" w-tid="29">Level: 23</div>
-                        <div class="friend-registered" w-tid="30">Registered: June 7, 2023</div>
-                        <div class="friend-message" w-tid="32">"Hey there! I saw you in the Mystic Forest. Want to team up?"</div>
-                    </div>
-                </div>
-                <div class="friend-actions" w-tid="33">
-                    <button class="btn btn-accept" w-tid="34">Accept</button>
-                    <button class="btn btn-decline" w-tid="35">Decline</button>
-                </div>
-            </div>
+
+            ${friendsRequests()}
+
             <div class="friend-card" w-tid="36" style="display: flex;">
                 <div class="friend-info" w-tid="37">
                     <div class="friend-avatar-container" w-tid="38">
@@ -126,4 +120,30 @@ export function friendsContent() {
         </div>
     </div>
     `)
+}
+
+function friendsRequests() {
+    console.log(globalState.requests)
+    const requests = globalState.requests.map(r => {
+        return (`
+            <div class="friend-card" w-tid="23" style="display: flex;">
+                <div class="friend-info" w-tid="24">
+                    <div class="friend-avatar-container" w-tid="25">
+                        <img src="${r.sender.avatar}" alt="${r.sender.username}" class="friend-avatar" w-tid="26" data-image_id="1" alt-rewritten="${r.sender.first_name} ${r.sender.last_name}, a young boxer with a determined expression, stands in boxing stance within a visually striking black and white portrait photograph.">
+                    </div>
+                    <div class="friend-details" w-tid="27">
+                        <div class="friend-name" w-tid="28">${r.sender.first_name} ${r.sender.last_name}</div>
+                        <div class="friend-level" w-tid="29">Level: ${r.sender.id}</div>
+                        <div class="friend-registered" w-tid="30">Registered: </div>
+                    </div>
+                </div>
+                <div class="friend-actions" w-tid="33">
+                    <button class="btn btn-accept" w-tid="34">Accept</button>
+                    <button class="btn btn-decline" w-tid="35">Decline</button>
+                </div>
+            </div>
+        `)
+    })
+
+    return requests.join('\n')
 }

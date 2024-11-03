@@ -1,7 +1,12 @@
+import { gameAiComponent } from "./components";
+
 export const globalState = {
     user: null,
     users: null,
     friends: null,
+    requests: null,
+    sendRequests: null,
+    game: null,
 };
   
 export async function fetchProfile() {
@@ -15,17 +20,10 @@ export async function fetchProfile() {
 
     const userData = await response.json();
     globalState.user = userData.user;
-
-    // fetch friends 
-    const responseFriends = await fetch('http://127.0.0.1:8000/api/friends/', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    const friendsData = await responseFriends.json();
-    globalState.friends = friendsData.friends;
+    globalState.requests = userData.user.friend_requests;
+    globalState.sendRequests = userData.user.sent_requests;
+    globalState.friends = userData.user.friend_creator;
+    globalState.game = userData.user.game_stats;
 }
 
 export async function fetchUsers() {
