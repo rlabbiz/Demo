@@ -101,6 +101,7 @@ export async function urlHandler() {
         case '/profile':
             site.innerHTML = await profileComponent();
             site.classList = 'site profile-layout';
+            await searchComponentEvents();
             break;
 
         case '/play':

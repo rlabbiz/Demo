@@ -128,7 +128,7 @@ export async function searchComponentEvents() {
     if (friendDeclineButtons.length != 0) {
         friendDeclineButtons.forEach(button => {
             button.addEventListener('click', async (e) => {
-                handleDeclineRequest(e);
+                await handleDeclineRequest(e);
             })
         })
     }
