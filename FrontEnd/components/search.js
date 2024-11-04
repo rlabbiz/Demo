@@ -54,7 +54,7 @@ function searchContent(query) {
                 </div>
                 <div class="friend-actions">
                     ${friendButton(user)}
-                    <button class="btn btn-view" key="${user.username}"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-view" key="${user.username}"><i key="${user.username}" class="fas fa-eye"></i></button>
                 </div>
             </div>
         `)
@@ -72,13 +72,13 @@ function searchContent(query) {
 }
 
 function friendButton(user) {
-    const requestButton = {innerHtml: '<i class="fas fa-user-plus"></i>', class: 'btn btn-request', key: user.username};
-    const acceptButton = {innerHtml: '<i class="fas fa-user-check"></i>', class: 'btn btn-accept', key: user.username};
-    const declineButton = {innerHtml: '<i class="fas fa-user-times"></i>', class: 'btn btn-decline', key: user.username};
-    const unFriendButton = {innerHtml: '<i class="fas fa-user-minus"></i>', class: 'btn btn-unfriend', key: user.username};
-    const blockButton = {innerHtml: '<i class="fas fa-user-slash"></i>', class: 'btn btn-block', key: user.username};
-    const sendMessageButton = {innerHtml: '<i class="fas fa-envelope"></i>', class: 'btn btn-message', key: user.username};
-    const playButton = {innerHtml: '<i class="fas fa-gamepad"></i>', class: 'btn btn-play', key: user.username};
+    const requestButton = {innerHtml: `<i key=${user.username} class="fas fa-user-plus"></i>`, class: 'btn btn-request', key: user.username};
+    const acceptButton = {innerHtml: `<i key=${user.username} class="fas fa-user-check"></i>`, class: 'btn btn-accept', key: user.username};
+    const declineButton = {innerHtml: `<i key=${user.username} class="fas fa-user-times"></i>`, class: 'btn btn-decline', key: user.username};
+    const unFriendButton = {innerHtml: `<i key=${user.username} class="fas fa-user-minus"></i>`, class: 'btn btn-unfriend', key: user.username};
+    const blockButton = {innerHtml: `<i key=${user.username} class="fas fa-user-slash"></i>`, class: 'btn btn-block', key: user.username};
+    const sendMessageButton = {innerHtml: `<i key=${user.username} class="fas fa-envelope"></i>`, class: 'btn btn-message', key: user.username};
+    const playButton = {innerHtml: `<i key=${user.username} class="fas fa-gamepad"></i>`, class: 'btn btn-play', key: user.username};
     let isRequest = false;
     let isFriend = false;
 
@@ -139,6 +139,7 @@ export async function searchComponentEvents() {
         })
     })
 
+    // handle send message button
     const sendMessageButton = document.querySelectorAll(".btn-message");
     sendMessageButton.forEach(button => {
         button.addEventListener('click', async (e) => {
@@ -147,9 +148,17 @@ export async function searchComponentEvents() {
             urlHandler()
         })
     })
+
+    // handle unfriend button 
+    const unfriendButton = document.querySelectorAll('.btn-unfriend');
+    unfriendButton.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            await handleUnfriend(e);
+        })
+    })
 }
 
-export async function handleSendRequest(e) {
+async function handleSendRequest(e) {
     let username =  e.target.getAttribute('key');
     const response = await fetch('http://127.0.0.1:8000/api/friend_operations/', {
         method: 'POST',
@@ -163,6 +172,8 @@ export async function handleSendRequest(e) {
             request_status: 'P'
         })
     }).then(response => response.json())
+    console.log(username)
+    console.log(response)
     if (response.ok) {
         // add cenncel request button to the user
         // const element = document.querySelector(`.btn-request[key="${username}"]`);
@@ -177,7 +188,7 @@ export async function handleSendRequest(e) {
     }
 }
 
-export async function handleAcceptRequest(e) {
+async function handleAcceptRequest(e) {
     const username = e.target.getAttribute('key');
     const response = await fetch('http://127.0.0.1:8000/api/friend_operations/', {
         method: 'POST',
@@ -219,4 +230,20 @@ export async function handleDeclineRequest(e) {
         console.log('Friend request failed');
         console.log(response)
     }
+}
+
+async function handleUnfriend(e) {
+    const username = e.target.getAttribute('key');
+    const response = fetch('http://127.0.0.1:8000/api/friend_operations/', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            sender: globalState.user.username,
+            receiver: username,
+            request_status: 'U'
+        })
+    })
 }

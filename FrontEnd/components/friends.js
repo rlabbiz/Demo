@@ -99,9 +99,9 @@ function friendsRequests(requests) {
                     </div>
                 </div>
                 <div class="friend-actions">
-                    <button class="btn btn-accept" key="${r.sender.username}" ><i class="fas fa-user-check"></i></button>
-                    <button class="btn btn-decline" key="${r.sender.username}" ><i class="fas fa-user-times"></i></button>
-                    <button class="btn btn-view" key="${r.sender.username}" ><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-accept" key="${r.sender.username}" ><i key="${r.sender.username}" class="fas fa-user-check"></i></button>
+                    <button class="btn btn-decline" key="${r.sender.username}" ><i key="${r.sender.username}" class="fas fa-user-times"></i></button>
+                    <button class="btn btn-view" key="${r.sender.username}" ><i key="${r.sender.username}" class="fas fa-eye"></i></button>
                 </div>
             </div>
         `)
@@ -133,11 +133,11 @@ function friendsList(friends) {
                     </div>
                 </div>
                 <div class="friend-actions">
-                    <button class="btn btn-message" key="${r.friend.username}"><i class="fas fa-envelope"></i></button>
-                    <button class="btn btn-play" key="${r.friend.username}"><i class="fas fa-gamepad"></i></button>
-                    <button class="btn btn-unfriend" key="${r.friend.username}"><i class="fas fa-user-minus"></i></button>
-                    <button class="btn btn-unfriend" key="${r.friend.username}"><i class="fas fa-user-slash"></i></button>
-                    <button class="btn btn-view" key="${r.friend.username}"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-message" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-envelope"></i></button>
+                    <button class="btn btn-play" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-gamepad"></i></button>
+                    <button class="btn btn-unfriend" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-user-minus"></i></button>
+                    <button class="btn btn-unfriend" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-user-slash"></i></button>
+                    <button class="btn btn-view" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-eye"></i></button>
                 </div>
             </div>    
         `)
