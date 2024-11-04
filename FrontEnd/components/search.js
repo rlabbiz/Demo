@@ -1,13 +1,9 @@
 import { header } from '../scripts/components.js'
 import { menu } from '../scripts/components.js'
-import {
-    fetchProfile,
-    globalState,
-    fetchUsers,
-} from '../scripts/fetchData.js';
+import { fetchProfile, globalState, fetchUsers } from '../scripts/fetchData.js';
 import { urlHandler } from '../scripts/routes.js';
-import { user } from './gameWaiting';
 import { getButtons } from './profile.js';
+import { handleFriendDecline, handleViewMessage } from '../scripts/generalMessage.js';
 
 export async function searchComponent() {
     if (globalState.user === null) 
@@ -102,7 +98,7 @@ function friendButton(user) {
 
 export async function searchComponentEvents() {
     // handle the send request button
-    const friendRequestButtons = document.querySelectorAll('.btn-request');
+    const friendRequestButtons = document.querySelectorAll('button.btn-request');
     friendRequestButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
             handleSendRequest(e);
@@ -110,7 +106,7 @@ export async function searchComponentEvents() {
     })
 
     // handle the accpet request button
-    const friendAcceptButtons = document.querySelectorAll('.btn-accept');
+    const friendAcceptButtons = document.querySelectorAll('button.btn-accept');
     if (friendAcceptButtons.length != 0) {
         friendAcceptButtons.forEach(button => {
             button.addEventListener('click', async (e) => {
@@ -120,7 +116,7 @@ export async function searchComponentEvents() {
     }
 
     // handle the decline request button
-    const friendDeclineButtons = document.querySelectorAll('.btn-decline');
+    const friendDeclineButtons = document.querySelectorAll('button.btn-decline');
     if (friendDeclineButtons.length != 0) {
         friendDeclineButtons.forEach(button => {
             button.addEventListener('click', async (e) => {
@@ -130,7 +126,7 @@ export async function searchComponentEvents() {
     }
 
     // handle the view profile button
-    const viewProfileButtons = document.querySelectorAll('.btn-view');
+    const viewProfileButtons = document.querySelectorAll('button.btn-view');
     viewProfileButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
             const username = e.target.getAttribute('key');
@@ -140,7 +136,7 @@ export async function searchComponentEvents() {
     })
 
     // handle send message button
-    const sendMessageButton = document.querySelectorAll(".btn-message");
+    const sendMessageButton = document.querySelectorAll("button.btn-message");
     sendMessageButton.forEach(button => {
         button.addEventListener('click', async (e) => {
             const username = e.target.getAttribute('key')
@@ -150,7 +146,7 @@ export async function searchComponentEvents() {
     })
 
     // handle unfriend button 
-    const unfriendButton = document.querySelectorAll('.btn-unfriend');
+    const unfriendButton = document.querySelectorAll('button.btn-unfriend');
     unfriendButton.forEach(button => {
         button.addEventListener('click', async (e) => {
             await handleUnfriend(e);
@@ -172,20 +168,16 @@ async function handleSendRequest(e) {
             request_status: 'P'
         })
     }).then(response => response.json())
-    console.log(username)
-    console.log(response)
-    if (response.ok) {
-        // add cenncel request button to the user
-        // const element = document.querySelector(`.btn-request[key="${username}"]`);
-        // element.innerHTML = '<i class="fas fa-user-times"></i>';
-        // element.classList.remove('btn-request');
-        // element.classList.add('btn-cancel');
-    } else {
-        // const element = document.querySelector(`.btn-request[key="${username}"]`);
-        // element.innerHTML = '<i class="fas fa-user-times"></i>';
-        // element.classList.remove('btn-request');
-        // element.classList.add('btn-cancel');
-    }
+    if (!response.error) {
+        // check e if button or i element and remove the button and add cencel button 
+        if (e.target.tagName === 'I') {
+            e.target.parentElement.remove();
+        } else {
+            e.target.remove();
+        }
+        handleViewMessage({title: 'Friend Request', message: response.success, type: 'success', icon: 'fas fa-check-circle'})
+    } else
+        handleFriendDecline({title: 'Friend Request', message: response.error, type: 'error', icon: 'fas fa-exclamation-circle'})
 }
 
 async function handleAcceptRequest(e) {
