@@ -1,5 +1,15 @@
 import { urlHandler } from "../scripts/routes.js";
-export function gameTournamentComponent() {
+import { globalState, fetchProfile } from "../scripts/fetchData.js";
+
+export async function gameTournamentComponent() {
+    if (!globalState.user) {
+        await fetchProfile();
+    }
+
+    if (!globalState.user) {
+        return (`cant fetch user data`)
+    }
+
     return (`
         <div class="tournament-component">
             <h2> <i class="fas fa-arrow-left" title="Back To Game"></i> PING PONG Tournament hub</h2>

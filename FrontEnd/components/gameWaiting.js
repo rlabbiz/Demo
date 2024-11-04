@@ -1,4 +1,5 @@
 import { urlHandler } from "../scripts/routes";
+import { globalState, fetchProfile } from "../scripts/fetchData";
 
 export const userInfo = {
     id: null,
@@ -7,7 +8,15 @@ export const userInfo = {
     otherPlayer: null,
 }
 
-export function gameStartingComponent() {
+export async function gameStartingComponent() {
+    if (!globalState.user) {
+        await fetchProfile();
+    }
+
+    if (!globalState.user) {
+        return (`cant fetch user data`)
+    }
+    
     const id = prompt('Enter your id');
     const name = prompt('Enter your name');
     const avatar = prompt('Enter your avatar id');

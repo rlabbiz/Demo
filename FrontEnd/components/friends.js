@@ -1,5 +1,6 @@
 import { header, menu } from '../scripts/components.js'
 import { fetchProfile, globalState, fetchUsers } from '../scripts/fetchData.js';
+import { urlHandler } from '../scripts/routes.js';
 
 export async function friendsComponent() {
     if (globalState.user === null) 
@@ -7,14 +8,31 @@ export async function friendsComponent() {
     if (globalState.user === null)
         return (`cant fetch user data`)
 
+
+    // get query string from url search param and filter by query string
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const search = urlParams.get('search');
+    let friends = globalState.friends;
+    let requests = globalState.requests;
+    if (search) {
+        friends = globalState.friends.filter(user => {
+            if (user.friend.username === globalState.user.username) return false;
+            return user.friend.username.includes(search) || user.friend.first_name.includes(search) || user.friend.last_name.includes(search)
+        })
+
+        requests = globalState.requests.filter(user => {
+            return user.sender.username.includes(search) || user.sender.first_name.includes(search) || user.sender.last_name.includes(search)
+        })
+    }
     return (
         header() +
         menu() +
-        friendsContent()
+        friendsContent(friends, requests)
     )
 }
 
-export function friendsContent() {
+export function friendsContent(friends, requests) {
     let userRequestLength = 0;
     let userFriendsLength = 0;
 
@@ -23,7 +41,6 @@ export function friendsContent() {
     if (globalState.requests)
         userRequestLength = globalState.requests.length;
 
-    console.log(globalState.user)
     return (`
     <div class="friends-list" w-tid="6">
         <div class="friend-header" w-tid="7">
@@ -49,20 +66,26 @@ export function friendsContent() {
         
         <h3 w-tid="21">Friend Requests</h3>
         <div class="friend-requests" w-tid="22">
-            ${friendsRequests()}
+            ${friendsRequests(requests)}
         </div>
 
         <h3 w-tid="49">Friends List</h3>
         <div class="friends-list" w-tid="50">
-            ${friendsList()}
+            ${friendsList(friends)}
         </div>
     </div>
     `)
 }
 
-function friendsRequests() {
-    console.log(globalState.requests)
-    const requests = globalState.requests.map(r => {
+function friendsRequests(requests) {
+    if (!requests || requests.length === 0) {
+        return (`
+            <div class="no-friends" w-tid="51">
+                No friend requests found
+            </div>
+        `)
+    }
+    const innerHTML = requests.map(r => {
         return (`
             <div class="friend-card" w-tid="23" style="display: flex;">
                 <div class="friend-info" w-tid="24">
@@ -78,16 +101,24 @@ function friendsRequests() {
                 <div class="friend-actions">
                     <button class="btn btn-accept" key="${r.sender.username}" ><i class="fas fa-user-check"></i></button>
                     <button class="btn btn-decline" key="${r.sender.username}" ><i class="fas fa-user-times"></i></button>
+                    <button class="btn btn-view" key="${r.sender.username}" ><i class="fas fa-eye"></i></button>
                 </div>
             </div>
         `)
     })
 
-    return requests.join('\n')
+    return innerHTML.join('\n')
 }
 
-function friendsList() {
-    const innerHTML = globalState.friends.map(r => {
+function friendsList(friends) {
+    if (!friends || friends.length === 0) {
+        return (`
+            <div class="no-friends" w-tid="51">
+                No friends found
+            </div>
+        `)
+    }
+    const innerHTML = friends.map(r => {
         return (`
             <div class="friend-card"style="display: flex;">
                 <div class="friend-info">
@@ -97,7 +128,7 @@ function friendsList() {
                     </div>
                     <div class="friend-details">
                         <div class="friend-name">${r.friend.first_name} ${r.friend.last_name}</div>
-                        <div class="friend-level">Level: 42</div>
+                        <div class="friend-level">Level: ${r.friend.game_stats[0].level}</div>
                         <div class="friend-registered">Registered: May 15, 2022</div>
                     </div>
                 </div>
@@ -113,4 +144,17 @@ function friendsList() {
     })
 
     return innerHTML.join('\n');
+}
+
+export async function friendsScript() {
+    const searchButton = document.querySelector('.search-bar .search-input');
+    if (searchButton) {
+        searchButton.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                const searchValue = e.target.value;
+                history.pushState({}, '', '/friends?search=' + searchValue)
+                urlHandler();
+            }
+        })
+    }
 }

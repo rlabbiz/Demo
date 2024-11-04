@@ -1,5 +1,6 @@
 import { userInfo, data } from "./gameWaiting"
 import { urlHandler } from "../scripts/routes";
+import { globalState, fetchProfile } from "../scripts/fetchData";
 
 let Ball = {
     x: 950 / 2,
@@ -29,7 +30,13 @@ let RightPlayer = {
     score: 0,
 }
 
-export function gameOnlineComponent() {
+export async function gameOnlineComponent() {
+    if (!globalState.user) 
+        await fetchProfile();
+
+    if (globalState.user === null)
+        return (`cant fetch user data`)
+
     let LeftUser, RightUser;
 
     // check if no room name, then exit this function

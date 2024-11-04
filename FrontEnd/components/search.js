@@ -54,7 +54,7 @@ function searchContent(query) {
                 </div>
                 <div class="friend-actions">
                     ${friendButton(user)}
-                    <button class="btn btn-view" key="${user.username}"><i class="fas fa-eye" key="${user.username}"></i></button>
+                    <button class="btn btn-view" key="${user.username}"><i class="fas fa-eye"></i></button>
                 </div>
             </div>
         `)
