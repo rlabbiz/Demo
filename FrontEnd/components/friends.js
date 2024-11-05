@@ -136,7 +136,7 @@ function friendsList(friends) {
                     <button class="btn btn-message" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-envelope"></i></button>
                     <button class="btn btn-play" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-gamepad"></i></button>
                     <button class="btn btn-unfriend" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-user-minus"></i></button>
-                    <button class="btn btn-unfriend" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-user-slash"></i></button>
+                    <button class="btn btn-block" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-user-slash"></i></button>
                     <button class="btn btn-view" key="${r.friend.username}"><i key="${r.friend.username}" class="fas fa-eye"></i></button>
                 </div>
             </div>    
