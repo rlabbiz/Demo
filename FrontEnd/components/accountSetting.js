@@ -55,7 +55,8 @@ export function accountSettingContent() {
                     <input type="email" id="email" name="email" value="${globalState.user.email}">
                 </div>
             </div>
-            <button type="button" class="save-btn" onclick="">Change Password</button>
+            <button type="button" class="btn save-btn">Save Changes</button>
+            <button type="button" class="btn change-password-btn">Change Password</button>
         </div>
 
         <div id="passwordModal" class="modal">
@@ -66,8 +67,8 @@ export function accountSettingContent() {
                 <input type="password" id="newPassword" placeholder="New Password" style="display: block; margin: 20px auto;">
                 <input type="password" id="reNewPassword" placeholder="Repeat New Password" style="display: block; margin: 20px auto;">
                 <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                    <button class="save-btn" style="margin-top: 0;">Confirm</button>
-                    <button class="save-btn" style="margin-top: 0; background-color: #FF6B6B;">Cancel</button>
+                    <button class="btn save-password-btn" style="margin-top: 0;">Confirm</button>
+                    <button class="btn cencel-password-btn" style="margin-top: 0; background-color: #FF6B6B;">Cancel</button>
                 </div>
             </div>
         </div>

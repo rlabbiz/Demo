@@ -157,7 +157,7 @@ export function setUpEvent() {
         })
     }
 
-    const saveChangeButton = document.querySelector('.account-setting .save-btn');
+    const saveChangeButton = document.querySelector('.account-setting .change-password-btn');
     const passwordModal = document.querySelector('#passwordModal');
 
     if (saveChangeButton) {
@@ -167,7 +167,7 @@ export function setUpEvent() {
     }
 
     const passwordModalClose = document.querySelector('#passwordModal span');
-    const passwordModalCancel = document.querySelector('#passwordModal .save-btn:last-child');
+    const passwordModalCancel = document.querySelector('#passwordModal .cencel-password-btn');
 
     if (passwordModalClose) {
         passwordModalClose.addEventListener('click', function () {

@@ -2165,7 +2165,7 @@ body {
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.account-setting .save-btn {
+.account-setting .save-btn, .account-setting .change-password-btn {
     background-color: #3DBDA7;
     color: white;
     border: none;
@@ -2174,8 +2174,12 @@ body {
     cursor: pointer;
     font-size: 18px;
     transition: background-color 0.3s, transform 0.2s;
-    display: block;
-    margin-top: 30px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.account-setting .change-password-btn {
+    background-color: #FF6B6B;
 }
 
 .modal {
@@ -2208,12 +2212,12 @@ body {
     top: 10px;
     right: 10px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .modal-content .close:hover {
     color: red;
     text-decoration: none;
-    cursor: pointer;
 }
 
 .modal-content input[type="text"], .modal-content input[type="email"], .modal-content input[type="password"] {
@@ -2227,7 +2231,7 @@ body {
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.modal-content .save-btn {
+.modal-content .save-password-btn, .modal-content .cencel-password-btn {
     background-color: #3DBDA7;
     color: white;
     border: none;
