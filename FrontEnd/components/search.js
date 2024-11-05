@@ -112,7 +112,8 @@ export async function searchComponentEvents() {
     const friendRequestButtons = document.querySelectorAll('button.btn-request');
     friendRequestButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
-            handleSendRequest(e);
+            await handleSendRequest(e);
+            await fetchProfile();
         })
     })
 
@@ -122,6 +123,7 @@ export async function searchComponentEvents() {
         friendAcceptButtons.forEach(button => {
             button.addEventListener('click', async (e) => {
                 await handleAcceptRequest(e);
+                await fetchProfile();
             })
         })
     }
@@ -132,6 +134,7 @@ export async function searchComponentEvents() {
         friendDeclineButtons.forEach(button => {
             button.addEventListener('click', async (e) => {
                 await handleDeclineRequest(e);
+                await fetchProfile();
             })
         })
     }
@@ -141,6 +144,7 @@ export async function searchComponentEvents() {
         friendDeclineReverseButtons.forEach(button => {
             button.addEventListener('click', async (e) => {
                 await handleDeclineReverseRequest(e);
+                await fetchProfile();
             })
         })
     }
@@ -170,6 +174,7 @@ export async function searchComponentEvents() {
     unfriendButton.forEach(button => {
         button.addEventListener('click', async (e) => {
             await handleUnfriend(e);
+            await fetchProfile();
         })
     })
 }
@@ -294,7 +299,7 @@ async function handleDeclineReverseRequest(e) {
 // still problem here response is always success even if the user is remoeved from the friend list aready 
 async function handleUnfriend(e) {
     const username = e.target.getAttribute('key');
-    const response = fetch('http://127.0.0.1:8000/api/friend_operations/', {
+    const response = await fetch('http://127.0.0.1:8000/api/friend_operations/', {
         method: 'POST',
         credentials: 'include',
         headers: {
