@@ -505,7 +505,7 @@ export function homeSidebar() {
                         <img src="" alt="profile">
                         <div class="status">
                             <h4>${globalState.user.username}</h4>
-                            <p>Level 6.18</p>
+                            <p>Level ${globalState.user.game_stats[0].level}</p>
                         </div>
                 </div>
                 <div class="profile-info">
