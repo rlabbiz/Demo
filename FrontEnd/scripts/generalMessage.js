@@ -88,7 +88,7 @@ export function showLoginNotification() {
     });
 }
 
-function showLogoutNotification() {
+export function showLogoutNotification() {
     notificationManager.create({
         type: 'info',
         title: 'See You Soon! 👋',
@@ -97,7 +97,7 @@ function showLogoutNotification() {
     });
 }
 
-function showGameRequest() {
+export function showGameRequest() {
     notificationManager.create({
         type: 'request',
         title: 'Game Challenge! 🎮',
@@ -118,7 +118,7 @@ function showGameRequest() {
     });
 }
 
-function showFriendRequest() {
+export function showFriendRequest() {
     notificationManager.create({
         type: 'request',
         title: 'New Friend Request 🤝',
@@ -139,7 +139,7 @@ function showFriendRequest() {
     });
 }
 
-function showNewMessage() {
+export function showNewMessage() {
     notificationManager.create({
         type: 'message',
         title: 'New Message 💬',
@@ -156,7 +156,7 @@ function showNewMessage() {
 }
 
 // Handle action functions with enhanced notifications
-function handleGameAccept() {
+export function handleGameAccept() {
     notificationManager.create({
         type: 'success',
         title: 'Game On! 🎮',
@@ -165,7 +165,7 @@ function handleGameAccept() {
     });
 }
 
-function handleGameDecline() {
+export function handleGameDecline() {
     notificationManager.create({
         type: 'info',
         title: 'Maybe Next Time 👋',
@@ -174,7 +174,7 @@ function handleGameDecline() {
     });
 }
 
-function handleFriendAccept() {
+export function handleFriendAccept() {
     notificationManager.create({
         type: 'success',
         title: 'New Friend Added! 🎉',
@@ -183,20 +183,10 @@ function handleFriendAccept() {
     });
 }
 
-function handleFriendDecline() {
-    notificationManager.create({
-        type: 'info',
-        title: 'Request Declined 👋',
-        message: 'Friend request has been declined',
-        icon: 'fas fa-user-times'
-    });
+export function handleFriendDecline(info) {
+    notificationManager.create(info);
 }
 
-function handleViewMessage() {
-    notificationManager.create({
-        type: 'info',
-        title: 'Opening Chat 💭',
-        message: 'Taking you to your messages...',
-        icon: 'fas fa-comment'
-    });
+export function handleViewMessage(info) {
+    notificationManager.create(info);
 }

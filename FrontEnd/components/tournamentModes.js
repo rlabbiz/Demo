@@ -1,5 +1,13 @@
-import { urlHandler } from "../scripts/routes";
-export function firstModeComponent() {
+import { urlHandler } from "../scripts/routes.js";
+import { globalState, fetchProfile } from "../scripts/fetchData.js";
+
+export async function firstModeComponent() {
+    if (globalState.user === null)
+        await fetchProfile();
+
+    if (globalState.user === null)
+        return (`cant fetch user data`)
+
     return (`
         <div class="first-mode">
             <h2>ping Pong masters</h2>
@@ -111,7 +119,13 @@ export function firstModeComponent() {
     `)
 }
 
-export function secondModeComponent() {
+export async function secondModeComponent() {
+    if (globalState.user === null)
+        await fetchProfile();
+
+    if (globalState.user === null)
+        return (`cant fetch user data`)
+
     return (`
         <div class="first-mode">
             <h2>ping Pong masters</h2>

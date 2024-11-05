@@ -13,7 +13,7 @@ import { SingInComponent, SingUpComponentScript } from '../components/singin.js'
 import { ChatComponent, chatScript } from '../components/chat.js';
 import { firstModeComponent, secondModeComponent, tournamentModesScript } from '../components/tournamentModes.js';
 import { accountSettingComponent } from '../components/accountSetting.js';
-import { friendsComponent } from '../components/friends.js';
+import { friendsComponent, friendsScript } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
 import { gameOnlineComponent, gameOnlineScript } from '../components/play.js';
 import { searchComponent, searchComponentEvents } from '../components/search.js';
@@ -38,30 +38,30 @@ export async function urlHandler() {
             site.classList = 'site gameComponent';
             break;
         case '/index.html':
-            site.innerHTML = homeComponent();
+            site.innerHTML = await homeComponent();
             site.classList = 'site gameComponent';
             break;
         case '/game':
-            site.innerHTML = gameComponent();
+            site.innerHTML = await gameComponent();
             site.classList = 'site gameComponent';
             break;
         case '/game_starting':
-            site.innerHTML = gameStartingComponent();
+            site.innerHTML = await gameStartingComponent();
             site.classList = 'site';
             gameStartingComponentScript();
             break;
         case '/tournament':
-            site.innerHTML = gameTournamentComponent();
+            site.innerHTML = await gameTournamentComponent();
             site.classList = 'site';
             tournamentScript();
             break;
         case '/ai':
-            site.innerHTML = gameAiComponent();
+            site.innerHTML = await gameAiComponent();
             site.classList = 'site';
             gameScriptAi();
             break;
         case '/game_setting':
-            site.innerHTML = gameSettingComponent();
+            site.innerHTML = await gameSettingComponent();
             site.classList = 'site game-setting-layout';
             gameSettingScript();
             break;
@@ -81,12 +81,12 @@ export async function urlHandler() {
             await chatScript();
             break;
         case '/first-mode':
-            site.innerHTML = firstModeComponent();
+            site.innerHTML = await firstModeComponent();
             site.classList = 'site';
             tournamentModesScript();
             break;
         case '/second-mode':
-            site.innerHTML = secondModeComponent();
+            site.innerHTML = await secondModeComponent();
             site.classList = 'site';
             tournamentModesScript();
             break;
@@ -95,16 +95,19 @@ export async function urlHandler() {
             site.classList = 'site account-setting-layout';
             break;
         case '/friends':
-            site.innerHTML = friendsComponent();
+            site.innerHTML = await friendsComponent();
             site.classList = 'site friends-layout';
+            await searchComponentEvents();
+            await friendsScript();
             break;
         case '/profile':
             site.innerHTML = await profileComponent();
             site.classList = 'site profile-layout';
+            await searchComponentEvents();
             break;
 
         case '/play':
-            site.innerHTML = gameOnlineComponent();
+            site.innerHTML = await gameOnlineComponent();
             site.classList = 'site';
             gameOnlineScript();
             break;

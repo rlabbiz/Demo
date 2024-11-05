@@ -1,6 +1,14 @@
 import { globalState, fetchProfile } from './fetchData.js';
 
-export function gameComponent() {
+export async function gameComponent() {
+    if (!globalState.user) {
+        await fetchProfile();
+    }
+
+    if (!globalState.user) {
+        return (`cant fetch data`);
+    }
+
   return (
     header() +
     menu() + 
@@ -9,7 +17,15 @@ export function gameComponent() {
   )
 }
 
-export function gameSettingComponent() {
+export async function gameSettingComponent() {
+    if (!globalState.user) {
+        await fetchProfile();
+    }
+
+    if (!globalState.user) {
+        return (`cant fetch data`);
+    }
+
     return (
         header() +
         menu() +
@@ -394,7 +410,15 @@ export function gameContent() {
 }
 
 
-export function gameAiComponent() {
+export async function gameAiComponent() {
+    if (!globalState.user) {
+        await fetchProfile();
+    }
+
+    if (!globalState.user) {
+        return (`cant fetch data`);
+    }
+
     return (`
         <div class="game-container">
             <div id="countdown">5</div>

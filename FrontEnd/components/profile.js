@@ -31,7 +31,6 @@ export async function profileComponent() {
         }
     }
         
-    // const user = globalState.users.find(user => user.username === username);
     return (
         header() +
         menu() +
@@ -141,16 +140,18 @@ function profileContent(user) {
 }
 
 function profileButtons(user) {
-    const requestButton = {innerHtml: '<i class="fas fa-user-plus"></i>', class: 'btn btn-request', key: user.username};
+    const requestButton = {innerHtml: `<i key=${user.username} class="fas fa-user-plus"></i>`, class: 'btn btn-request', key: user.username};
     const editButton = {innerHtml: 'Edit Profile', class: 'edit-profile-btn', key: user.username};
-    const acceptButton = {innerHtml: '<i class="fas fa-user-check"></i>', class: 'btn btn-accept', key: user.username};
-    const declineButton = {innerHtml: '<i class="fas fa-user-times"></i>', class: 'btn btn-decline', key: user.username};
-    const unFriendButton = {innerHtml: '<i class="fas fa-user-minus"></i>', class: 'btn btn-unfriend', key: user.username};
-    const blockButton = {innerHtml: '<i class="fas fa-user-slash"></i>', class: 'btn btn-block', key: user.username};
-    const sendMessageButton = {innerHtml: '<i class="fas fa-envelope"></i>', class: 'btn btn-message', key: user.username};
-    const playButton = {innerHtml: '<i class="fas fa-gamepad"></i>', class: 'btn btn-play', key: user.username};
+    const acceptButton = {innerHtml: `<i key=${user.username} class="fas fa-user-check"></i>`, class: 'btn btn-accept', key: user.username};
+    const declineButton = {innerHtml: `<i key=${user.username} class="fas fa-user-times"></i>`, class: 'btn btn-decline', key: user.username};
+    const declineButtonReverse = {innerHtml: `<i key=${user.username} class="fas fa-user-times"></i>`, class: 'btn btn-decline-reverse', key: user.username};
+    const unFriendButton = {innerHtml: `<i key=${user.username} class="fas fa-user-minus"></i>`, class: 'btn btn-unfriend', key: user.username};
+    const blockButton = {innerHtml: `<i key=${user.username} class="fas fa-user-slash"></i>`, class: 'btn btn-block', key: user.username};
+    const sendMessageButton = {innerHtml: `<i key=${user.username} class="fas fa-envelope"></i>`, class: 'btn btn-message', key: user.username};
+    const playButton = {innerHtml: `<i key=${user.username} class="fas fa-gamepad"></i>`, class: 'btn btn-play', key: user.username};
     let isRequest = false;
     let isFriend = false;
+    let isSend = false;
 
     if (globalState.user.username === user.username)
         return (getButtons([editButton]))
@@ -165,10 +166,17 @@ function profileButtons(user) {
             isFriend = true;
     })
 
+    globalState.user.sent_requests.forEach(r => {
+        if (r.receiver.username === user.username)
+            isSend = true;
+    })
+
     if (isRequest) 
         return (getButtons([acceptButton, declineButton]))
     else if (isFriend)
         return (getButtons([sendMessageButton, playButton, unFriendButton, blockButton]))
+    else if (isSend)
+        return (getButtons([declineButtonReverse]))
     else
         return (getButtons([requestButton]))
 }

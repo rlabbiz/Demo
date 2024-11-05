@@ -1,0 +1,59 @@
+
+services:
+
+  Backend:
+    container_name: backend
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    image: backend
+    environment:
+      - ALLOWED_HOSTS=backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./logs:/var/log/django
+    networks:
+      - monitoring
+    restart: always
+    # depends_on:
+    #   - db
+  
+  
+  FrontEnd:
+    container_name: frontEnd
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    image: nginx
+    volumes:
+    - frent:/usr/share/nginx/html
+    - ./FrontEnd/conf/nginx.conf:/etc/nginx/conf.d/default.conf
+    - ./FrontEnd/conf/empty.conf:/etc/nginx/conf.d/nginx.conf
+    ports:
+    - "8008:80"
+    networks:
+      - monitoring
+
+#// ------------------------------------------------------- Volumes ------------------------------------------------------------- //
+
+volumes:
+  prometheus_data:
+  monitoring:  
+  grafana_data:
+  portainer_data:
+  esdata:
+    driver: local
+  frent:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/rarraji/Desktop/Solixx/Frontend
+
+
+#// ------------------------------------------------------- Networks ------------------------------------------------------------- //
+
+networks:
+  monitoring:
+    driver: bridge
