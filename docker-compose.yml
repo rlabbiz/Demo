@@ -49,7 +49,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/rarraji/Desktop/Solixx/Frontend
+      device: /Volumes/REDA/mourad/Frontend
 
 
 #// ------------------------------------------------------- Networks ------------------------------------------------------------- //

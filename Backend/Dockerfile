@@ -18,8 +18,8 @@ RUN python3 -m venv env \
     && ./env/bin/pip install --upgrade pip \
     && ./env/bin/pip install -r requirements1.txt
 
-# RUN ./env/bin/python3 manage.py makemigrations
-# RUN ./env/bin/python3 manage.py migrate
+RUN ./env/bin/python3 manage.py makemigrations
+RUN ./env/bin/python3 manage.py migrate
 
 EXPOSE 8000
 
