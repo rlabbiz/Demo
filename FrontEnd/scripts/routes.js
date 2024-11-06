@@ -12,7 +12,7 @@ import { singupScript } from '../components/singup.js';
 import { SingInComponent, SingUpComponentScript } from '../components/singin.js';
 import { ChatComponent, chatScript } from '../components/chat.js';
 import { firstModeComponent, secondModeComponent, tournamentModesScript } from '../components/tournamentModes.js';
-import { accountSettingComponent } from '../components/accountSetting.js';
+import { accountSettingComponent, accountSettingScript } from '../components/accountSetting.js';
 import { friendsComponent, friendsScript } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
 import { gameOnlineComponent, gameOnlineScript } from '../components/play.js';
@@ -93,6 +93,7 @@ export async function urlHandler() {
         case '/account_settings':
             site.innerHTML = await accountSettingComponent();
             site.classList = 'site account-setting-layout';
+            await accountSettingScript()
             break;
         case '/friends':
             site.innerHTML = await friendsComponent();

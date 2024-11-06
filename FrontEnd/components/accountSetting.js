@@ -55,7 +55,8 @@ export function accountSettingContent() {
                     <input type="email" id="email" name="email" value="${globalState.user.email}">
                 </div>
             </div>
-            <button type="button" class="save-btn" onclick="">Change Password</button>
+            <button type="button" class="btn save-btn">Save Changes</button>
+            <button type="button" class="btn change-password-btn">Change Password</button>
         </div>
 
         <div id="passwordModal" class="modal">
@@ -66,10 +67,55 @@ export function accountSettingContent() {
                 <input type="password" id="newPassword" placeholder="New Password" style="display: block; margin: 20px auto;">
                 <input type="password" id="reNewPassword" placeholder="Repeat New Password" style="display: block; margin: 20px auto;">
                 <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                    <button class="save-btn" style="margin-top: 0;">Confirm</button>
-                    <button class="save-btn" style="margin-top: 0; background-color: #FF6B6B;">Cancel</button>
+                    <button class="btn save-password-btn" style="margin-top: 0;">Confirm</button>
+                    <button class="btn cencel-password-btn" style="margin-top: 0; background-color: #FF6B6B;">Cancel</button>
                 </div>
             </div>
         </div>
     `)
+}
+
+
+export async function accountSettingScript() {
+    const changePassword = document.querySelector('.account-setting .change-password-btn');
+    const passwordModal = document.querySelector('#passwordModal');
+
+    if (changePassword) {
+        changePassword.addEventListener('click', function () {
+            passwordModal.style.display = 'block';
+        })
+    }
+
+    const passwordModalClose = document.querySelector('#passwordModal span');
+    const passwordModalCancel = document.querySelector('#passwordModal .cencel-password-btn');
+
+    if (passwordModalClose) {
+        passwordModalClose.addEventListener('click', function () {
+            passwordModal.style.display = 'none';
+        })
+    }
+
+    if (passwordModalCancel) {
+        passwordModalCancel.addEventListener('click', function () {
+            passwordModal.style.display = 'none';
+        })
+    }
+
+    const avatarSelector = document.querySelectorAll('.account-setting .avatar-selection img');
+
+    if (avatarSelector) {
+        avatarSelector.forEach(selector => {
+            selector.addEventListener('click', function (e) {
+                avatarSelector.forEach(selector => {
+                    selector.classList.remove('active');
+                })
+                selector.classList.add('active');
+                const target = e.target;
+                if (target.tagName === 'IMG') {
+                    const profilePic = document.querySelector('.account-setting .profile-pic');
+                    profilePic.src = target.src;
+                }
+            })
+        })
+    }
 }
