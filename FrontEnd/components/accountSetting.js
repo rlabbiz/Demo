@@ -78,8 +78,11 @@ export function accountSettingContent() {
 
 export async function accountSettingScript() {
     const changePassword = document.querySelector('.account-setting .change-password-btn');
-    const passwordModal = document.querySelector('#passwordModal');
     const saveBtn = document.querySelector('.account-setting .save-btn');
+    const passwordModal = document.querySelector('#passwordModal');
+    const passwordModalClose = document.querySelector('#passwordModal span');
+    const passwordModalCancel = document.querySelector('#passwordModal .cencel-password-btn');
+    const savePasswordBtn = document.querySelector('#passwordModal .save-password-btn');
 
     // Save changes to user profile data
     if (saveBtn) {
@@ -88,14 +91,19 @@ export async function accountSettingScript() {
         })
     }
 
+    // Save changes to user password
+    console.log(savePasswordBtn);
+    if (savePasswordBtn) {
+        savePasswordBtn.addEventListener('click', async () => {
+            await changePasswordModal();
+        })
+    }
+
     if (changePassword) {
         changePassword.addEventListener('click', function () {
             passwordModal.style.display = 'block';
         })
     }
-
-    const passwordModalClose = document.querySelector('#passwordModal span');
-    const passwordModalCancel = document.querySelector('#passwordModal .cencel-password-btn');
 
     if (passwordModalClose) {
         passwordModalClose.addEventListener('click', function () {
@@ -136,7 +144,7 @@ async function updateProfile() {
     const avatar = document.querySelector('.account-setting .profile-pic').src;
 
     const response = await fetch('http://127.0.0.1:8000/api/profile/', {
-        method: 'POST',
+        method: 'PUT',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
@@ -152,5 +160,29 @@ async function updateProfile() {
         })
     }).then(response => response.json());
 
+    console.log(response);
+}
+
+async function changePasswordModal() {
+    const currentPassword = document.querySelector('#currentPassword').value;
+    const newPassword = document.querySelector('#newPassword').value;
+    const reNewPassword = document.querySelector('#reNewPassword').value;
+
+    if (newPassword !== reNewPassword) {
+        alert('Passwords do not match');
+        return;
+    }
+
+    const response = await fetch('http://127.0.0.1:8000/api/password_updating/', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            password: currentPassword,
+            new_password: newPassword
+        })
+    }).then(response => response.json());
     console.log(response);
 }
