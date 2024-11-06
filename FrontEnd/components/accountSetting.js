@@ -79,6 +79,14 @@ export function accountSettingContent() {
 export async function accountSettingScript() {
     const changePassword = document.querySelector('.account-setting .change-password-btn');
     const passwordModal = document.querySelector('#passwordModal');
+    const saveBtn = document.querySelector('.account-setting .save-btn');
+
+    // Save changes to user profile data
+    if (saveBtn) {
+        saveBtn.addEventListener('click', async function () {
+            await updateProfile();
+        })
+    }
 
     if (changePassword) {
         changePassword.addEventListener('click', function () {
@@ -118,4 +126,31 @@ export async function accountSettingScript() {
             })
         })
     }
+}
+
+async function updateProfile() {
+    const firstName = document.querySelector('#firstName').value;
+    const lastName = document.querySelector('#lastName').value;
+    const username = document.querySelector('#username').value;
+    const email = document.querySelector('#email').value;
+    const avatar = document.querySelector('.account-setting .profile-pic').src;
+
+    const response = await fetch('http://127.0.0.1:8000/api/profile/', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            first_name: 'firstName',
+            last_name: 'lastName',
+            username: 'username',
+            email: 'email@gmail,.com',
+            gender: 'M',
+            avatar: avatar,
+            two_fa: false
+        })
+    }).then(response => response.json());
+
+    console.log(response);
 }
