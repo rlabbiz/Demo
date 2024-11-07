@@ -1,6 +1,6 @@
 import { header } from '../scripts/components.js'
 import { menu } from '../scripts/components.js'
-import { fetchProfile, globalState, fetchUsers } from '../scripts/fetchData.js';
+import { fetchProfile, globalState, fetchUsers, sendRealTimeNotification } from '../scripts/fetchData.js';
 import { urlHandler } from '../scripts/routes.js';
 import { getButtons } from './profile.js';
 import { handleFriendDecline, handleViewMessage, showFriendRequest } from '../scripts/generalMessage.js';
@@ -201,6 +201,7 @@ async function handleSendRequest(e) {
             e.target.remove();
         }
         handleViewMessage({title: 'Friend Request', message: response.success, type: 'success', icon: 'fas fa-check-circle'})
+        sendRealTimeNotification('friend_request', {sender: globalState.user.username, receiver: username});
     } else
         handleFriendDecline({title: 'Friend Request', message: response.error, type: 'error', icon: 'fas fa-exclamation-circle'})
 }

@@ -1,4 +1,4 @@
-import { gameAiComponent } from "./components.js";
+import { showFriendRequest } from "./generalMessage";
 
 export const globalState = {
     user: null,
@@ -7,6 +7,7 @@ export const globalState = {
     requests: null,
     sendRequests: null,
     game: null,
+    ws: null,
 };
   
 export async function fetchProfile() {
@@ -24,6 +25,30 @@ export async function fetchProfile() {
     globalState.sendRequests = userData.user.sent_requests;
     globalState.friends = userData.user.friends;
     globalState.game = userData.user.game_stats;
+
+    if (!globalState.ws)
+        globalState.ws = new WebSocket(`ws://127.0.0.1:8000/ws/realtimenotifications/${globalState.user.username}/`);
+    globalState.ws.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        showFriendRequest();
+        console.log('Friend request received');
+    }
+
+    globalState.ws.onclose = function (e) {
+        globalState.ws.close();
+        globalState.ws = null;
+    }
+}
+
+export async function sendRealTimeNotification(type, message) {
+    if (globalState.user === null)
+        return ;
+    if (globalState.ws.readyState !== 1)
+        globalState.ws = new WebSocket(`ws://127.0.0.1:8000/ws/realtimenotifications/${globalState.user.username}/`);
+    globalState.ws.send(JSON.stringify({
+        type: type,
+        message: message
+    }));
 }
 
 export async function fetchUsers() {
