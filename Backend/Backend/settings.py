@@ -20,6 +20,8 @@ if not DEBUG:
 
 # Application definition
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,8 +34,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
-    'channels',
     'Chat',
+    'RealTimeNotifications',
     'django_prometheus', 
 ]
 
