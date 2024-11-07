@@ -3,6 +3,7 @@ from .views.profile_views import *
 from .views.auth_views import *
 from .views.game_views import *
 from django.urls import path
+from tournament.views import PlayerViewSet, TournamentViewSet, MatchViewSet
 
 urlpatterns = [
     path('register/', RegistrationView.as_view(), name='registration'),
@@ -28,4 +29,7 @@ urlpatterns = [
     path("games_history/", UserGameHistoryView.as_view(), name="user_game_history"),
     path("game_stats_updating/", GameStateUpdatingView.as_view(), name="game_state"),
     path("sent_requests/", SentRequestsView.as_view(), name="sent_requests"),
+    path('players', MatchViewSet.as_view({'get': 'list'})),
+    path('tournaments', PlayerViewSet.as_view({'get': 'list'})),
+    path('matches', TournamentViewSet.as_view({'get': 'list'})),
 ]

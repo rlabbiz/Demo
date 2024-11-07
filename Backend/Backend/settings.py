@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'Chat',
     'RealTimeNotifications',
-    'django_prometheus', 
+    'django_prometheus',
+    'tournament',
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {
