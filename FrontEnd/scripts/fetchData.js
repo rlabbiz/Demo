@@ -1,4 +1,4 @@
-import { showFriendRequest } from "./generalMessage";
+import { showFriendRequest } from "./generalMessage.js";
 
 export const globalState = {
     user: null,
