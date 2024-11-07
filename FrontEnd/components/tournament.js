@@ -29,8 +29,9 @@ export async function gameTournamentComponent() {
                     <option value="4" w-tid="18">4 Players - Quick Clash</option>
                     <option value="8" w-tid="19">8 Players - Epic Showdown</option>
                 </select>
-                <input type="text" id="tournamentName" placeholder="Give your tournament an epic name" w-tid="20">
-                <button onclick="createNewTournament()" w-tid="21">Launch Tournament</button>
+                <input type="text" class="tournamentName" placeholder="Give your tournament an epic name" w-tid="20">
+                <input type="text" class="playerName" placeholder="Enter unique name" w-tid="20">
+                <button>Launch Tournament</button>
             </div>
 
             <div class="join-tournament" id="joinTournament" w-tid="22">
@@ -115,4 +116,13 @@ export function tournamentScript() {
             })
         })
     }
+
+    // get tournament name and username from input fields
+    const launchTournament = document.querySelector('.tournament-component .create-tournament button');
+    const playerName = document.querySelector('.tournament-component .create-tournament .playerName');
+    const tournamentName = document.querySelector('.tournament-component .create-tournament .tournamentName');
+
+    launchTournament.addEventListener('click', () => {
+        // here you can add you endpoint to create a new tournament, and you can access to playerName and tournamentName vaviable above
+    })
 }
