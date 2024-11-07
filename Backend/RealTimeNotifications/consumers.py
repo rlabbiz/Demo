@@ -11,18 +11,34 @@ class RealTimeNotificationsConsumer(AsyncWebsocketConsumer):
         user = self.scope['url_route']['kwargs']['id']
         if user not in connections:
             connections[user] = self.channel_name
-        print(connections)
         await self.accept()
         
     
     async def disconnect(self, close_code):
-        user = self.scope['user']
+        user = self.scope['url_route']['kwargs']['id']
         if user in connections:
             del connections[user]
-            print(connections)
     
     async def receive(self, text_data):
         user = self.scope['user']
         text_data_json = json.loads(text_data)
+        type = text_data_json['type']
         message = text_data_json['message']
-        print(message)
+        # if type is friend_request, get the reveiver and send the message to him
+        if type == 'friend_request':
+            receiver = message['receiver']
+            if receiver in connections:
+                await self.channel_layer.send(
+                    connections[receiver],
+                    {
+                        'type': 'send_message',
+                        'message': {'type': type, 'message': message}
+                    }
+                )
+
+
+    async def send_message(self, event):
+        message = event['message']
+        await self.send(text_data=json.dumps({
+            'message': message
+        }))
