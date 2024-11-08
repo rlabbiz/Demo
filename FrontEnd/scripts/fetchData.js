@@ -1,4 +1,4 @@
-import { showFriendRequest } from "./generalMessage.js";
+import { showFriendRequest, handleFriendAccept, handleFriendDecline } from "./generalMessage.js";
 
 export const globalState = {
     user: null,
@@ -30,8 +30,13 @@ export async function fetchProfile() {
         globalState.ws = new WebSocket(`ws://127.0.0.1:8000/ws/realtimenotifications/${globalState.user.username}/`);
     globalState.ws.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        showFriendRequest();
-        console.log('Friend request received');
+        if (data.message.type === 'friend_request')
+            showFriendRequest(data.message.message.sender);
+        if (data.message.type === 'friend_accept')
+            handleFriendAccept(data.message.message.sender);
+        if (data.message.type === 'friend_decline')
+            handleFriendDecline({title: 'Friend Request Declined', message: data.message.message.sender + ' has declined your friend request', icon: 'fas fa-user-minus', type: 'info'});
+        console.log(data.message);
     }
 
     globalState.ws.onclose = function (e) {

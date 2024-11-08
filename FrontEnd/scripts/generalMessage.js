@@ -118,24 +118,24 @@ export function showGameRequest() {
     });
 }
 
-export function showFriendRequest() {
+export function showFriendRequest(user) {
     notificationManager.create({
         type: 'request',
         title: 'New Friend Request 🤝',
-        message: 'Sarah would like to connect with you',
+        message: `${user} would like to connect with you`,
         icon: 'fas fa-user-plus',
-        actions: [
-            {
-                type: 'accept',
-                text: 'Accept',
-                onClick: 'handleFriendAccept()'
-            },
-            {
-                type: 'reject',
-                text: 'Decline',
-                onClick: 'handleFriendDecline()'
-            }
-        ]
+        // actions: [
+        //     {
+        //         type: 'accept',
+        //         text: 'Accept',
+        //         onClick: 'sayHello()'
+        //     },
+        //     {
+        //         type: 'reject',
+        //         text: 'Decline',
+        //         onClick: 'handleFriendDecline()'
+        //     }
+        // ]
     });
 }
 
@@ -174,11 +174,11 @@ export function handleGameDecline() {
     });
 }
 
-export function handleFriendAccept() {
+export function handleFriendAccept(user) {
     notificationManager.create({
         type: 'success',
         title: 'New Friend Added! 🎉',
-        message: 'You and Sarah are now connected',
+        message: `You and ${user} are now connected`,
         icon: 'fas fa-user-check'
     });
 }
