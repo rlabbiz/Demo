@@ -235,6 +235,7 @@ async function handleAcceptRequest(e) {
             })
         }
         handleViewMessage({title: 'Accept Friend Request', message: response.success, type: 'success', icon: 'fas fa-check-circle'})
+        sendRealTimeNotification('friend_accept', {sender: globalState.user.username, receiver: username});
     } else
         handleFriendDecline({title: 'Accept Friend Request', message: response.error, type: 'error', icon: 'fas fa-exclamation-circle'})
 }
@@ -267,6 +268,7 @@ export async function handleDeclineRequest(e) {
             })
         }
         handleViewMessage({title: 'Decline Friend Request', message: response.success, type: 'success', icon: 'fas fa-check-circle'})
+        sendRealTimeNotification('friend_decline', {sender: globalState.user.username, receiver: username});
     } else
         handleFriendDecline({title: 'Decline Friend Request', message: response.error, type: 'error', icon: 'fas fa-exclamation-circle'})
 }

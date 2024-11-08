@@ -25,20 +25,19 @@ class RealTimeNotificationsConsumer(AsyncWebsocketConsumer):
         type = text_data_json['type']
         message = text_data_json['message']
         # if type is friend_request, get the reveiver and send the message to him
-        if type == 'friend_request':
-            receiver = message['receiver']
-            if receiver in connections:
-                await self.channel_layer.send(
-                    connections[receiver],
-                    {
-                        'type': 'send_message',
-                        'message': {'type': type, 'message': message}
-                    }
-                )
+        receiver = message['receiver']
+        if receiver in connections:
+            await self.channel_layer.send(
+                connections[receiver],
+                {
+                    'type': 'send_message',
+                    'message': {'type': type, 'message': message}
+                }
+            )
 
 
     async def send_message(self, event):
-        message = event['message']
+        # message = event['message']
         await self.send(text_data=json.dumps({
-            'message': message
+            'message': event
         }))
