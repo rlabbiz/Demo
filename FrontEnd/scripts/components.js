@@ -87,10 +87,10 @@ function getHeaderNotifications() {
                     <div class="notification-header" >
                         <div class="notification-name">${r.sender.first_name} ${r.sender.last_name}</div>
                     </div>
-                    <div class="notification-info">${r.sender.game_stats[0].level}</div>
+                    <div class="notification-info">Level: ${r.sender.game_stats[0].level}</div>
                     <div class="notification-actions">
-                        <button class="btn btn-accept">Accept</button>
-                        <button class="btn btn-decline">Decline</button>
+                        <button class="btn btn-accept" key="${r.sender.username}">Accept</button>
+                        <button class="btn btn-decline" key="${r.sender.username}">Decline</button>
                     </div>
                 </div>
             </div>

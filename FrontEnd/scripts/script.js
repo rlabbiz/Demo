@@ -175,14 +175,6 @@ export function setUpEvent() {
         })
     }
 
-    if (closeByBody){
-        closeByBody.addEventListener('click', function(e) {
-            if (notificationLink && e.target !== notificationLink) {
-                notificationMenu.classList.remove('show');
-            }
-        })
-    }
-
     const profileButton = document.querySelector('.header .header-menu .profile-link');
     if (profileButton) {
         profileButton.addEventListener('click', function (e) {
