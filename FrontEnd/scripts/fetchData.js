@@ -32,17 +32,27 @@ export async function fetchProfile() {
         const data = JSON.parse(e.data);
         if (data.message.type === 'friend_request')
             showFriendRequest(data.message.message.sender);
-        if (data.message.type === 'friend_accept')
+        else if (data.message.type === 'friend_accept')
             handleFriendAccept(data.message.message.sender);
-        if (data.message.type === 'friend_decline')
+        else if (data.message.type === 'friend_decline')
             handleFriendDecline({title: 'Friend Request Declined', message: data.message.message.sender + ' has declined your friend request', icon: 'fas fa-user-minus', type: 'info'});
-        console.log(data.message);
+        else if (data.message.type === 'online')
+            setOnlineFriends(data.message.users);
     }
 
     globalState.ws.onclose = function (e) {
         globalState.ws.close();
         globalState.ws = null;
     }
+}
+
+function setOnlineFriends(onlineFriends) {
+    globalState.friends.forEach(r => {
+        if (onlineFriends.includes(r.friend.username))
+            r.friend.online = true;
+        else
+            r.friend.online = false;
+    });
 }
 
 export async function sendRealTimeNotification(type, message) {

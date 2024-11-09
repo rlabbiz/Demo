@@ -16,9 +16,7 @@ export async function gameComponent() {
 }
 
 export async function gameSettingComponent() {
-    if (!globalState.user) {
-        await fetchProfile();
-    }
+    await fetchProfile();
 
     if (!globalState.user) {
         return (`cant fetch data`);
@@ -33,9 +31,8 @@ export async function gameSettingComponent() {
 
 
 export async function homeComponent() {
-    if (!globalState.user) {
-        await fetchProfile();
-    }
+    await fetchProfile();
+
     // check if cant fetch data
     if (!globalState.user) {
         return (`cant fetch data`);
@@ -292,9 +289,7 @@ export function gameContent() {
 
 
 export async function gameAiComponent() {
-    if (!globalState.user) {
-        await fetchProfile();
-    }
+    await fetchProfile();
 
     if (!globalState.user) {
         return (`cant fetch data`);
