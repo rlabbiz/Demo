@@ -17,8 +17,28 @@ import { friendsComponent, friendsScript } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
 import { gameOnlineComponent, gameOnlineScript } from '../components/play.js';
 import { searchComponent, searchComponentEvents } from '../components/search.js';
+import { globalState } from './fetchData.js';
+
+function loadingSpinner() {
+    console.log('loading spinner');
+    // check if page is singin page, if so, return
+    const snniper = document.querySelector('.loading-container');
+    const site = document.querySelector('.site');
+    if (globalState.onlineUsers || window.location.pathname === '/singin' || window.location.pathname === '/singup') {
+        if (snniper) {
+            snniper.style.display = 'none';
+            site.style.display = 'grid';
+        }
+    } else {
+        // // calback after 1s
+        snniper.style.display = 'block';
+        site.style.display = 'none';        
+        setTimeout(loadingSpinner, 100);
+    }
+}
 
 export async function urlHandler() {
+    loadingSpinner();
     const routeName = window.location.pathname;
     const site = document.querySelector('.site');
     

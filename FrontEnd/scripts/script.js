@@ -1,5 +1,4 @@
 import { urlHandler } from "./routes.js";
-
 // Game script
 
 function event(e){

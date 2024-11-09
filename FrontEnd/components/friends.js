@@ -8,7 +8,6 @@ export async function friendsComponent() {
     if (globalState.user === null)
         return (`cant fetch user data`)
 
-
     // get query string from url search param and filter by query string
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -119,12 +118,14 @@ function friendsList(friends) {
         `)
     }
     const innerHTML = friends.map(r => {
+        console.log(r.friend)
+        console.log(r.friend.online) 
         return (`
             <div class="friend-card"style="display: flex;">
                 <div class="friend-info">
                     <div class="friend-avatar-container">
                         <img src="${r.friend.avatar}" alt="${r.friend.username}" class="friend-avatar">
-                        <div class="status-indicator status-online" ></div>
+                        ${getOnlineStatus(r)}
                     </div>
                     <div class="friend-details">
                         <div class="friend-name">${r.friend.first_name} ${r.friend.last_name}</div>
@@ -144,6 +145,13 @@ function friendsList(friends) {
     })
 
     return innerHTML.join('\n');
+}
+
+function getOnlineStatus(user) {
+    if (globalState.onlineUsers && globalState.onlineUsers.includes(user.friend.username))
+        return (`<div class="status-indicator status-online"></div>`)
+    else
+        return (`<div class="status-indicator status-offline"></div>`)
 }
 
 export async function friendsScript() {

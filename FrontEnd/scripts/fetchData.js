@@ -8,6 +8,7 @@ export const globalState = {
     sendRequests: null,
     game: null,
     ws: null,
+    onlineUsers: null,
 };
   
 export async function fetchProfile() {
@@ -36,23 +37,16 @@ export async function fetchProfile() {
             handleFriendAccept(data.message.message.sender);
         else if (data.message.type === 'friend_decline')
             handleFriendDecline({title: 'Friend Request Declined', message: data.message.message.sender + ' has declined your friend request', icon: 'fas fa-user-minus', type: 'info'});
-        else if (data.message.type === 'online')
-            setOnlineFriends(data.message.users);
+        else if (data.message.type === 'online') {
+            globalState.onlineUsers = data.message.users;
+            console.log(globalState.onlineUsers);
+        }
     }
 
     globalState.ws.onclose = function (e) {
         globalState.ws.close();
         globalState.ws = null;
     }
-}
-
-function setOnlineFriends(onlineFriends) {
-    globalState.friends.forEach(r => {
-        if (onlineFriends.includes(r.friend.username))
-            r.friend.online = true;
-        else
-            r.friend.online = false;
-    });
 }
 
 export async function sendRealTimeNotification(type, message) {
