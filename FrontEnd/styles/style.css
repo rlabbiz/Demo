@@ -107,7 +107,7 @@ body {
     }
 }
 
-.notification {
+#generalMessage .notification {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
@@ -124,11 +124,11 @@ body {
     animation: slideIn 0.5s ease-out;
 }
 
-.notification.removing {
+#generalMessage .notification.removing {
     animation: slideOut 0.5s ease-in forwards;
 }
 
-.notification-icon {
+#generalMessage .notification-icon {
     width: 45px;
     height: 45px;
     border-radius: 12px;
@@ -141,7 +141,7 @@ body {
     overflow: hidden;
 }
 
-.notification-icon::before {
+#generalMessage .notification-icon::before {
     content: '';
     position: absolute;
     width: 100%;
