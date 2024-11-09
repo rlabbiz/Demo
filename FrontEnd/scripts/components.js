@@ -79,7 +79,6 @@ export function header() {
 }
 
 function getHeaderNotifications() {
-    console.log(globalState.requests);
     const innerHTML = globalState.requests.map(r => {
         return (`
             <div class="notification-item">
