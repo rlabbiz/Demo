@@ -6,7 +6,7 @@ import { gameAiComponent } from './components.js';
 import { gameScriptAi } from './game.js';
 import { gameSettingScript } from './game.js';
 import { gameSettingComponent } from './components.js';
-import { homeComponent } from './components.js';
+import { homeComponent, chartScript } from './components.js';
 import { SingUpComponent } from '../components/singup.js';
 import { singupScript } from '../components/singup.js';
 import { SingInComponent, SingUpComponentScript } from '../components/singin.js';
@@ -56,10 +56,12 @@ export async function urlHandler() {
         case '/':
             site.innerHTML = await homeComponent();
             site.classList = 'site gameComponent';
+            chartScript();
             break;
         case '/index.html':
             site.innerHTML = await homeComponent();
             site.classList = 'site gameComponent';
+            chartScript();
             break;
         case '/game':
             site.innerHTML = await gameComponent();

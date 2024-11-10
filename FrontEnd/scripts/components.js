@@ -482,6 +482,119 @@ export function homeContent() {
                     
                 </div>
             </div>
+
+            <div class="charts-row">
+                <div class="chart-container">
+                    <canvas id="pieChart-tic-tac"></canvas>
+                </div>
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-container">
+                    <canvas id="pieChart-ping"></canvas>
+                </div>
+            </div>
         </div>
     `)
+}
+
+export function chartScript() {
+    const pieCtxTicTac = document.getElementById('pieChart-tic-tac').getContext('2d');
+    const pieCtxPing = document.getElementById('pieChart-ping').getContext('2d');
+
+    const totalGames = 247;
+    const wonGames = Math.round(totalGames * 0.68);
+    const lostGames = totalGames - wonGames;
+
+    const pieChartTicTac = new Chart(pieCtxTicTac, {
+        type: 'doughnut',
+        data: {
+            labels: ['Victories', 'Defeats'],
+            datasets: [{
+                data: [wonGames, lostGames],
+                backgroundColor: [
+                    'rgba(111, 166, 255, 0.8)',
+                    'rgba(255, 107, 161, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(111, 166, 255, 1)',
+                    'rgba(255, 107, 161, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '65%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Tic Tac Statistics',
+                    color: '#fff',
+                    font: {
+                        size: 16,
+                        family: "'Poppins', sans-serif",
+                        weight: '600'
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#fff',
+                        padding: 20,
+                        font: {
+                            size: 14,
+                            family: "'Poppins', sans-serif"
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const pieChartPing = new Chart(pieCtxPing, {
+        type: 'doughnut',
+        data: {
+            labels: ['Victories', 'Defeats'],
+            datasets: [{
+                data: [wonGames, lostGames],
+                backgroundColor: [
+                    'rgba(111, 166, 255, 0.8)',
+                    'rgba(255, 107, 161, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(111, 166, 255, 1)',
+                    'rgba(255, 107, 161, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '65%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'PingPong Statistics',
+                    color: '#fff',
+                    font: {
+                        size: 16,
+                        family: "'Poppins', sans-serif",
+                        weight: '600'
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#fff',
+                        padding: 20,
+                        font: {
+                            size: 14,
+                            family: "'Poppins', sans-serif"
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
