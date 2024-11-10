@@ -790,20 +790,24 @@ body {
 
 .game-mode .models {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
 .game-mode .models .model {
-    width: calc(100% / 3 - 20px);
+    width: calc(100% / 3 - 30px);
     min-width: 200px;
     height: 200px;
-    margin: 80px 0;
+    margin: 125px 0;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.3);
     position: relative;
     padding: 20px;
+}
+
+.game-mode .models .tic-tac {
+    margin-top: -205px;
 }
 
 .game-mode .models .center {
