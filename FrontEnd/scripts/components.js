@@ -93,7 +93,10 @@ function getHeaderNotifications() {
             </div>
         `)
     })
-    
+
+    if (innerHTML.length === 0) 
+        return `<div class="no-notifications">No notifications Yet</div>`;
+
     return innerHTML.join('');
 }
 
