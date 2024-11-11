@@ -138,30 +138,41 @@ export async function accountSettingScript() {
 }
 
 async function updateProfile() {
-    const firstName = document.querySelector('#firstName').value;
-    const lastName = document.querySelector('#lastName').value;
-    const username = document.querySelector('#username').value;
-    const email = document.querySelector('#email').value;
-    const avatar = document.querySelector('.account-setting .profile-pic').src;
+    const firstName = document.querySelector('#firstName');
+    const lastName = document.querySelector('#lastName');
+    const username = document.querySelector('#username');
+    const email = document.querySelector('#email');
+    const avatar = document.querySelector('.account-setting .profile-pic');
 
-    const response = await fetch('http://127.0.0.1:8000/api/profile/', {
+    const response = await fetch('http://127.0.0.1:8000/api/profile_updating/', {
         method: 'PUT',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            first_name: 'firstName',
-            last_name: 'lastName',
-            username: 'username',
-            email: 'email@gmail,.com',
-            gender: 'M',
-            avatar: avatar,
+            first_name: firstName?.value,
+            last_name: lastName?.value,
+            username: username?.value,
+            email: email?.value,
             two_fa: false
         })
     }).then(response => response.json());
-
-    console.log(response);
+    if (!response.error) {
+        handleViewMessage({
+            title: 'Success',
+            message: response?.success,
+            type: 'success',
+            icon: 'fas fa-check-circle'
+        });
+    } else {
+        handleViewMessage({
+            title: 'Error',
+            message: response?.error,
+            type: 'error',
+            icon: 'fas fa-exclamation-circle'
+        });
+    }
 }
 
 async function changePasswordModal() {
