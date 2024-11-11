@@ -1,5 +1,6 @@
 import { header, menu } from '../scripts/components.js'
 import { fetchProfile, globalState } from '../scripts/fetchData.js';
+import { handleViewMessage } from '../scripts/generalMessage.js';
 
 
 export async function accountSettingComponent() {
@@ -164,12 +165,17 @@ async function updateProfile() {
 }
 
 async function changePasswordModal() {
-    const currentPassword = document.querySelector('#currentPassword').value;
-    const newPassword = document.querySelector('#newPassword').value;
-    const reNewPassword = document.querySelector('#reNewPassword').value;
+    const currentPassword = document.querySelector('#currentPassword');
+    const newPassword = document.querySelector('#newPassword');
+    const reNewPassword = document.querySelector('#reNewPassword');
 
-    if (newPassword !== reNewPassword) {
-        alert('Passwords do not match');
+    if (newPassword?.value !== reNewPassword?.value) {
+        handleViewMessage({
+            title: 'Error',
+            message: 'New passwords do not match with repeat password',
+            type: 'error',
+            icon: 'fas fa-exclamation-circle'
+        });
         return;
     }
 
@@ -180,9 +186,31 @@ async function changePasswordModal() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            password: currentPassword,
-            new_password: newPassword
+            old_password: currentPassword?.value,
+            new_password: newPassword?.value,
+            re_new_password: reNewPassword?.value
         })
     }).then(response => response.json());
-    console.log(response);
+    if (!response.error) {
+        handleViewMessage({
+            title: 'Success',
+            message: response?.success,
+            type: 'success',
+            icon: 'fas fa-check-circle'
+        });
+        currentPassword.value = '';
+        newPassword.value = '';
+        reNewPassword.value = '';
+        const passwordModal = document.querySelector('#passwordModal');
+        if (passwordModal)
+            passwordModal.style.display = 'none';
+    } else {
+        handleViewMessage({
+            title: 'Error',
+            message: response?.error,
+            type: 'error',
+            icon: 'fas fa-exclamation-circle'
+        });
+    }
+
 }
