@@ -49,7 +49,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/rlabbiz/Desktop/demo/FrontEnd
+      device: ./FrontEnd
 
 
 #// ------------------------------------------------------- Networks ------------------------------------------------------------- //

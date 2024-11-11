@@ -1,4 +1,5 @@
 import { globalState, fetchProfile } from './fetchData.js';
+import { getLastMatches } from '../components/profile.js'; 
 
 export async function gameComponent() {
     await fetchProfile();
@@ -202,97 +203,8 @@ export function gameContent() {
                 </div>
             </div>
 
-            <div class="best-players">
-                <h2 class="heading">Best Players</h2>
-                <div class="player">
-                    <img src="images/profile.png" alt="" >
-                    <h6>KAMAZLI</h6>
-                    <p>2540PTS</p>
-                    <span>9.2</span>
-                </div>
-
-                <div class="player">
-                    <img src="images/profile.png" alt="" >
-                    <h6>KAMAZLI</h6>
-                    <p>2540PTS</p>
-                    <span>9.2</span>
-                </div>
-
-                <div class="player">
-                    <img src="images/profile.png" alt="" >
-                    <h6>KAMAZLI</h6>
-                    <p>2540PTS</p>
-                    <span>9.2</span>
-                </div>
-
-                <div class="player">
-                    <img src="images/profile.png" alt="" >
-                    <h6>KAMAZLI</h6>
-                    <p>2540PTS</p>
-                    <span>9.2</span>
-                </div>
-
-                <div class="player">
-                    <img src="images/profile.png" alt="" >
-                    <h6>KAMAZLI</h6>
-                    <p>2540PTS</p>
-                    <span>9.2</span>
-                </div>
-
-                <div class="player">
-                    <img src="images/profile.png" alt="" >
-                    <h6>KAMAZLI</h6>
-                    <p>2540PTS</p>
-                    <span>9.2</span>
-                </div>
-            </div>
-
-            <div class="last-matches">
-                <h2>Last Matches</h2>
-                <div class="matches">
-                    <div class="match win">
-                        <img src="images/image 1.png" alt="">
-                        <h4>telha</h4>
-                        <span>5 : 0</span>
-                        <i><img src="images/image 4.png" alt=""></i>
-                    </div>
-
-                    <div class="match lose">
-                        <img src="images/image 1.png" alt="">
-                        <h4>telha</h4>
-                        <span>5 : 0</span>
-                        <i><img src="images/image 6.png" alt=""></i>
-                    </div>
-
-                    <div class="match win">
-                        <img src="images/image 1.png" alt="">
-                        <h4>telha</h4>
-                        <span>5 : 0</span>
-                        <i><img src="images/image 4.png" alt=""></i>
-                    </div>
-
-                    <div class="match win">
-                        <img src="images/image 1.png" alt="">
-                        <h4>telha</h4>
-                        <span>5 : 0</span>
-                        <i><img src="images/image 4.png" alt=""></i>
-                    </div>
-
-                    <div class="match win">
-                        <img src="images/image 1.png" alt="">
-                        <h4>telha</h4>
-                        <span>5 : 0</span>
-                        <i><img src="images/image 4.png" alt=""></i>
-                    </div>
-
-                    <div class="match lose">
-                        <img src="images/image 1.png" alt="">
-                        <h4>telha</h4>
-                        <span>5 : 0</span>
-                        <i><img src="images/image 6.png" alt=""></i>
-                    </div>
-                </div>
-            </div>
+            ${getLastMatches()}
+            
         </div>    
     `)
 }

@@ -72,36 +72,7 @@ function profileContent(user) {
                 </div>
             </div>
 
-            <div class="match-history" w-tid="42">
-                <h2 w-tid="43" class="">Recent Matches</h2>
-                <div class="match-list" w-tid="44">
-                    <div class="match-item" w-tid="45">
-                        <span w-tid="46">vs. John Doe</span>
-                        <span w-tid="47">Score: 21-18</span>
-                        <span class="match-result win" w-tid="48">Win</span>
-                    </div>
-                    <div class="match-item" w-tid="49">
-                        <span w-tid="50">vs. Emma Smith</span>
-                        <span w-tid="51">Score: 19-21</span>
-                        <span class="match-result loss" w-tid="52">Loss</span>
-                    </div>
-                    <div class="match-item" w-tid="53">
-                        <span w-tid="54">vs. Mike Johnson</span>
-                        <span w-tid="55">Score: 21-15</span>
-                        <span class="match-result win" w-tid="56">Win</span>
-                    </div>
-                    <div class="match-item" w-tid="57">
-                        <span w-tid="58">vs. Lisa Brown</span>
-                        <span w-tid="59">Score: 21-12</span>
-                        <span class="match-result win" w-tid="60">Win</span>
-                    </div>
-                    <div class="match-item" w-tid="61">
-                        <span w-tid="62">vs. Tom Wilson</span>
-                        <span w-tid="63">Score: 18-21</span>
-                        <span class="match-result loss" w-tid="64">Loss</span>
-                    </div>
-                </div>
-            </div>
+            ${getLastMatches()}
             <div class="achievements" w-tid="65">
                 <h2 w-tid="66">Achievements</h2>
                 <div class="achievement-grid" w-tid="67">
@@ -133,6 +104,41 @@ function profileContent(user) {
                             <p w-tid="87">Win a match in under 5 minutes</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    `)
+}
+
+export function getLastMatches() {
+    return (`
+        <div class="match-history" w-tid="42">
+            <h2 w-tid="43" class="">Recent Matches</h2>
+            <div class="match-list" w-tid="44">
+                <div class="match-item" w-tid="45">
+                    <span w-tid="46">vs. John Doe</span>
+                    <span w-tid="47">Score: 21-18</span>
+                    <span class="match-result win" w-tid="48">Win</span>
+                </div>
+                <div class="match-item" w-tid="49">
+                    <span w-tid="50">vs. Emma Smith</span>
+                    <span w-tid="51">Score: 19-21</span>
+                    <span class="match-result loss" w-tid="52">Loss</span>
+                </div>
+                <div class="match-item" w-tid="53">
+                    <span w-tid="54">vs. Mike Johnson</span>
+                    <span w-tid="55">Score: 21-15</span>
+                    <span class="match-result win" w-tid="56">Win</span>
+                </div>
+                <div class="match-item" w-tid="57">
+                    <span w-tid="58">vs. Lisa Brown</span>
+                    <span w-tid="59">Score: 21-12</span>
+                    <span class="match-result win" w-tid="60">Win</span>
+                </div>
+                <div class="match-item" w-tid="61">
+                    <span w-tid="62">vs. Tom Wilson</span>
+                    <span w-tid="63">Score: 18-21</span>
+                    <span class="match-result loss" w-tid="64">Loss</span>
                 </div>
             </div>
         </div>
