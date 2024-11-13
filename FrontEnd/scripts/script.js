@@ -49,6 +49,15 @@ export function setUpEvent() {
         })
     }
 
+    const ticTacToeLink = document.querySelector('.tic-tac a');
+    if (ticTacToeLink) {
+        ticTacToeLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            history.pushState(null, null, '/tic-tac');
+            urlHandler();
+        })
+    }
+
     const aiLink = document.querySelector('.ai a');
     if (aiLink) {
         aiLink.addEventListener('click', function (e) {

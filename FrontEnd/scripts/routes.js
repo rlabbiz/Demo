@@ -17,10 +17,10 @@ import { friendsComponent, friendsScript } from '../components/friends.js';
 import { profileComponent } from '../components/profile.js';
 import { gameOnlineComponent, gameOnlineScript } from '../components/play.js';
 import { searchComponent, searchComponentEvents } from '../components/search.js';
+import { ticTacComponent } from '../components/ticTac.js';
 import { globalState } from './fetchData.js';
 
 function loadingSpinner() {
-    console.log('loading spinner');
     // check if page is singin page, if so, return
     const snniper = document.querySelector('.loading-container');
     const site = document.querySelector('.site');
@@ -139,6 +139,11 @@ export async function urlHandler() {
             site.innerHTML = await searchComponent();
             site.classList = 'site friends-layout';
             await searchComponentEvents();
+            break;
+
+        case '/tic-tac':
+            site.innerHTML = await ticTacComponent();
+            site.classList = 'site ';
             break;
         
         default:
