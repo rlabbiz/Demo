@@ -1,5 +1,6 @@
 import { urlHandler } from "../scripts/routes.js";
 import { globalState, fetchProfile } from "../scripts/fetchData.js";
+import { handleViewMessage } from "../scripts/generalMessage.js";
 
 export async function gameTournamentComponent() {
     if (!globalState.user) {
@@ -122,7 +123,36 @@ export function tournamentScript() {
     const playerName = document.querySelector('.tournament-component .create-tournament .playerName');
     const tournamentName = document.querySelector('.tournament-component .create-tournament .tournamentName');
 
-    launchTournament.addEventListener('click', () => {
+    launchTournament.addEventListener('click', async () => {
         // here you can add you endpoint to create a new tournament, and you can access to playerName and tournamentName vaviable above
+
+        const resposne = await fetch('http://127.0.0.1:8000/tournament/tournaments/', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: tournamentName.value,
+                playerName: playerName.value,
+                playerId: globalState.user.id,
+            })
+        }).then(resposne => resposne.json());
+        if (resposne.message) {
+            handleViewMessage({
+                message: resposne.message,
+                type: 'success',
+                title: 'Touranment Created',
+                icon: 'fas fa-check-circle'
+            });
+        } else {
+            handleViewMessage({
+                message: resposne.message || 'Failed to create tournament',
+                type: 'error',
+                title: 'Touranment Creation Failed',
+                icon: 'fas fa-exclamation-triangle'
+            });
+        }
+        console.log(resposne);
     })
 }

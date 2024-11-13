@@ -6,5 +6,5 @@ from API.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('API.urls')),
-    # path('api/', include('tournament.urls')),
+    path('tournament/', include('tournament.urls')),
 ]
