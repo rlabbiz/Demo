@@ -41,30 +41,35 @@ export async function gameTournamentComponent() {
                 <button onclick="joinTournamentById()" w-tid="25">Join by ID</button>
                 
                 <div class="tournament-list" id="tournamentList" w-tid="26" style="display: block;">
-                    <div class="tournament-item" id="first-mode">
-                        <span>Paddle Fury </span>
-                        <p>4/8</p>
-                        <button class="join-button" onclick="joinTournament('T001')">Enter Arena</button>
-                    </div>
-                    <div class="tournament-item" id="first-mode">
-                        <span>Table Titans</span>
-                        <p>5/8</p>
-                        <button class="join-button" onclick="joinTournament('T002')">Enter Arena</button>
-                    </div>
-                    <div class="tournament-item" id="second-mode">
-                        <span>Spin Masters</span>
-                        <p>3/4</p>
-                        <button class="join-button" onclick="joinTournament('T003')">Enter Arena</button>
-                    </div>
-                    <div class="tournament-item" id="first-mode">
-                        <span>Ping Pong Legends</span>
-                        <p>6/8</p>
-                        <button class="join-button" onclick="joinTournament('T004')">Enter Arena</button>
-                    </div>
+                    ${await tournamentsList()}
                 </div>
             </div>
         </div>
     `)
+}
+
+async function tournamentsList() {
+    const response = await fetch(`http://127.0.0.1:8000/tournament/tournaments/`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(response => response.json());
+    
+    const innerHTML = response.map(tournament => {
+        return (`
+            <div class="tournament-item" id="first-mode">
+                <span>${tournament.name}</span>
+                <p>${tournament.players.length}/8</p>
+                <button class="join-button">Enter Arena</button>
+            </div>
+        `)
+    })
+    
+    if (innerHTML.length === 0)
+        return `<h3>No tournaments available</h3>`
+    return innerHTML.join('\n');
 }
 
 export function tournamentScript() {
